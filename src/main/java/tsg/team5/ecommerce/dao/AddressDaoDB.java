@@ -5,7 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AddressDaoDB {
+public class AddressDaoDB  implements AddressDao{
     @Autowired
     JdbcTemplate jdbc;
 

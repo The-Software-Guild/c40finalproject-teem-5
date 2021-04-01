@@ -4,18 +4,18 @@ import java.util.Objects;
 
 public class Item {
 
-    private int itemid;
+    private int itemId;
 
     private String itemName;
 
     private Double price;
 
-    public int getItemid() {
-        return itemid;
+    public int getItemId() {
+        return itemId;
     }
 
-    public void setItemid(int itemid) {
-        this.itemid = itemid;
+    public void setItemId(int itemId) {
+        this.itemId = itemId;
     }
 
     public String getItemName() {
@@ -39,7 +39,7 @@ public class Item {
     @Override
     public boolean equals(Object o){
         Item item1 = (Item)o;
-        if(item1.itemid == this.itemid && item1.itemName.equals(this.itemName) && item1.price == this.price){
+        if(item1.itemId == this.itemId && item1.itemName.equals(this.itemName) && item1.price == this.price){
             return true;
         }
         return false;
@@ -47,7 +47,7 @@ public class Item {
 
     @Override
     public int hashCode(){
-        return Objects.hash(itemid, itemName, price);
+        return Objects.hash(itemId, itemName, price);
     }
 
 
