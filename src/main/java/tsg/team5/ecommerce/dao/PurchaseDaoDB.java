@@ -4,7 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import tsg.team5.ecommerce.entity.Customer;
+import tsg.team5.ecommerce.entity.Exchange;
+import tsg.team5.ecommerce.entity.Item;
 import tsg.team5.ecommerce.entity.Purchase;
+import tsg.team5.ecommerce.dao.ExchangeDao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,6 +21,15 @@ public class PurchaseDaoDB implements PurchaseDao{
     @Autowired
     JdbcTemplate jdbcTemplate;
 
+    @Autowired
+    ExchangeDao exchangeDao;
+
+    @Autowired
+    CustomerDao customerDao;
+
+    @Autowired
+    ItemDao itemDao;
+
     @Override
     public Purchase getPurchaseById(int purchaseId) {
         final String getPurchaseById_sql= "select * from Purchase where purchaseId=?;";
@@ -25,13 +38,40 @@ public class PurchaseDaoDB implements PurchaseDao{
 
     @Override
     public List<Purchase> getAllPurchases() {
-        final String getAllPurchases="select * from Purchase;";
-        List<Purchase>
+        final String getAllPurchases_sql="select * from Purchase;";
+        List<Purchase> purchases =jdbcTemplate.query(getAllPurchases_sql, new PurchaseMapper());
+        associateCustomerExchangeitems(purchases);
+        return purchases;
     }
+
+    private void associateCustomerExchangeitems(List<Purchase> purchases) {
+        for (Purchase prc: purchases) {
+            prc.setCustomer(getCustomerForPurchase(prc.getPurchaseId()));
+            prc.setExchange(getExchangeForPurchase(prc.getPurchaseId()));
+            prc.setPurchasedItems(getItemsForPurchase(prc.getPurchaseId()));
+        }
+    }
+
+    private Exchange getExchangeForPurchase(int purchaseId) {
+        final String getExchangeForPurchase_sql = "select exr.* FROM ExchangeRate exr "
+                + "join purchase p on exr.exchangeId = p.exchangeId where p.exchangeId = ?";
+       // return jdbcTemplate.queryForObject(getExchangeForPurchase_sql, new ExchangeDao., id);
+        return null;
+    }
+
+    private Customer getCustomerForPurchase(int purchaseId) {
+        return null;
+    }
+
+    private List<Item> getItemsForPurchase(int purchaseId) {
+        return null;
+    }
+
 
     @Override
     public List<Purchase> getPurchaseRangeDate(LocalDate from, LocalDate to) {
-        return null;
+        final String getPurchaseRangeDate_sql= "select * from Purchase where purchaseDate between between ? and ?;";
+        return jdbcTemplate.query(getPurchaseRangeDate_sql, new PurchaseMapper(),from,to);
     }
 
     @Override
