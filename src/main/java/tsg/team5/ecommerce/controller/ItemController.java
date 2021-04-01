@@ -42,4 +42,15 @@ public class ItemController {
 
     }
 
+    @GetMapping("deleteItem")
+    public String deleteItem(HttpServletRequest request){
+        int id = Integer.parseInt(request.getParameter("itemID"));
+        //itemID correspond the name that will be given in the html/jsx
+        Item item = itemDao.getItemById(id);
+
+        return "redirect:/items";
+    }
+
+    
+
 }
