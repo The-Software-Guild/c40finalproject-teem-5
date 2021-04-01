@@ -4,12 +4,12 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Exchange {
-    int exchangeId;
-    BigDecimal USD;
-    BigDecimal CAD;
-    BigDecimal EUR;
-    BigDecimal GBP;
-    BigDecimal JPY;
+    private int exchangeId;
+    private BigDecimal USD;
+    private BigDecimal CAD;
+    private BigDecimal EUR;
+    private BigDecimal GBP;
+    private BigDecimal JPY;
 
     public int getExchangeId() {
         return exchangeId;
