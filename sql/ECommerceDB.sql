@@ -5,18 +5,17 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema ECommerceDB
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema ECommerceDB
 -- -----------------------------------------------------
--- DROP SCHEMA IF EXISTS 'ECommerceDB';
 CREATE SCHEMA IF NOT EXISTS `ECommerceDB` DEFAULT CHARACTER SET utf8 ;
 USE `ECommerceDB` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`ExchangeRate`
+-- Table `ECommerceDB`.`ExchangeRate`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ECommerceDB`.`ExchangeRate` (
   `exchangeId` INT NOT NULL,
@@ -30,26 +29,47 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Customer`
+-- Table `ECommerceDB`.`Address`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `ECommerceDB`.`Address` (
+  `addressId` INT NOT NULL,
+  `street` VARCHAR(30) NOT NULL,
+  `country` VARCHAR(30) NOT NULL,
+  `postal` VARCHAR(15) NOT NULL,
+  `city` VARCHAR(30) NOT NULL,
+  `state` CHAR(2) NOT NULL,
+  PRIMARY KEY (`addressId`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `ECommerceDB`.`Customer`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ECommerceDB`.`Customer` (
   `customerId` INT NOT NULL,
   `customerName` VARCHAR(45) NOT NULL,
   `customerEmail` VARCHAR(45) NOT NULL,
-  `customerAddress` VARCHAR(45) NOT NULL,
   `customerPhone` CHAR(10) NOT NULL,
+  `addressId` INT NOT NULL,
   PRIMARY KEY (`customerId`),
-  UNIQUE INDEX `customerEmail_UNIQUE` (`customerEmail` ASC) VISIBLE)
+  UNIQUE INDEX `customerEmail_UNIQUE` (`customerEmail` ASC) VISIBLE,
+  INDEX `fk_Customer_Address1_idx` (`addressId` ASC) VISIBLE,
+  CONSTRAINT `fk_Customer_Address1`
+    FOREIGN KEY (`addressId`)
+    REFERENCES `ECommerceDB`.`Address` (`addressId`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Purchase`
+-- Table `ECommerceDB`.`Purchase`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ECommerceDB`.`Purchase` (
   `purchaseId` INT NOT NULL,
   `purchaseDate` DATE NOT NULL,
   `quantity` INT NOT NULL,
+  `baseCurrency` CHAR(3) NOT NULL,
   `exchangeId` INT NOT NULL,
   `customerId` INT NOT NULL,
   PRIMARY KEY (`purchaseId`),
@@ -71,7 +91,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`Item`
+-- Table `ECommerceDB`.`Item`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ECommerceDB`.`Item` (
   `itemId` INT NOT NULL,
@@ -82,7 +102,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`ItemPurchase`
+-- Table `ECommerceDB`.`ItemPurchase`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `ECommerceDB`.`ItemPurchase` (
   `itemId` INT NOT NULL,
