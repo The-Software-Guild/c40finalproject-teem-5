@@ -9,5 +9,4 @@ public class AddressDaoDB {
     @Autowired
     JdbcTemplate jdbc;
 
-    //test
 }
