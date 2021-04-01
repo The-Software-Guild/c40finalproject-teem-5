@@ -37,7 +37,7 @@ public class CustomerDaoDB implements CustomerDao{
     // Gets the address object for the customer instead of having the address id
     private Address getAddressForCustomer(int id) {
         final String SELECT_ADDRESS_FOR_CUSTOMER = "SELECT a.* FROM address a JOIN customer c ON c.addressId = a.addressId WHERE c.customerId = ?";
-        return jdbc.queryForObject(SELECT_ADDRESS_FOR_CUSTOMER, new AddressDaoDB().AddressMapper(), id);
+        return jdbc.queryForObject(SELECT_ADDRESS_FOR_CUSTOMER, new AddressDaoDB.AddressMapper(), id);
     }
 
     @Override
