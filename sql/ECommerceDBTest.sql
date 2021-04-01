@@ -1,7 +1,7 @@
-DROP DATABASE IF EXISTS ECommerceDB;
-CREATE DATABASE ECommerceDB;
+DROP DATABASE IF EXISTS ECommerceDBTest;
+CREATE DATABASE ECommerceDBTest;
 
-USE ECommerceDB ;
+USE ECommerceDBTest;
 
 -- -----------------------------------------------------
 -- Table `ExchangeRate`
