@@ -64,6 +64,9 @@ public class PurchaseDaoDB implements PurchaseDao{
     }
 
     private List<Item> getItemsForPurchase(int purchaseId) {
+        final String getItemsForPurchase_sql = "select exr.* FROM ExchangeRate exr "
+                + "join purchase p on exr.exchangeId = p.exchangeId where p.exchangeId = ?";
+//         return jdbcTemplate.query(getExchangeForPurchase_sql, new ExchangeDao., id);
         return null;
     }
 
