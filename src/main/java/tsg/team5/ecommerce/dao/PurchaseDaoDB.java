@@ -25,8 +25,17 @@ public class PurchaseDaoDB implements PurchaseDao{
 
     @Override
     public List<Purchase> getAllPurchases() {
-        final String getAllPurchases="select * from Purchase;";
-        List<Purchase>
+        final String getAllPurchases_sql="select * from Purchase;";
+        List<Purchase> purchases =jdbcTemplate.query(getAllPurchases_sql, new PurchaseMapper());
+        associateCustomerExchangeitems(purchases);
+        return purchases;
+    }
+
+    private void associateCustomerExchangeitems(List<Purchase> purchases) {
+        for (Purchase prc: purchases) {
+            prc.setCustomer(getSuperheroForSight(si.getSightId()));
+            prc.setExchange(getLocationForSight(si.getSightId()));
+        }
     }
 
     @Override
