@@ -21,10 +21,10 @@ CREATE TABLE exchangeRate (
 CREATE TABLE address (
   addressId INT PRIMARY KEY AUTO_INCREMENT,
   street VARCHAR(30) NOT NULL,
-  country VARCHAR(30) NOT NULL,
-  postal VARCHAR(10) NOT NULL,
   city VARCHAR(30) NOT NULL,
-  state CHAR(2) NOT NULL
+  state CHAR(2) NOT NULL,
+  postal VARCHAR(10) NOT NULL,
+  country VARCHAR(30) NOT NULL
 );
 
 -- -----------------------------------------------------

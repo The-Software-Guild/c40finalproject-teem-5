@@ -5,10 +5,10 @@ import java.util.Objects;
 public class Address {
     int addressId;
     String street;
-    String country;
-    String postal;
     String city;
     String state;
+    String postal;
+    String country;
 
     public int getAddressId() {
         return addressId;
