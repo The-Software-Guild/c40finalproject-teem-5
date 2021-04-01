@@ -1,12 +1,13 @@
 package tsg.team5.ecommerce.entity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
 public class Purchase {
     private int purchaseId;
-    private LocalDateTime purchaseDate;
+    private LocalDate purchaseDate;
     private int quantity;
     private Exchange exchange;
     private Customer customer;
@@ -25,11 +26,11 @@ public class Purchase {
         return Objects.hash(purchaseId, purchaseDate, quantity, exchange, customer, PurchasedItems);
     }
 
-    public LocalDateTime getPurchaseDate() {
+    public LocalDate getPurchaseDate() {
         return purchaseDate;
     }
 
-    public void setPurchaseDate(LocalDateTime purchaseDate) {
+    public void setPurchaseDate(LocalDate purchaseDate) {
         this.purchaseDate = purchaseDate;
     }
 
