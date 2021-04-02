@@ -42,8 +42,8 @@ public class ItemDaoDB implements ItemDao{
     @Override
     public void updateItem(Item item) {
 
-        final String sql = "Update Item Set itemId = ?, itemName = ?, price = ?";
-        jdbc.update(sql, item.getItemId(), item.getItemName(), item.getPrice());
+        final String sql = "Update Item Set itemId = ?, itemName = ?, price = ? Where itemId = ?";
+        jdbc.update(sql, item.getItemId(), item.getItemName(), item.getPrice(), item.getItemId());
 
     }
 
