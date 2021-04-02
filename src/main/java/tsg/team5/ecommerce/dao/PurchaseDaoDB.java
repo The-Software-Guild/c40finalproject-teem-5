@@ -26,7 +26,8 @@ public class PurchaseDaoDB implements PurchaseDao{
     @Override
     public List<Purchase> getAllPurchases() {
         final String getAllPurchases="select * from Purchase;";
-        List<Purchase>
+        //List<Purchase>
+        return null;
     }
 
     @Override
