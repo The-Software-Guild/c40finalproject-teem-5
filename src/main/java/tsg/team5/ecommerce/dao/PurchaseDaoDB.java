@@ -64,8 +64,13 @@ public class PurchaseDaoDB implements PurchaseDao{
                 "customerId = ? " +
                 "Where purchaseID = ?";
 
-        jdbcTemplate.update(sql, purchase.getPurchaseId(), purchase.getPurchaseDate(), purchase.getQuantity(),
-                purchase.getExchange().getExchangeId(), purchase.getCustomer().getCustomerId(), purchase.getPurchaseId());
+        jdbcTemplate.update(sql,
+                purchase.getPurchaseId(),
+                purchase.getPurchaseDate(),
+                purchase.getQuantity(),
+                purchase.getExchange().getExchangeId(),
+                purchase.getCustomer().getCustomerId(),
+                purchase.getPurchaseId());
 
     }
 
