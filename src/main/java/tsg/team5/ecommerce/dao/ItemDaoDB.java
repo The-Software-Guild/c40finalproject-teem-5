@@ -24,7 +24,7 @@ public class ItemDaoDB implements ItemDao{
     @Override
     public Item getItemById(int Id) {
         try {
-            final String sql = "Select * From Item Where itemId";
+            final String sql = "Select * From Item Where itemId = ?";
             return jdbc.queryForObject(sql, new ItemMapper(), Id);
         }catch(Exception e){
             return null;
