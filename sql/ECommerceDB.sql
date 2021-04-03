@@ -57,7 +57,7 @@ CREATE TABLE purchase (
 -- Table `Item`
 -- -----------------------------------------------------
 CREATE TABLE item (
-  itemId INT PRIMARY KEY AUTO_INCREMENT,
+  itemId INT PRIMARY KEY,
   itemName VARCHAR(50) NOT NULL,
   price DECIMAL(6,2) NOT NULL
 );
