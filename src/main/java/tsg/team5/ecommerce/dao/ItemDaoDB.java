@@ -55,7 +55,6 @@ public class ItemDaoDB implements ItemDao{
 
     }
 
-
     public static final class ItemMapper implements RowMapper<Item> {
 
         @Override
@@ -67,6 +66,4 @@ public class ItemDaoDB implements ItemDao{
             return item;
         }
     }
-
-
 }
