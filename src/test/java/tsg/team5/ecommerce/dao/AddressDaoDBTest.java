@@ -100,5 +100,4 @@ class AddressDaoDBTest {
         fromDao = addressDao.getAddressById(address.getAddressId());
         assertNull(fromDao);
     }
-
 }

@@ -1,7 +1,6 @@
 package tsg.team5.ecommerce.entity;
 
 import java.time.LocalDate;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
