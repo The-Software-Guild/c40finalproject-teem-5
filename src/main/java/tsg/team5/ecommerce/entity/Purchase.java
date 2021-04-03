@@ -7,22 +7,31 @@ import java.util.Objects;
 public class Purchase {
     private int purchaseId;
     private LocalDate purchaseDate;
+    private String baseCurrency;
     private int quantity;
     private Exchange exchange;
     private Customer customer;
     private List<Item> PurchasedItems;
+
+    public String getBaseCurrency() {
+        return baseCurrency;
+    }
+
+    public void setBaseCurrency(String baseCurrency) {
+        this.baseCurrency = baseCurrency;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Purchase purchase = (Purchase) o;
-        return purchaseId == purchase.purchaseId && quantity == purchase.quantity && purchaseDate.equals(purchase.purchaseDate) && exchange.equals(purchase.exchange) && customer.equals(purchase.customer) && PurchasedItems.equals(purchase.PurchasedItems);
+        return baseCurrency.equals(purchase.baseCurrency);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(purchaseId, purchaseDate, quantity, exchange, customer, PurchasedItems);
+        return Objects.hash(baseCurrency);
     }
 
     public LocalDate getPurchaseDate() {
