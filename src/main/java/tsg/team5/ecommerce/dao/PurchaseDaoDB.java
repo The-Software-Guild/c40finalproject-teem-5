@@ -26,7 +26,7 @@ public class PurchaseDaoDB implements PurchaseDao{
             Purchase purchase = jdbc.queryForObject(GET_PURCHASE_BY_ID, new PurchaseMapper(), purchaseId);
             purchase.setCustomer(getCustomerForPurchase(purchaseId));
             purchase.setExchange(getExchangeForPurchase(purchaseId));
-            purchase.setPurchasedItems(getItemsForPurchase(purchaseId));
+            purchase.setItems(getItemsForPurchase(purchaseId));
             return purchase;
 
         } catch (DataAccessException ex){
@@ -46,13 +46,13 @@ public class PurchaseDaoDB implements PurchaseDao{
         for (Purchase prc: purchases) {
             prc.setCustomer(getCustomerForPurchase(prc.getPurchaseId()));
             prc.setExchange(getExchangeForPurchase(prc.getPurchaseId()));
-            prc.setPurchasedItems(getItemsForPurchase(prc.getPurchaseId()));
+            prc.setItems(getItemsForPurchase(prc.getPurchaseId()));
         }
     }
 
     private Exchange getExchangeForPurchase(int purchaseId) {
         final String GET_EXCHANGE_FOR_PURCHASE = "select exr.* FROM exchangeRate exr "
-                + "join purchase p on exr.exchangeId = p.exchangeId where p.exchangeId = ?";
+                + "join purchase p on exr.exchangeId = p.exchangeId where p.purchaseId = ?";
         return jdbc.queryForObject(GET_EXCHANGE_FOR_PURCHASE, new ExchangeDaoDB.ExchangeMapper(), purchaseId);
     }
 
@@ -75,46 +75,52 @@ public class PurchaseDaoDB implements PurchaseDao{
 
     private List<Item> getItemsForPurchase(int purchaseId) {
         final String GET_ITEMS_FOR_PURCHASE = "select it.* FROM item it "
-                + "join item_purchase ip on ip.purchaseId = it.purchaseId where ip.purchaseId= ?";
+                + "join item_purchase ip on ip.itemId = it.itemId where ip.purchaseId= ?";
         return jdbc.query(GET_ITEMS_FOR_PURCHASE, new ItemDaoDB.ItemMapper(), purchaseId);
     }
 
     @Override
     public List<Purchase> getPurchasesRangeDate(LocalDate from, LocalDate to) {
         final String getPurchaseRangeDate_sql= "select * from purchase where purchaseDate between ? and ?;";
-        return jdbc.query(getPurchaseRangeDate_sql, new PurchaseMapper(),from,to);
+        List<Purchase> purchases =  jdbc.query(getPurchaseRangeDate_sql, new PurchaseMapper(),from,to);
+        associateCustomerExchangeItems(purchases);
+        return purchases;
     }
 
     @Override
     public List<Purchase> getPurchasesForCustomer(int customerId) {
         final String getCustomerForPurchase_sql = "select p.* FROM purchase p "
                 + "join customer cu on cu.customerId = p.customerId where p.customerId = ?";
-        return jdbc.query(getCustomerForPurchase_sql, new PurchaseMapper(), customerId);
+        List<Purchase> purchases = jdbc.query(getCustomerForPurchase_sql, new PurchaseMapper(), customerId);
+        associateCustomerExchangeItems(purchases);
+        return purchases;
     }
 
     @Override
     public List<Purchase> getPurchasesByDate(LocalDate date) {
         final String getPurchaseByDate_sql= "select * from purchase where purchaseDate = ?";
-        return jdbc.query(getPurchaseByDate_sql, new PurchaseMapper(), date);
+        List<Purchase> purchases =  jdbc.query(getPurchaseByDate_sql, new PurchaseMapper(), date);
+        associateCustomerExchangeItems(purchases);
+        return purchases;
     }
 
     @Override
     public List<Purchase> getPurchasesByCurrency(String curr) {
-        final String getPurchasesByCurrency_sql= "select * from Purchase where baseCurrency = ?";
-        return jdbc.query(getPurchasesByCurrency_sql, new PurchaseMapper(), curr);
+        final String getPurchasesByCurrency_sql= "select * from Purchase where currency = ?";
+        List<Purchase> purchases =  jdbc.query(getPurchasesByCurrency_sql, new PurchaseMapper(), curr);
+        associateCustomerExchangeItems(purchases);
+        return purchases;
     }
 
     @Override
     @Transactional
     public Purchase addPurchase(Purchase purchase) {
-        final String addPurchase_sql = "insert into purchase (purchaseDate,quantity,baseCurrency,exchangeId,customerId)"+
-                "value (?,?,?,?,?)";
-        jdbc.update(addPurchase_sql, purchase.getPurchaseDate(),
-                                     purchase.getQuantity(),
-                                     purchase.getBaseCurrency(),
-                                     purchase.getExchange().getExchangeId(),
-                                     purchase.getCustomer().getCustomerId()
-                );
+        final String addPurchase_sql = "insert into purchase (purchaseDate, currency, exchangeId, customerId)"+
+                "value (?,?,?,?)";
+        jdbc.update(addPurchase_sql, purchase.getPurchaseDate(), purchase.getCurrency(),
+                         purchase.getExchange().getExchangeId(),
+                         purchase.getCustomer().getCustomerId());
+
         int newId=jdbc.queryForObject("select LAST_INSERT_ID()", Integer.class);
         purchase.setPurchaseId(newId);
         insertItemsForPurchase(purchase);
@@ -124,17 +130,17 @@ public class PurchaseDaoDB implements PurchaseDao{
 
     private void insertItemsForPurchase(Purchase purchase) {
         final String insertItemsForPurchase_sql = "insert into item_purchase(itemId, purchaseId) VALUES(?,?)";
-        for(Item item : purchase.getPurchasedItems()) {
-            jdbc.update(insertItemsForPurchase_sql, purchase.getPurchaseId(), item.getItemId());
+        for(Item item : purchase.getItems()) {
+            jdbc.update(insertItemsForPurchase_sql, item.getItemId(), purchase.getPurchaseId());
         }
     }
 
     @Override
     @Transactional
-    public void UpdatePurchase(Purchase purchase) {
+    public void updatePurchase(Purchase purchase) {
         final String sql = "UPDATE purchase SET purchaseID = ?, " +
                 "purchaseDate = ?, " +
-                "quantity = ?, " +
+                "currency = ?, " +
                 "exchangeId = ?, " +
                 "customerId = ? " +
                 "WHERE purchaseID = ?";
@@ -142,7 +148,7 @@ public class PurchaseDaoDB implements PurchaseDao{
         jdbc.update(sql,
                 purchase.getPurchaseId(),
                 purchase.getPurchaseDate(),
-                purchase.getQuantity(),
+                purchase.getCurrency(),
                 purchase.getExchange().getExchangeId(),
                 purchase.getCustomer().getCustomerId(),
                 purchase.getPurchaseId());
@@ -153,6 +159,15 @@ public class PurchaseDaoDB implements PurchaseDao{
         insertItemsForPurchase(purchase);
     }
 
+    @Override
+    public void deletePurchase(int id) {
+        final String DELETE_ITEM_PURCHASE = "DELETE FROM item_purchase WHERE purchaseId = ?";
+        jdbc.update(DELETE_ITEM_PURCHASE, id);
+
+        final String DELETE_PURCHASE = "DELETE FROM purchase WHERE purchaseId = ?";
+        jdbc.update(DELETE_PURCHASE, id);
+    }
+
     public final static class PurchaseMapper implements RowMapper<Purchase>
     {
         @Override
@@ -160,8 +175,7 @@ public class PurchaseDaoDB implements PurchaseDao{
             Purchase purchase = new Purchase();
             purchase.setPurchaseId(rs.getInt("purchaseId"));
             purchase.setPurchaseDate(rs.getDate("purchaseDate").toLocalDate());
-            purchase.setQuantity(rs.getInt("quantity"));
-            purchase.setBaseCurrency(rs.getString("baseCurrency"));
+            purchase.setCurrency(rs.getString("currency"));
             return purchase;
         }
     }

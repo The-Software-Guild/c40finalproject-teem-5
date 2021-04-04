@@ -7,11 +7,10 @@ import java.util.Objects;
 public class Purchase {
     private int purchaseId;
     private LocalDate purchaseDate;
-    private String baseCurrency;
-    private int quantity;
+    private String currency;
     private Exchange exchange;
     private Customer customer;
-    private List<Item> PurchasedItems;
+    private List<Item> items;
 
     public int getPurchaseId() {
         return purchaseId;
@@ -29,20 +28,12 @@ public class Purchase {
         this.purchaseDate = purchaseDate;
     }
 
-    public String getBaseCurrency() {
-        return baseCurrency;
+    public String getCurrency() {
+        return currency;
     }
 
-    public void setBaseCurrency(String baseCurrency) {
-        this.baseCurrency = baseCurrency;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     public Exchange getExchange() {
@@ -61,12 +52,12 @@ public class Purchase {
         this.customer = customer;
     }
 
-    public List<Item> getPurchasedItems() {
-        return PurchasedItems;
+    public List<Item> getItems() {
+        return items;
     }
 
-    public void setPurchasedItems(List<Item> purchasedItems) {
-        PurchasedItems = purchasedItems;
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 
     @Override
@@ -74,11 +65,11 @@ public class Purchase {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Purchase purchase = (Purchase) o;
-        return purchaseId == purchase.purchaseId && quantity == purchase.quantity && purchaseDate.equals(purchase.purchaseDate) && baseCurrency.equals(purchase.baseCurrency) && exchange.equals(purchase.exchange) && customer.equals(purchase.customer) && PurchasedItems.equals(purchase.PurchasedItems);
+        return purchaseId == purchase.purchaseId && purchaseDate.equals(purchase.purchaseDate) && currency.equals(purchase.currency) && exchange.equals(purchase.exchange) && customer.equals(purchase.customer) && items.equals(purchase.items);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(purchaseId, purchaseDate, baseCurrency, quantity, exchange, customer, PurchasedItems);
+        return Objects.hash(purchaseId, purchaseDate, currency, exchange, customer, items);
     }
 }

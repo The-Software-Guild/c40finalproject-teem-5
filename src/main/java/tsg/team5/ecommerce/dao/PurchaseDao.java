@@ -14,5 +14,6 @@ public interface PurchaseDao {
     List<Purchase> getPurchasesByDate(LocalDate date);  //return all purchases made in a specific date
     List<Purchase> getPurchasesByCurrency(String  curr);    //return all the purchases made with a specific currency
     Purchase addPurchase(Purchase purchase);    //add a new purchase
-    void UpdatePurchase(Purchase purchase);    //update a purchase
+    void updatePurchase(Purchase purchase);    //update a purchase
+    void deletePurchase(int id);
 }

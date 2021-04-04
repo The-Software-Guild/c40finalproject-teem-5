@@ -7,7 +7,8 @@ public class Item {
     private int itemId;
     private String itemName;
     private String category;
-    private Double price;
+    private double price;
+    private int quantity;
 
     public int getItemId() {
         return itemId;
@@ -29,12 +30,20 @@ public class Item {
 
     public void setCategory(String category) { this.category = category; }
 
-    public Double getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(double price) {
         this.price = price;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     @Override
@@ -42,11 +51,11 @@ public class Item {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
-        return itemId == item.itemId && itemName.equals(item.itemName) && category.equals(item.category) && price.equals(item.price);
+        return itemId == item.itemId && Double.compare(item.price, price) == 0 && quantity == item.quantity && itemName.equals(item.itemName) && category.equals(item.category);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(itemId, itemName, category, price);
+        return Objects.hash(itemId, itemName, category, price, quantity);
     }
 }

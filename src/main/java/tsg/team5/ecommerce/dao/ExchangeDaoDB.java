@@ -35,14 +35,14 @@ public class ExchangeDaoDB implements ExchangeDao{
     @Override
     public Exchange addExchange(Exchange exchange){
         final String ADD_EXCHANGE = "INSERT INTO exchangeRate " +
-                "(USD, CAD, EUR, GBP, JPY) VALUES " +
+                "(CAD, EUR, GBP, JPY, CNY) VALUES " +
                 "(?, ?, ?, ?, ?)";
         jdbc.update(ADD_EXCHANGE,
-                exchange.getUsd(),
                 exchange.getCad(),
                 exchange.getEur(),
                 exchange.getGbp(),
-                exchange.getJpy());
+                exchange.getJpy(),
+                exchange.getCny());
 
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID();", Integer.class);
         exchange.setExchangeId(newId);
@@ -54,18 +54,18 @@ public class ExchangeDaoDB implements ExchangeDao{
     public void updateExchange(Exchange exchange) {
         final String UPDATE_EXCHANGE =
                 "UPDATE exchangeRate SET " +
-                "usd = ?, " +
                 "cad = ?, " +
                 "eur = ?, " +
                 "gbp = ?, " +
-                "jpy = ? " +
+                "jpy = ?, " +
+                "cny = ? " +
                 "WHERE exchangeId = ?";
         jdbc.update(UPDATE_EXCHANGE,
-                exchange.getUsd(),
                 exchange.getCad(),
                 exchange.getEur(),
                 exchange.getGbp(),
                 exchange.getJpy(),
+                exchange.getCny(),
                 exchange.getExchangeId());
     }
 
@@ -80,11 +80,11 @@ public class ExchangeDaoDB implements ExchangeDao{
         public Exchange mapRow(ResultSet rs, int index) throws SQLException {
             Exchange exchange = new Exchange();
             exchange.setExchangeId(rs.getInt("exchangeId"));
-            exchange.setUsd(rs.getBigDecimal("usd"));
             exchange.setCad(rs.getBigDecimal("cad"));
             exchange.setEur(rs.getBigDecimal("eur"));
             exchange.setGbp(rs.getBigDecimal("gbp"));
             exchange.setJpy(rs.getBigDecimal("jpy"));
+            exchange.setCny(rs.getBigDecimal("cny"));
             return exchange;
         }
     }

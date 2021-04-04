@@ -5,11 +5,11 @@ import java.util.Objects;
 
 public class Exchange {
     private int exchangeId;
-    private BigDecimal usd;
     private BigDecimal cad;
     private BigDecimal eur;
     private BigDecimal gbp;
     private BigDecimal jpy;
+    private BigDecimal cny;
 
     public int getExchangeId() {
         return exchangeId;
@@ -18,11 +18,11 @@ public class Exchange {
         this.exchangeId = exchangeId;
     }
 
-    public BigDecimal getUsd() {
-        return usd;
+    public BigDecimal getCny() {
+        return cny;
     }
-    public void setUsd(BigDecimal usd) {
-        this.usd = usd;
+    public void setCny(BigDecimal cny) {
+        this.cny = cny;
     }
 
     public BigDecimal getCad() {
@@ -58,11 +58,11 @@ public class Exchange {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Exchange exchange = (Exchange) o;
-        return exchangeId == exchange.exchangeId && usd.equals(exchange.usd) && cad.equals(exchange.cad) && eur.equals(exchange.eur) && gbp.equals(exchange.gbp) && jpy.equals(exchange.jpy);
+        return exchangeId == exchange.exchangeId && cny.equals(exchange.cny) && cad.equals(exchange.cad) && eur.equals(exchange.eur) && gbp.equals(exchange.gbp) && jpy.equals(exchange.jpy);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(exchangeId, usd, cad, eur, gbp, jpy);
+        return Objects.hash(exchangeId, cny, cad, eur, gbp, jpy);
     }
 }
