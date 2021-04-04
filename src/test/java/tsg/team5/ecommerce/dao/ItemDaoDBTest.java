@@ -38,7 +38,7 @@ class ItemDaoDBTest {
         Item item2 = new Item();
         item2.setItemId(2);
         item2.setItemName("example2");
-        item.setCategory("category2");
+        item2.setCategory("category2");
         item2.setPrice(2.50);
         item2 = itemDao.addItem(item2);
 
@@ -59,7 +59,7 @@ class ItemDaoDBTest {
         Item item2 = new Item();
         item2.setItemId(2);
         item2.setItemName("example2");
-        item.setCategory("category2");
+        item2.setCategory("category2");
         item2.setPrice(2.50);
         item2 = itemDao.addItem(item2);
 
