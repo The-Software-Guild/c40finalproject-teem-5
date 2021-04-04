@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
+//PurchaseDoaDB
 @Repository
 public class PurchaseDaoDB implements PurchaseDao{
 
