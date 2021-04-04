@@ -5,11 +5,11 @@ import java.util.Objects;
 
 public class Exchange {
     private int exchangeId;
-    private BigDecimal USD;
-    private BigDecimal CAD;
-    private BigDecimal EUR;
-    private BigDecimal GBP;
-    private BigDecimal JPY;
+    private BigDecimal usd;
+    private BigDecimal cad;
+    private BigDecimal eur;
+    private BigDecimal gbp;
+    private BigDecimal jpy;
 
     public int getExchangeId() {
         return exchangeId;
@@ -18,39 +18,39 @@ public class Exchange {
         this.exchangeId = exchangeId;
     }
 
-    public BigDecimal getUSD() {
-        return USD;
+    public BigDecimal getUsd() {
+        return usd;
     }
-    public void setUSD(BigDecimal USD) {
-        this.USD = USD;
-    }
-
-    public BigDecimal getCAD() {
-        return CAD;
-    }
-    public void setCAD(BigDecimal CAD) {
-        this.CAD = CAD;
+    public void setUsd(BigDecimal usd) {
+        this.usd = usd;
     }
 
-    public BigDecimal getEUR() {
-        return EUR;
+    public BigDecimal getCad() {
+        return cad;
     }
-    public void setEUR(BigDecimal EUR) {
-        this.EUR = EUR;
-    }
-
-    public BigDecimal getGBP() {
-        return GBP;
-    }
-    public void setGBP(BigDecimal GBP) {
-        this.GBP = GBP;
+    public void setCad(BigDecimal cad) {
+        this.cad = cad;
     }
 
-    public BigDecimal getJPY() {
-        return JPY;
+    public BigDecimal getEur() {
+        return eur;
     }
-    public void setJPY(BigDecimal JPY) {
-        this.JPY = JPY;
+    public void setEur(BigDecimal eur) {
+        this.eur = eur;
+    }
+
+    public BigDecimal getGbp() {
+        return gbp;
+    }
+    public void setGbp(BigDecimal gbp) {
+        this.gbp = gbp;
+    }
+
+    public BigDecimal getJpy() {
+        return jpy;
+    }
+    public void setJpy(BigDecimal jpy) {
+        this.jpy = jpy;
     }
 
     @Override
@@ -58,11 +58,11 @@ public class Exchange {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Exchange exchange = (Exchange) o;
-        return exchangeId == exchange.exchangeId && USD.equals(exchange.USD) && CAD.equals(exchange.CAD) && EUR.equals(exchange.EUR) && GBP.equals(exchange.GBP) && JPY.equals(exchange.JPY);
+        return exchangeId == exchange.exchangeId && usd.equals(exchange.usd) && cad.equals(exchange.cad) && eur.equals(exchange.eur) && gbp.equals(exchange.gbp) && jpy.equals(exchange.jpy);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(exchangeId, USD, CAD, EUR, GBP, JPY);
+        return Objects.hash(exchangeId, usd, cad, eur, gbp, jpy);
     }
 }

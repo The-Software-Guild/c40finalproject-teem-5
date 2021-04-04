@@ -39,11 +39,11 @@ public class PurchaseDaoDB implements PurchaseDao{
     public List<Purchase> getAllPurchases() {
         final String getAllPurchases_sql="select * from Purchase;";
         List<Purchase> purchases =jdbc.query(getAllPurchases_sql, new PurchaseMapper());
-        associateCustomerExchangeitems(purchases);
+        associateCustomerExchangeItems(purchases);
         return purchases;
     }
 
-    private void associateCustomerExchangeitems(List<Purchase> purchases) {
+    private void associateCustomerExchangeItems(List<Purchase> purchases) {
         for (Purchase prc: purchases) {
             prc.setCustomer(getCustomerForPurchase(prc.getPurchaseId()));
             prc.setExchange(getExchangeForPurchase(prc.getPurchaseId()));
@@ -54,8 +54,7 @@ public class PurchaseDaoDB implements PurchaseDao{
     private Exchange getExchangeForPurchase(int purchaseId) {
         final String getExchangeForPurchase_sql = "select exr.* FROM ExchangeRate exr "
                 + "join purchase p on exr.exchangeId = p.exchangeId where p.exchangeId = ?";
-       return jdbc.queryForObject(getExchangeForPurchase_sql, new ExchangeDaoDB.ExchangeMapper(), purchaseId);
-
+        return jdbc.queryForObject(getExchangeForPurchase_sql, new ExchangeDaoDB.ExchangeMapper(), purchaseId);
     }
 
     private Customer getCustomerForPurchase(int purchaseId) {
@@ -70,7 +69,6 @@ public class PurchaseDaoDB implements PurchaseDao{
                 + " on it.itemId=ip.itemId where ip.purchaseId= ?";
         return jdbc.query(getItemsForPurchase_sql, new ItemDaoDB.ItemMapper(), purchaseId);
     }
-
 
     @Override
     public List<Purchase> getPurchaseRangeDate(LocalDate from, LocalDate to) {
@@ -155,5 +153,4 @@ public class PurchaseDaoDB implements PurchaseDao{
             return purchase;
         }
     }
-
 }
