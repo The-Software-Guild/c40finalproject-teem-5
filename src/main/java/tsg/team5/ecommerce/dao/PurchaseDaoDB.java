@@ -6,10 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import tsg.team5.ecommerce.entity.Customer;
-import tsg.team5.ecommerce.entity.Exchange;
-import tsg.team5.ecommerce.entity.Item;
-import tsg.team5.ecommerce.entity.Purchase;
+import tsg.team5.ecommerce.entity.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -62,7 +59,18 @@ public class PurchaseDaoDB implements PurchaseDao{
     private Customer getCustomerForPurchase(int purchaseId) {
         final String GET_CUSTOMER_FOR_PURCHASE = "select cu.* FROM customer cu "
                 + "join purchase p on cu.customerId = p.customerId where p.purchaseId = ?";
-        return jdbc.queryForObject(GET_CUSTOMER_FOR_PURCHASE, new CustomerDaoDB.CustomerMapper(), purchaseId);
+        Customer customer =  jdbc.queryForObject(GET_CUSTOMER_FOR_PURCHASE, new CustomerDaoDB.CustomerMapper(), purchaseId);
+
+        // methods copied from CustomerDaoDB class
+        customer.setAddress(getAddressForCustomer(customer.getCustomerId()));
+
+        return customer;
+    }
+
+    // Gets the address object for the customer instead of having the address id
+    private Address getAddressForCustomer(int id) {
+        final String SELECT_ADDRESS_FOR_CUSTOMER = "SELECT a.* FROM address a JOIN customer c ON c.addressId = a.addressId WHERE c.customerId = ?";
+        return jdbc.queryForObject(SELECT_ADDRESS_FOR_CUSTOMER, new AddressDaoDB.AddressMapper(), id);
     }
 
     private List<Item> getItemsForPurchase(int purchaseId) {
