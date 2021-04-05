@@ -30,11 +30,11 @@ class App extends Component {
             }
         ],
         exchangeRate: {
-            USD: 1.1234,
             CAD: 1.1234,
             EUR: 1.1234,
             GBP: 1.1234,
             JPY: 1.1234,
+            CNY: 1.1234
         },
         currentCurrency:"USD"
     }
