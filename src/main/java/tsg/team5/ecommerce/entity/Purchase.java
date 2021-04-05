@@ -1,29 +1,23 @@
 package tsg.team5.ecommerce.entity;
 
 import java.time.LocalDate;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
 public class Purchase {
     private int purchaseId;
     private LocalDate purchaseDate;
-    private int quantity;
+    private String currency;
     private Exchange exchange;
     private Customer customer;
-    private List<Item> PurchasedItems;
+    private List<Item> items;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Purchase purchase = (Purchase) o;
-        return purchaseId == purchase.purchaseId && quantity == purchase.quantity && purchaseDate.equals(purchase.purchaseDate) && exchange.equals(purchase.exchange) && customer.equals(purchase.customer) && PurchasedItems.equals(purchase.PurchasedItems);
+    public int getPurchaseId() {
+        return purchaseId;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(purchaseId, purchaseDate, quantity, exchange, customer, PurchasedItems);
+    public void setPurchaseId(int purchaseId) {
+        this.purchaseId = purchaseId;
     }
 
     public LocalDate getPurchaseDate() {
@@ -34,12 +28,12 @@ public class Purchase {
         this.purchaseDate = purchaseDate;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public String getCurrency() {
+        return currency;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     public Exchange getExchange() {
@@ -58,19 +52,24 @@ public class Purchase {
         this.customer = customer;
     }
 
-    public List<Item> getPurchasedItems() {
-        return PurchasedItems;
+    public List<Item> getItems() {
+        return items;
     }
 
-    public void setPurchasedItems(List<Item> purchasedItems) {
-        PurchasedItems = purchasedItems;
+    public void setItems(List<Item> items) {
+        this.items = items;
     }
 
-    public int getPurchaseId() {
-        return purchaseId;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Purchase purchase = (Purchase) o;
+        return purchaseId == purchase.purchaseId && purchaseDate.equals(purchase.purchaseDate) && currency.equals(purchase.currency) && exchange.equals(purchase.exchange) && customer.equals(purchase.customer) && items.equals(purchase.items);
     }
 
-    public void setPurchaseId(int purchaseId) {
-        this.purchaseId = purchaseId;
+    @Override
+    public int hashCode() {
+        return Objects.hash(purchaseId, purchaseDate, currency, exchange, customer, items);
     }
 }
