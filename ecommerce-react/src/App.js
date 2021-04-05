@@ -24,16 +24,18 @@ class App extends Component {
             {
                 title: "test product",
                 price: 1.99,
-                exchangeRate: {
-                    USD: 1.1234,
-                    CAD: 1.1234,
-                    EUR: 1.1234,
-                    GBP: 1.1234,
-                    JPY: 1.1234,
-                },
-                quantity: 0
+                quantity: 0,
+                customerId:0,
+                addressId:0
             }
         ],
+        exchangeRate: {
+            USD: 1.1234,
+            CAD: 1.1234,
+            EUR: 1.1234,
+            GBP: 1.1234,
+            JPY: 1.1234,
+        },
         currentCurrency:"USD"
     }
 
