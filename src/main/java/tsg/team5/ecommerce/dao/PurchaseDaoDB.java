@@ -106,7 +106,7 @@ public class PurchaseDaoDB implements PurchaseDao{
 
     @Override
     public List<Purchase> getPurchasesByCurrency(String curr) {
-        final String getPurchasesByCurrency_sql= "select * from Purchase where currency = ?";
+        final String getPurchasesByCurrency_sql= "select * from purchase where currency = ?";
         List<Purchase> purchases =  jdbc.query(getPurchasesByCurrency_sql, new PurchaseMapper(), curr);
         associateCustomerExchangeItems(purchases);
         return purchases;

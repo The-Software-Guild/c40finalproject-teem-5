@@ -1,4 +1,5 @@
-import React from "react"
+import React from 'react'
+import { Card } from 'react-bootstrap'
 
 const ItemCard = ({ item, index, handleSelect }) => {
     return (
@@ -25,7 +26,7 @@ const ItemCard = ({ item, index, handleSelect }) => {
 function StorePage() {
     return (
         <div id="home_page" className="App-page App-header">
-            stoire sotoer
+            Store is open for Business!!!
         </div>
     )
 }
