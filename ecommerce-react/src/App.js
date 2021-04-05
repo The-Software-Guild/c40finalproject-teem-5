@@ -8,6 +8,9 @@ import DataPage from './pages/data_page'
 import axios from 'axios';
 import UserServiceFetch from './services/UserServiceFetch'
 
+const STORE_URL = "https://fakestoreapi.com"
+const EXCHANGE_RATE_URL = "http://data.fixer.io/api"
+
 class App extends Component {
     state = {
         userId: null,
@@ -52,14 +55,29 @@ class App extends Component {
 
     }
 
+    componentDidMount() {
+        console.log("App is now mounted.")
+        this.loadItemData();
+    }
+
+    loadItemData() {
+        this.setState({ loading: true })
+        console.log("Loading item data")
+        fetch(STORE_URL + "/products")
+            .then(data => data.json())
+            .then(data => this.setState(
+                { itemData: data, loading: false }
+            ))
+    }
+
     render() {
         return (
             <div className="App">
                 <NavBar />
                 <main>
                     <Switch>
-                        <Route exact path='/' component={StorePage} />
-                        <Route path='/store' component={StorePage} />
+                        <Route path='/store' render={props =>
+                            (<StorePage items={this.state.itemData} />)}/>
                         <Route path='/checkout' render={props =>
                         (<CheckoutPage items={this.state.cartData} currency={this.state.currentCurrency} handleCurrencySelect={this.handleCurrencySelect} handleTestAxios={this.handleTestAxios}/>)}/>
 
