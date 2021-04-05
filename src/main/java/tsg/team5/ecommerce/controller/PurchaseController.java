@@ -15,10 +15,12 @@ public class PurchaseController {
     @Autowired
     PurchaseDao purchaseDao;
 
+    @ResponseBody
     @PostMapping("makePurchase")
-    public Purchase makePurchase(@RequestBody Purchase purchase){
+    public Purchase makePurchase(@RequestBody String purchase){
 
-        System.out.println(purchase.getPurchaseId());
+
+        System.out.println(purchase);
         System.out.println("axios contact");
 
         return null;
