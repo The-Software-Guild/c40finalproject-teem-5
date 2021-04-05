@@ -22,6 +22,7 @@ public class ItemController {
 
         List<Item> items = itemDao.getAllItems();
         model.addAttribute("items", items);
+        //this adds item so that it can be accessed from the html/jsx
         return "items";
 
     }
@@ -51,6 +52,27 @@ public class ItemController {
         return "redirect:/items";
     }
 
-    
+    @GetMapping("editItem")
+    public String editItem(HttpServletRequest request, Model model){
+
+        int id = Integer.parseInt(request.getParameter("itemid"));
+        Item item = itemDao.getItemById(id);
+
+        model.addAttribute("Item", item);
+
+        return "editItem";
+    }
+
+    @PostMapping("editItem")
+    public String performEditItem(HttpServletRequest request){
+
+        int id = Integer.parseInt(request.getParameter("itemid"));
+        Item item = itemDao.getItemById(id);
+        item.setItemId(Integer.parseInt(request.getParameter("itemid")));
+        item.setItemName(request.getParameter("itemName"));
+        item.setPrice(Double.parseDouble(request.getParameter("price")));
+
+        return "redirect:/items";
+    }
 
 }

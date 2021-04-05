@@ -43,7 +43,7 @@ public class CustomerDaoDB implements CustomerDao{
     @Override
     public Customer getCustomerById(int id) {
         try{
-            final String SELECT_CUSTOMER_BY_ID = "SELECT * FROM power WHERE id = ?";
+            final String SELECT_CUSTOMER_BY_ID = "SELECT * FROM customer WHERE customerId = ?";
             Customer customer = jdbc.queryForObject(SELECT_CUSTOMER_BY_ID, new CustomerMapper(), id);
             customer.setAddress(getAddressForCustomer(id));
             return customer;
@@ -56,8 +56,9 @@ public class CustomerDaoDB implements CustomerDao{
     @Override
     @Transactional
     public Customer addCustomer(Customer customer) {
-        final String INSERT_CUSTOMER = "INSERT INTO customer(name, email, phone) VALUES (?,?,?)";
-        jdbc.update(INSERT_CUSTOMER, customer.getCustomerName(), customer.getCustomerEmail(), customer.getCustomerPhone());
+        final String INSERT_CUSTOMER = "INSERT INTO customer(customerName, customerEmail, customerPhone, addressId) VALUES (?,?,?,?)";
+        jdbc.update(INSERT_CUSTOMER, customer.getCustomerName(), customer.getCustomerEmail(),
+                customer.getCustomerPhone(), customer.getAddress().getAddressId());
 
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         customer.setCustomerId(newId);
@@ -67,9 +68,10 @@ public class CustomerDaoDB implements CustomerDao{
 
     @Override
     public void updateCustomer(Customer customer) {
-        final String UPDATE_SUPER = "UPDATE customer SET customerName = ?, customerEmail = ?, customerPhone = ? WHERE customerId = ?";
+        final String UPDATE_SUPER = "UPDATE customer SET customerName = ?, customerEmail = ?," +
+                " customerPhone = ?, addressId = ? WHERE customerId = ?";
         jdbc.update(UPDATE_SUPER, customer.getCustomerName(), customer.getCustomerEmail(), customer.getCustomerPhone(),
-                customer.getCustomerId());
+                customer.getAddress().getAddressId(), customer.getCustomerId());
     }
 
     @Override

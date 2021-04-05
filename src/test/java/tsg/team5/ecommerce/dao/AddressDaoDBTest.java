@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import tsg.team5.ecommerce.entity.Address;
+import tsg.team5.ecommerce.entity.*;
 
 import java.util.List;
 
@@ -14,13 +14,45 @@ import static org.junit.jupiter.api.Assertions.*;
 class AddressDaoDBTest {
 
     @Autowired
+    PurchaseDao purchaseDao;
+
+    @Autowired
+    CustomerDao customerDao;
+
+    @Autowired
     AddressDao addressDao;
 
+    @Autowired
+    ItemDao itemDao;
+
+    @Autowired
+    ExchangeDao exchangeDao;
+
     @BeforeEach
-    void setUp(){
+    void setUp() {
+        List<Purchase> purchases = purchaseDao.getAllPurchases();
+        for(Purchase purchase : purchases){
+            purchaseDao.deletePurchase(purchase.getPurchaseId());
+        }
+
+        List<Customer> customers = customerDao.getAllCustomers();
+        for(Customer customer : customers){
+            customerDao.deleteCustomer(customer.getCustomerId());
+        }
+
         List<Address> addresses = addressDao.getAllAddresses();
-        for(Address address: addresses){
+        for(Address address : addresses){
             addressDao.deleteAddressById(address.getAddressId());
+        }
+
+        List<Item> items = itemDao.getAllItems();
+        for(Item item : items){
+            itemDao.deleteItem(item.getItemId());
+        }
+
+        List<Exchange> exchanges = exchangeDao.getAllExchanges();
+        for(Exchange exchange : exchanges){
+            exchangeDao.deleteExchangeById(exchange.getExchangeId());
         }
     }
 
@@ -100,5 +132,4 @@ class AddressDaoDBTest {
         fromDao = addressDao.getAddressById(address.getAddressId());
         assertNull(fromDao);
     }
-
 }

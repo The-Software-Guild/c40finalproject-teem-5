@@ -1,18 +1,18 @@
 DROP DATABASE IF EXISTS ECommerceDB;
 CREATE DATABASE ECommerceDB;
 
-USE ECommerceDB ;
+USE ECommerceDB;
 
 -- -----------------------------------------------------
 -- Table `ExchangeRate`
 -- -----------------------------------------------------
 CREATE TABLE exchangeRate (
   exchangeId INT PRIMARY KEY AUTO_INCREMENT,
-  usd DECIMAL(6,4) NOT NULL,
   cad DECIMAL(6,4) NOT NULL,
   eur DECIMAL(6,4) NOT NULL,
   gbp DECIMAL(6,4) NOT NULL,
-  jpy DECIMAL(8,4) NOT NULL
+  jpy DECIMAL(8,4) NOT NULL,
+  cny DECIMAL(6,4) NOT NULL
 );
 
 -- -----------------------------------------------------
@@ -45,8 +45,7 @@ CREATE TABLE customer (
 CREATE TABLE purchase (
   purchaseId INT PRIMARY KEY AUTO_INCREMENT,
   purchaseDate DATE DEFAULT(CURRENT_DATE()),
-  quantity INT NOT NULL,
-  baseCurrency CHAR(3) NOT NULL,
+  currency CHAR(3) DEFAULT 'USD',
   exchangeId INT NOT NULL,
   customerId INT NOT NULL,
 	FOREIGN KEY (exchangeId) REFERENCES ExchangeRate (exchangeId),
@@ -59,7 +58,9 @@ CREATE TABLE purchase (
 CREATE TABLE item (
   itemId INT PRIMARY KEY,
   itemName VARCHAR(50) NOT NULL,
-  price DECIMAL(6,2) NOT NULL
+  category VARCHAR(30) NOT NULL,
+  price DECIMAL(6,2) NOT NULL,
+  quantity INT DEFAULT 1
 );
 
 -- -----------------------------------------------------

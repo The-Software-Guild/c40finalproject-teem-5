@@ -5,10 +5,10 @@ import java.util.Objects;
 public class Item {
 
     private int itemId;
-
     private String itemName;
-
-    private Double price;
+    private String category;
+    private double price;
+    private int quantity;
 
     public int getItemId() {
         return itemId;
@@ -26,29 +26,36 @@ public class Item {
         this.itemName = itemName;
     }
 
-    public Double getPrice() {
+    public String getCategory() { return category; }
+
+    public void setCategory(String category) { this.category = category; }
+
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
 
-
-    @Override
-    public boolean equals(Object o){
-        Item item1 = (Item)o;
-        if(item1.itemId == this.itemId && item1.itemName.equals(this.itemName) && item1.price == this.price){
-            return true;
-        }
-        return false;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     @Override
-    public int hashCode(){
-        return Objects.hash(itemId, itemName, price);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Item item = (Item) o;
+        return itemId == item.itemId && Double.compare(item.price, price) == 0 && quantity == item.quantity && itemName.equals(item.itemName) && category.equals(item.category);
     }
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(itemId, itemName, category, price, quantity);
+    }
 }

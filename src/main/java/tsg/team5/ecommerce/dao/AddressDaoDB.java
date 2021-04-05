@@ -20,7 +20,7 @@ public class AddressDaoDB implements AddressDao{
     @Override
     public Address getAddressById(int addressId) {
         try {
-            final String GET_ADDRESS_BY_ID = "SELECT * FROM Address WHERE addressId = ?;";
+            final String GET_ADDRESS_BY_ID = "SELECT * FROM Address WHERE addressId = ?";
             return jdbc.queryForObject(GET_ADDRESS_BY_ID, new AddressMapper(), addressId);
         } catch (DataAccessException ex){
             return null;
@@ -29,7 +29,7 @@ public class AddressDaoDB implements AddressDao{
 
     @Override
     public List<Address> getAllAddresses() {
-        final String GET_ALL_ADDRESSES = "SELECT * FROM Address;";
+        final String GET_ALL_ADDRESSES = "SELECT * FROM Address";
         return jdbc.query(GET_ALL_ADDRESSES, new AddressMapper());
     }
 
@@ -37,7 +37,7 @@ public class AddressDaoDB implements AddressDao{
     public Address addAddress(Address address){
         final String ADD_ADDRESS = "INSERT INTO Address " +
                 "(street, country, postal, city, state) VALUES " +
-                "(?, ?, ?, ?, ?);";
+                "(?, ?, ?, ?, ?)";
         jdbc.update(ADD_ADDRESS,
                 address.getStreet(),
                 address.getCountry(),
@@ -60,7 +60,7 @@ public class AddressDaoDB implements AddressDao{
                 "postal = ?, " +
                 "city = ?, " +
                 "state = ? " +
-                "WHERE addressId = ?;";
+                "WHERE addressId = ?";
         jdbc.update(UPDATE_ADDRESS,
                 address.getStreet(),
                 address.getCountry(),
@@ -73,7 +73,7 @@ public class AddressDaoDB implements AddressDao{
     @Override
     public void deleteAddressById(int addressId) {
         final String DELETE_ADDRESS_BY_ID =
-                "DELETE FROM Address WHERE addressId = ?;";
+                "DELETE FROM Address WHERE addressId = ?";
         jdbc.update(DELETE_ADDRESS_BY_ID, addressId);
     }
 
