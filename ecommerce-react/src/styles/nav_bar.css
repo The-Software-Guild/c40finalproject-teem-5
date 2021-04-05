@@ -1,0 +1,30 @@
+.nav_list ul {
+    width: 100%;
+    min-height: 5vh;
+    float: left;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background-color: #f2f2f2;
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    font-size: calc(5px + 2vmin);
+}
+
+.nav_list li {
+    float: left;
+}
+
+.nav_list li a {
+    display: block;
+    padding: 8px 15px;
+    text-decoration: none;
+    font-weight: bold;
+    color: #069;
+    border-right: 1px solid #ccc;
+}
+
+.nav_list li a:hover {
+    color: #c00;
+    background-color: #fff;
+}

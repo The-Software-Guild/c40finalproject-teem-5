@@ -36,6 +36,7 @@ build/
 
 # dependencies
 /ecommerce-react/node_modules
+/ecommerce-react/.vs
 /ecommerce-react/.pnp
 /.pnp.js
 
