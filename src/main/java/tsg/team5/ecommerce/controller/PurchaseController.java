@@ -26,11 +26,12 @@ public class PurchaseController {
 
         //Use this section to parse all relevant data from the JSON received
         JSONObject info = new JSONObject(purchase);
-        int purchaseId = info.getInt("purchaseID");
+        int purchaseId = info.getInt("purchaseID"); //not necessary
         String purchaseCurrency = info.getString("currency");
+        LocalDate date = LocalDate.now();
+
         System.out.println(purchaseCurrency);
 
-        LocalDate date = LocalDate.now();
 
         //use this section to populate the purchase object with data
         Purchase purchase1 = new Purchase();
