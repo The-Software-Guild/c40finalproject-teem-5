@@ -1,19 +1,21 @@
 import React, { Component } from "react"
-import { Row, Container, Card, CardColumns } from 'react-bootstrap';
+import '../styles/store_page.css'
+import { Row, Container, Card, CardColumns, Button } from 'react-bootstrap'
 
 const ItemCard = ({ item, index }) => {
     return (
-        <Card bg="primary" text="white" style={{ minHeight: "200px", minWidth: "500px" , position: "relative"}}>
+        <Card style={{ maxWidth: "200px", borderStyle: "outset", padding:"5px"}}>
             <Card.Body>
                 <Card.Img src={item.image} style={{ height: "100px" }} />
-                <Card.Title>{item.title}</Card.Title>
-                <Card.Text>
-                    {item.price}
+                <Card.Title style={{ fontSize: "10px" }}>{item.title}</Card.Title>
+                <Card.Text style={{ fontSize: "10px" }}>
+                    {item.price.toFixed(2)}
                     <br />
                     {item.description}
                 </Card.Text>
-                <Card.Footer>{item.category}</Card.Footer>
-            </Card.Body>
+                <Button>Add to Cart</Button>
+                </Card.Body>
+                <Card.Footer style={{ fontSize: "10px" }}>{item.category}</Card.Footer>
         </Card>
     );
 }
@@ -34,15 +36,11 @@ class StorePage extends Component {
     render() {
         let { items } = this.props;
         return (
-            <div id="store_page" className="App-page"
-            >
-                <Container>
-                        <CardColumns>
+            <div id="store_page" className="Store-page" style={{ flexDirection: "row" }}>
+                <div> Storefront </div>
                             {items.map((item, i) => {
                                 return <ItemCard item={item} key={i} />
                             })}
-                        </CardColumns>
-                </Container>
             </div>
         )
     }
