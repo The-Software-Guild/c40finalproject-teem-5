@@ -1,0 +1,9 @@
+.Item-Display{
+border: 2px;
+max-width:30%;
+margin:5px;
+}
+
+.Cart-Display{
+max-width:66%;
+}
