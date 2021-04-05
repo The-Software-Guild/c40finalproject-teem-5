@@ -36,6 +36,7 @@ public class PurchaseDaoDB implements PurchaseDao{
 
     @Override
     public List<Purchase> getAllPurchases() {
+
         final String GET_ALL_PURCHASES="select * from purchase";
         List<Purchase> purchases =jdbc.query(GET_ALL_PURCHASES, new PurchaseMapper());
         associateCustomerExchangeItems(purchases);
@@ -77,6 +78,7 @@ public class PurchaseDaoDB implements PurchaseDao{
         final String GET_ITEMS_FOR_PURCHASE = "select it.* FROM item it "
                 + "join item_purchase ip on ip.itemId = it.itemId where ip.purchaseId= ?";
         return jdbc.query(GET_ITEMS_FOR_PURCHASE, new ItemDaoDB.ItemMapper(), purchaseId);
+
     }
 
     @Override

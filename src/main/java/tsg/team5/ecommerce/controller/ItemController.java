@@ -1,17 +1,19 @@
 package tsg.team5.ecommerce.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import tsg.team5.ecommerce.dao.ItemDao;
 import tsg.team5.ecommerce.entity.Item;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-@Controller
+@CrossOrigin(origins = "http://localhost:3000")
+@RestController
+@RequestMapping("item/")
 public class ItemController {
 
     @Autowired
@@ -22,24 +24,29 @@ public class ItemController {
 
         List<Item> items = itemDao.getAllItems();
         model.addAttribute("items", items);
+
         //this adds item so that it can be accessed from the html/jsx
-        return "items";
+        return "items"; //return results to see in postman
 
     }
-
+    /*HttpServletRequest request*/
     @PostMapping("addItem")
     public String addItem(HttpServletRequest request){
 
-        String id = request.getParameter("itemID");
-        String name = request.getParameter("itemName");
-        String price = request.getParameter("price");
+        System.out.println("axios contact");
 
-        Item item = new Item();
-        item.setItemId(Integer.parseInt(id));
-        item.setItemName(name);
-        item.setPrice(Double.parseDouble(price));
+        //String id = request.getParameter("itemID");
+        //String name = request.getParameter("itemName");
+        //String price = request.getParameter("price");
 
-        return "redirect:/items";
+        //Item item = new Item();
+        //item.setItemId(Integer.parseInt(id));
+        //item.setItemName(name);
+        //item.setPrice(Double.parseDouble(price));
+
+        //itemDao.addItem(item);
+
+        return null;
 
     }
 
