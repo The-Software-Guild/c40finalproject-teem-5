@@ -12,29 +12,41 @@ const EXCHANGE_RATE_URL = "http://data.fixer.io/api"
 class App extends Component {
     state = {
         userId: null,
-        itemData: [
-            {
-                title: "test product",
-                price: 1.99,
-                description: "lorem ipsum set",
-                image: "https://i.pravatar.cc",
-                category: "electronic"
-            }
-        ],
-        cartData: [
-            {
-                title: "test product",
-                price: 1.99,
-                exchangeRate: {
-                    USD: 1.1234,
-                    CAD: 1.1234,
-                    EUR: 1.1234,
-                    GBP: 1.1234,
-                    JPY: 1.1234,
-                },
-                quantity: 0
-            }
-        ]
+        itemData: [{
+            id: null,
+            title: "test product",
+            price: 1.99,
+            description: "lorem ipsum set",
+            image: "https://i.pravatar.cc",
+            category: "electronic"
+        }],
+        cartData: [{
+            title: "test product",
+            price: 1.99,
+            exchangeRate: {
+                USD: 1.1234,
+                CAD: 1.1234,
+                EUR: 1.1234,
+                GBP: 1.1234,
+                JPY: 1.1234,
+            },
+            quantity: 0
+        }]
+    }
+
+    componentDidMount() {
+        console.log("App is now mounted.")
+        this.loadItemData();
+    }
+
+    loadItemData() {
+        this.setState({ loading: true })
+        console.log("Loading item data")
+        fetch(STORE_URL + "/products")
+            .then(data => data.json())
+            .then(data => this.setState(
+                { itemData: data, loading: false }
+            ))
     }
 
     render() {
@@ -43,9 +55,11 @@ class App extends Component {
                 <NavBar />
                 <main>
                     <Switch>
-                        <Route exact path='/' component={StorePage} />
-                        <Route path='/store' component={StorePage} />
-                        <Route path='/checkout' component={CheckoutPage} />
+                        <Route path='/store' render={props =>
+                            (<StorePage items={this.state.itemData} />)}
+                        />
+                        <Route path='/checkout' render={props =>
+                            (<CheckoutPage items={this.state.itemData} />)} />
                         <Route path='/data' component={DataPage} />
                     </Switch>
                 </main>

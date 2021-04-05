@@ -6,7 +6,7 @@ function NavBar() {
     return (
         <div className="nav_list">
             <ul>
-                <li><NavLink to='/'>Store</NavLink></li>
+                <li><NavLink to='/store'>Store</NavLink></li>
                 <li><NavLink to='/checkout'>Checkout</NavLink></li>
                 <li><NavLink to='/data'>Data</NavLink></li>
             </ul>
