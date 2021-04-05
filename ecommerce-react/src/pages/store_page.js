@@ -3,7 +3,7 @@ import { Row, Container, Card, CardColumns } from 'react-bootstrap';
 
 const ItemCard = ({ item, index }) => {
     return (
-        <Card bg="primary" text="white" style={{ height: "200px", width: "500px" }}>
+        <Card bg="primary" text="white" style={{ minHeight: "200px", minWidth: "500px" , position: "relative"}}>
             <Card.Body>
                 <Card.Img src={item.image} style={{ height: "100px" }} />
                 <Card.Title>{item.title}</Card.Title>
@@ -34,17 +34,14 @@ class StorePage extends Component {
     render() {
         let { items } = this.props;
         return (
-            <div id="store_page" className="App-page App-header"
-                style={{ overflow: "scroll", overflowX: "hidden", height: "90vh" }}
+            <div id="store_page" className="App-page"
             >
                 <Container>
-                    <Row style={{ display: "flex", justifyContent: "space-between" }}>
                         <CardColumns>
                             {items.map((item, i) => {
                                 return <ItemCard item={item} key={i} />
                             })}
                         </CardColumns>
-                    </Row>
                 </Container>
             </div>
         )
