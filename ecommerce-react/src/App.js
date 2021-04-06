@@ -29,7 +29,7 @@ class App extends Component {
             {
                 title: "test product",
                 price: 1.99,
-                quantity: 0,
+                quantity: 5,
                 itemId:0,
                 category:'fake'
             }
@@ -118,6 +118,8 @@ class App extends Component {
                 customerId:this.state.customerId,
                 cartData:this.state.cartData
             }).then(response => response.json)
+            .then(data => console.log(data));
+
 
         {/*
         UserServiceFetch.addPurchase().then((response =>

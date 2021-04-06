@@ -1,5 +1,7 @@
 package tsg.team5.ecommerce.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -42,8 +44,7 @@ public class PurchaseController {
 
     @ResponseBody
     @PostMapping("makePurchase")
-
-    public Purchase makePurchase(@RequestBody String purchase) throws JSONException {
+    public String makePurchase(@RequestBody String purchase) throws JSONException, JsonProcessingException {
         //Use this section to parse all relevant data from the JSON received
         JSONObject info = new JSONObject(purchase);
         String purchaseCurrency = info.getString("currency");
@@ -91,10 +92,13 @@ public class PurchaseController {
         purchaseDao.addPurchase(purchase1);
         System.out.println("did it work?");
 
+        double total = MoneyManip.calculateTotalInvoice(purchase1);
+        System.out.print(total);
+
+        ObjectMapper mapper = new ObjectMapper();
 
 
-
-        return null;
+        return mapper.writeValueAsString(purchase1);
     }
 
 
