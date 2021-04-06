@@ -44,14 +44,40 @@ class App extends Component {
         this.setState({currentCurrency:selected})
     }
 
-    handleTestAxios = (event) =>{
 
 
-        let allRates = axios.get('http://data.fixer.io/api/latest?access_key=5577025857c2f2cc601f6bd524482428')
-            .then(response => response.data.rates)
+    handleTestAxios = async(event) =>{
 
+        let USDRate = await axios.get('http://data.fixer.io/api/latest?access_key=5577025857c2f2cc601f6bd524482428')
+            .then(response =>
+            response.data.rates.USD);
 
-        console.log(allRates);
+        let CADRate = await axios.get('http://data.fixer.io/api/latest?access_key=5577025857c2f2cc601f6bd524482428')
+            .then(response =>
+            response.data.rates.CAD);
+
+        let EURRate = await axios.get('http://data.fixer.io/api/latest?access_key=5577025857c2f2cc601f6bd524482428')
+            .then(response =>
+            response.data.rates.EUR);
+
+        let GBPRate = await axios.get('http://data.fixer.io/api/latest?access_key=5577025857c2f2cc601f6bd524482428')
+            .then(response =>
+            response.data.rates.GBP);
+
+        let JPYRate = await axios.get('http://data.fixer.io/api/latest?access_key=5577025857c2f2cc601f6bd524482428')
+            .then(response =>
+            response.data.rates.JPY);
+
+        var rates = {
+            USD:USDRate,
+            CAD:CADRate,
+            EUR:EURRate,
+            GBP:GBPRate,
+            JPY:JPYRate
+        }
+        console.log(rates);
+
+        this.setState({exchangeRate:rates});
 
         console.log(this.state.exchangeRate);
 
@@ -59,9 +85,11 @@ class App extends Component {
             console.log(response)
         ));
         
-        UserServiceFetch.getCurrentExchange()
+
 
     }
+
+
 
     render() {
         return (
