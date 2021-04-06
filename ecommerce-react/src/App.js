@@ -81,9 +81,18 @@ class App extends Component {
 
         console.log(this.state.exchangeRate);
 
+            axios.post('http://localhost:8080/cart/makePurchase',
+            {
+                        purchaseDate:null,
+                        currency:this.state.currentCurrency,
+                        exchange:this.state.exchangeRate,
+                        cartData:this.state.cartData
+            }).then(response => response.json)
+
+        {/*
         UserServiceFetch.addPurchase().then((response =>
             console.log(response)
-        ));
+        )); */}
         
 
 
