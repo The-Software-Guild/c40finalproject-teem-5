@@ -1,17 +1,23 @@
 package tsg.team5.ecommerce.controller;
 
-
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import tsg.team5.ecommerce.dao.PurchaseDao;
+import tsg.team5.ecommerce.entity.Purchase;
+
 import tsg.team5.ecommerce.dao.*;
 import tsg.team5.ecommerce.entity.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
 import java.util.ArrayList;
+
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -37,6 +43,7 @@ public class PurchaseController {
 
     @ResponseBody
     @PostMapping("makePurchase")
+
     public Purchase makePurchase(@RequestBody String purchase) throws JSONException {
 
         //Use this section to parse all relevant data from the JSON received
@@ -90,6 +97,10 @@ public class PurchaseController {
         exchange1 = exchangeDao.addExchange(exchange1);
 
 
+        System.out.println(purchase);
+        System.out.println("axios contact");
+
+
         //use this section to populate the purchase object with data
         //get the exchangeID from the above exchange
         Purchase purchase1 = new Purchase();
@@ -100,12 +111,39 @@ public class PurchaseController {
         purchase1.setItems(itemList);
 
         purchaseDao.addPurchase(purchase1);
+
         System.out.println("sent to database");
 
-        //Print json passed in for debugging
-        System.out.println(purchase);
 
         return null;
     }
 
+
+
+
+   /* @ResponseBody
+    @GetMapping
+    public List<Purchase> getCustomerData(int id){
+        return purchaseDao.getPurchasesForCustomer(id);
+    }
+
+
+    @ResponseBody
+    @GetMapping
+    public List<Purchase> getCurrencyData(String currency){
+        return purchaseDao.getPurchasesByCurrency(currency);
+    }
+
+    @ResponseBody
+    @GetMapping
+    public List<Purchase> getSpecificDateData(LocalDate date){
+        return purchaseDao.getPurchasesByDate(date);
+
+    }
+
+    @ResponseBody
+    @GetMapping
+    public List<Purchase> getRangedDateData(LocalDate from, LocalDate to){
+        return purchaseDao.getPurchasesRangeDate(from, to);
+    }*/
 }

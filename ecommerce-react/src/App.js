@@ -5,8 +5,13 @@ import NavBar from "./components/nav_bar"
 import CheckoutPage from "./pages/checkout_page";
 import StorePage from './pages/store_page'
 import DataPage from './pages/data_page'
+import LoginPage from './pages/login_page'
 import axios from 'axios';
 import UserServiceFetch from './services/UserServiceFetch'
+import { Col } from "react-bootstrap";
+
+const STORE_URL = "https://fakestoreapi.com"
+const EXCHANGE_RATE_URL = "http://data.fixer.io/api"
 
 class App extends Component {
     state = {
@@ -24,26 +29,42 @@ class App extends Component {
             {
                 title: "test product",
                 price: 1.99,
-                quantity: 0
+                quantity: 0,
+
             }
         ],
         exchangeRate: {
-            USD: 1.1234,
             CAD: 1.1234,
             EUR: 1.1234,
             GBP: 1.1234,
             JPY: 1.1234,
             CNY: 1.1234
         },
-        currentCurrency:"USD",
-        customerId:0,
-        addressId:0
+        currentCurrency: "USD",
+        customerId: 0,
+        addressId: 0
     }
 
-    handleCurrencySelect = (event) =>{
+    handleCurrencySelect = (event) => {
         let selected = event.target.value;
-        this.setState({currentCurrency:selected})
+        this.setState({ currentCurrency: selected })
+
     }
+
+    handleCustomerSelect = (event) => {
+        let selected = event.target.value;
+        this.setState({ customerId: selected })
+        console.log(selected)
+    }
+
+
+    handleAddressSelect = (event) => {
+        let selected = event.target.value;
+        this.setState({ addressId: selected })
+        console.log(selected)
+    }
+
+
 
 
 
@@ -107,6 +128,21 @@ class App extends Component {
     }
 
 
+    componentDidMount() {
+        console.log("App is now mounted.")
+        this.loadItemData();
+    }
+
+    loadItemData() {
+        this.setState({ loading: true })
+        console.log("Loading item data")
+        fetch(STORE_URL + "/products")
+            .then(data => data.json())
+            .then(data => this.setState(
+                { itemData: data, loading: false }
+            ))
+    }
+
 
     render() {
         return (
@@ -114,12 +150,19 @@ class App extends Component {
                 <NavBar />
                 <main>
                     <Switch>
-                        <Route exact path='/' component={StorePage} />
-                        <Route path='/store' component={StorePage} />
+                        <Route exact path='/' render={props =>
+                        (<LoginPage customer={this.state.customerId} address={this.state.addressId}
+                            selectCustomer={this.handleCustomerSelect} selectAddress={this.handleAddressSelect} />)}
+                        />
+                        <Route path='/store' render={props =>
+                            (<StorePage items={this.state.itemData} />)}
+                        />
                         <Route path='/checkout' render={props =>
-                        (<CheckoutPage items={this.state.cartData} currency={this.state.currentCurrency} handleCurrencySelect={this.handleCurrencySelect} handleTestAxios={this.handleTestAxios}/>)}/>
+                        (<CheckoutPage items={this.state.cartData} currency={this.state.currentCurrency}
+                            handleCurrencySelect={this.handleCurrencySelect} handleTestAxios={this.handleTestAxios} />)}
+                        />
 
-                        <Route path='/data' component={DataPage}/>
+                        <Route path='/data' component={DataPage} />
                     </Switch>
                 </main>
             </div>
