@@ -30,6 +30,7 @@ class App extends Component {
                 title: "test product",
                 price: 1.99,
                 quantity: 0,
+
             }
         ],
         exchangeRate: {
@@ -47,6 +48,7 @@ class App extends Component {
     handleCurrencySelect = (event) => {
         let selected = event.target.value;
         this.setState({ currentCurrency: selected })
+
     }
 
     handleCustomerSelect = (event) => {
@@ -55,19 +57,76 @@ class App extends Component {
         console.log(selected)
     }
 
+
     handleAddressSelect = (event) => {
         let selected = event.target.value;
         this.setState({ addressId: selected })
         console.log(selected)
     }
 
-    handleTestAxios = (event) => {
 
+
+
+
+    handleTestAxios = async(event) =>{
+
+        let USDRate = await axios.get('http://data.fixer.io/api/latest?access_key=5577025857c2f2cc601f6bd524482428')
+            .then(response =>
+            response.data.rates.USD);
+
+        let CADRate = await axios.get('http://data.fixer.io/api/latest?access_key=5577025857c2f2cc601f6bd524482428')
+            .then(response =>
+            response.data.rates.CAD);
+
+        let EURRate = await axios.get('http://data.fixer.io/api/latest?access_key=5577025857c2f2cc601f6bd524482428')
+            .then(response =>
+            response.data.rates.EUR);
+
+        let GBPRate = await axios.get('http://data.fixer.io/api/latest?access_key=5577025857c2f2cc601f6bd524482428')
+            .then(response =>
+            response.data.rates.GBP);
+
+        let JPYRate = await axios.get('http://data.fixer.io/api/latest?access_key=5577025857c2f2cc601f6bd524482428')
+            .then(response =>
+            response.data.rates.JPY);
+
+        let CNYRate = await axios.get('http://data.fixer.io/api/latest?access_key=5577025857c2f2cc601f6bd524482428')
+            .then(response =>
+            response.data.rates.CNY);
+
+        var rates = {
+            USD:USDRate,
+            CAD:CADRate,
+            EUR:EURRate,
+            GBP:GBPRate,
+            JPY:JPYRate,
+            CNY:CNYRate
+        }
+        console.log(rates);
+
+        this.setState({exchangeRate:rates});
+
+        console.log(this.state.exchangeRate);
+
+            axios.post('http://localhost:8080/cart/makePurchase',
+            {
+                purchaseDate:null,
+                currency:this.state.currentCurrency,
+                exchange:this.state.exchangeRate,
+                addressId:this.state.addressId,
+                customerId:this.state.customerId,
+                cartData:this.state.cartData
+            }).then(response => response.json)
+
+        {/*
         UserServiceFetch.addPurchase().then((response =>
             console.log(response)
-        ));
+        )); */}
+        
+
 
     }
+
 
     componentDidMount() {
         console.log("App is now mounted.")
@@ -83,6 +142,7 @@ class App extends Component {
                 { itemData: data, loading: false }
             ))
     }
+
 
     render() {
         return (
