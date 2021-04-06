@@ -93,11 +93,10 @@ public class PurchaseController {
         System.out.println("did it work?");
 
         double total = MoneyManip.calculateTotalInvoice(purchase1);
-        System.out.print(total);
+        System.out.println(total);
 
         ObjectMapper mapper = new ObjectMapper();
-
-
+        System.out.println(mapper.writeValueAsString(purchase1));
         return mapper.writeValueAsString(purchase1);
     }
 

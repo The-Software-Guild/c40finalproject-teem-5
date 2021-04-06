@@ -117,8 +117,7 @@ class App extends Component {
                 addressId:this.state.addressId,
                 customerId:this.state.customerId,
                 cartData:this.state.cartData
-            }).then(response => response.json)
-            .then(data => console.log(data));
+            }).then(response => console.log(response));
 
 
         {/*
