@@ -30,7 +30,8 @@ class App extends Component {
                 title: "test product",
                 price: 1.99,
                 quantity: 0,
-
+                itemId:0,
+                category:'fake'
             }
         ],
         exchangeRate: {
@@ -41,7 +42,7 @@ class App extends Component {
             CNY: 1.1234
         },
         currentCurrency: "USD",
-        customerId: 0,
+        customerId: 1,
         addressId: 0
     }
 
