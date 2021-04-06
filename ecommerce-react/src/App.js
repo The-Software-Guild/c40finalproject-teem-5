@@ -24,9 +24,7 @@ class App extends Component {
             {
                 title: "test product",
                 price: 1.99,
-                quantity: 0,
-                customerId:0,
-                addressId:0
+                quantity: 0
             }
         ],
         exchangeRate: {
@@ -35,8 +33,11 @@ class App extends Component {
             EUR: 1.1234,
             GBP: 1.1234,
             JPY: 1.1234,
+            CNY: 1.1234
         },
-        currentCurrency:"USD"
+        currentCurrency:"USD",
+        customerId:0,
+        addressId:0
     }
 
     handleCurrencySelect = (event) =>{
@@ -68,12 +69,17 @@ class App extends Component {
             .then(response =>
             response.data.rates.JPY);
 
+        let CNYRate = await axios.get('http://data.fixer.io/api/latest?access_key=5577025857c2f2cc601f6bd524482428')
+            .then(response =>
+            response.data.rates.CNY);
+
         var rates = {
             USD:USDRate,
             CAD:CADRate,
             EUR:EURRate,
             GBP:GBPRate,
-            JPY:JPYRate
+            JPY:JPYRate,
+            CNY:CNYRate
         }
         console.log(rates);
 
@@ -83,10 +89,12 @@ class App extends Component {
 
             axios.post('http://localhost:8080/cart/makePurchase',
             {
-                        purchaseDate:null,
-                        currency:this.state.currentCurrency,
-                        exchange:this.state.exchangeRate,
-                        cartData:this.state.cartData
+                purchaseDate:null,
+                currency:this.state.currentCurrency,
+                exchange:this.state.exchangeRate,
+                addressId:this.state.addressId,
+                customerId:this.state.customerId,
+                cartData:this.state.cartData
             }).then(response => response.json)
 
         {/*
