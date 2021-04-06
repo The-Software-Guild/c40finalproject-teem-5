@@ -46,13 +46,13 @@ class App extends Component {
 
     handleTestAxios = (event) =>{
 
-        let allData = axios.get('http://data.fixer.io/api/latest?access_key=5577025857c2f2cc601f6bd524482428')
-                    .then(response => response.data.rates);
+
+        let allRates = axios.get('http://data.fixer.io/api/latest?access_key=5577025857c2f2cc601f6bd524482428')
+            .then(response => response.data.rates)
 
 
-        console.log(allData);
-        console.log(this.state.exchangeRate);
-        this.setState({exchangeRate:allData});
+        console.log(allRates);
+
         console.log(this.state.exchangeRate);
 
         UserServiceFetch.addPurchase().then((response =>
