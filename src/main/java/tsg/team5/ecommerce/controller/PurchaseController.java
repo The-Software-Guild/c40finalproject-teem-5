@@ -100,14 +100,10 @@ public class PurchaseController {
         purchase1.setItems(itemList);
 
         purchaseDao.addPurchase(purchase1);
-        System.out.println("did it work?");
-
-
-
+        System.out.println("sent to database");
 
         //Print json passed in for debugging
         System.out.println(purchase);
-
 
         return null;
     }
