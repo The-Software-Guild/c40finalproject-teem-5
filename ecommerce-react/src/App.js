@@ -7,6 +7,7 @@ import StorePage from './pages/store_page'
 import DataPage from './pages/data_page'
 import axios from 'axios';
 import UserServiceFetch from './services/UserServiceFetch'
+import { Col } from "react-bootstrap";
 
 const STORE_URL = "https://fakestoreapi.com"
 const EXCHANGE_RATE_URL = "http://data.fixer.io/api"
@@ -28,8 +29,8 @@ class App extends Component {
                 title: "test product",
                 price: 1.99,
                 quantity: 0,
-                customerId:0,
-                addressId:0
+                customerId: 0,
+                addressId: 0
             }
         ],
         exchangeRate: {
@@ -39,15 +40,15 @@ class App extends Component {
             JPY: 1.1234,
             CNY: 1.1234
         },
-        currentCurrency:"USD"
+        currentCurrency: "USD"
     }
 
-    handleCurrencySelect = (event) =>{
+    handleCurrencySelect = (event) => {
         let selected = event.target.value;
-        this.setState({currentCurrency:selected})
+        this.setState({ currentCurrency: selected })
     }
 
-    handleTestAxios = (event) =>{
+    handleTestAxios = (event) => {
 
         UserServiceFetch.addPurchase().then((response =>
             console.log(response)
@@ -77,11 +78,14 @@ class App extends Component {
                 <main>
                     <Switch>
                         <Route path='/store' render={props =>
-                            (<StorePage items={this.state.itemData} />)}/>
+                            (<StorePage items={this.state.itemData} />)}
+                        />
                         <Route path='/checkout' render={props =>
-                        (<CheckoutPage items={this.state.cartData} currency={this.state.currentCurrency} handleCurrencySelect={this.handleCurrencySelect} handleTestAxios={this.handleTestAxios}/>)}/>
+                        (<CheckoutPage items={this.state.cartData} currency={this.state.currentCurrency}
+                            handleCurrencySelect={this.handleCurrencySelect} handleTestAxios={this.handleTestAxios} />)}
+                        />
 
-                        <Route path='/data' component={DataPage}/>
+                        <Route path='/data' component={DataPage} />
                     </Switch>
                 </main>
             </div>

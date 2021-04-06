@@ -1,4 +1,19 @@
 .Store-page{
     background-color: aliceblue;
-    font-size: 20px;
+    justify-items:flex-start;
+}
+
+.item-list {
+    grid-area: main;
+}
+
+.item-side {
+    grid-area: sidebar;
+}
+
+.Store-grid {
+    display: grid;
+    grid-template-columns: 80% 20%;
+    grid-template-rows: auto;
+    grid-template-areas: "main sidebar";
 }
