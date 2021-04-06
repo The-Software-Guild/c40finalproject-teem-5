@@ -43,7 +43,8 @@ class App extends Component {
         },
         currentCurrency: "USD",
         customerId: 1,
-        addressId: 0
+        addressId: 0,
+        totalCost:"0.00"
     }
 
     handleCurrencySelect = (event) => {
@@ -71,41 +72,13 @@ class App extends Component {
 
     handleTestAxios = async(event) =>{
 
-        let USDRate = await axios.get('http://data.fixer.io/api/latest?access_key=5577025857c2f2cc601f6bd524482428')
-            .then(response =>
-            response.data.rates.USD);
+        let USDRates = await axios.get('https://api.ratesapi.io/api/latest?base=USD&symbols=CAD,EUR,GBP,JPY,CNY')
+                    .then(response => response.data.rates)
 
-        let CADRate = await axios.get('http://data.fixer.io/api/latest?access_key=5577025857c2f2cc601f6bd524482428')
-            .then(response =>
-            response.data.rates.CAD);
 
-        let EURRate = await axios.get('http://data.fixer.io/api/latest?access_key=5577025857c2f2cc601f6bd524482428')
-            .then(response =>
-            response.data.rates.EUR);
+        console.log(USDRates);
 
-        let GBPRate = await axios.get('http://data.fixer.io/api/latest?access_key=5577025857c2f2cc601f6bd524482428')
-            .then(response =>
-            response.data.rates.GBP);
-
-        let JPYRate = await axios.get('http://data.fixer.io/api/latest?access_key=5577025857c2f2cc601f6bd524482428')
-            .then(response =>
-            response.data.rates.JPY);
-
-        let CNYRate = await axios.get('http://data.fixer.io/api/latest?access_key=5577025857c2f2cc601f6bd524482428')
-            .then(response =>
-            response.data.rates.CNY);
-
-        var rates = {
-            USD:USDRate,
-            CAD:CADRate,
-            EUR:EURRate,
-            GBP:GBPRate,
-            JPY:JPYRate,
-            CNY:CNYRate
-        }
-        console.log(rates);
-
-        this.setState({exchangeRate:rates});
+        this.setState({exchangeRate:USDRates});
 
         console.log(this.state.exchangeRate);
 
@@ -161,7 +134,8 @@ class App extends Component {
                         />
                         <Route path='/checkout' render={props =>
                         (<CheckoutPage items={this.state.cartData} currency={this.state.currentCurrency}
-                            handleCurrencySelect={this.handleCurrencySelect} handleTestAxios={this.handleTestAxios} />)}
+                            handleCurrencySelect={this.handleCurrencySelect} handleTestAxios={this.handleTestAxios}
+                            totalCost={this.state.totalCost}/>)}
                         />
 
                         <Route path='/data' component={DataPage} />
