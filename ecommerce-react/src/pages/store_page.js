@@ -70,7 +70,7 @@ class StorePage extends Component {
     render() {
         let { items, handleAdd, cart } = this.props
         return (
-            <Container className="Store-page" style={{ height: "100vh" }}>
+            <Container className="Store-page">
                 <Row style={{ fontSize: "35px", marginBottom: "5px" }}>Storefront</Row>
                 <div className="Store-grid">
                     {/* component holding all items */}

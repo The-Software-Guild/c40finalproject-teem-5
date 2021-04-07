@@ -1,15 +1,9 @@
-.Store-page{
+.Store-page {
     background-color: aliceblue;
-    justify-items:flex-start;
+    justify-items: flex-start;
+    height: 100vh;
 }
 
-.item-list {
-    grid-area: main;
-}
-
-.item-side {
-    grid-area: sidebar;
-}
 
 .item-display {
     display: flex; 
@@ -48,12 +42,18 @@
     overflow-x: hidden;
 }
 
-
-
 .Store-grid {
     display: grid;
     grid-template-columns: 80% 20%;
     grid-template-rows: auto;
     grid-template-areas: "main sidebar";
     margin-left: 10px;
+}
+
+.item-list {
+    grid-area: main;
+}
+
+.item-side {
+    grid-area: sidebar;
 }
