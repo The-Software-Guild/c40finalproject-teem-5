@@ -44,8 +44,8 @@ class CheckoutPage extends React.Component {
             </Row>
             <hr/>
             <Row style={{display:"flex"}}>
-                <Col className="Cart-Display" style={{width: '70%'}}>
-                    <div id="checkout_page" className="App-page" >
+                <Col style={{width: '70%'}}>
+                    <div id="checkout_page" className="item-display" >
                         {items.map((item, i) => {
                             return <ListedItem item={item} key={i}/>
                         })}

@@ -32,20 +32,6 @@ class App extends Component {
                 quantity: 5,
                 itemId:0,
                 category:'fake'
-            },
-            {
-                title: "test product",
-                price: 1.99,
-                quantity: 5,
-                itemId:1,
-                category:'fake'
-            },
-            {
-                title: "test product",
-                price: 1.99,
-                quantity: 5,
-                itemId:2,
-                category:'fake'
             }
         ],
         exchangeRate: {
