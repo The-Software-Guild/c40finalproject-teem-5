@@ -9,7 +9,7 @@ const ListedItem = ({item, key }) =>{
 
     return(
 
-        <Card style={{width: '18rem', backgroundColor:"lightblue", margin:"5px"}} >
+        <Card style={{width: '150px', backgroundColor:"lightblue", margin:"5px", display:"grid"}} >
             <Card.Body>
                 <Card.Title>{item.title}</Card.Title>
                 <div>
@@ -43,12 +43,12 @@ class CheckoutPage extends React.Component {
             </Row>
             <hr/>
             <Row style={{display:"flex", justifyContent:"space-between"}}>
-                <Col sm={8} className="Cart-Display">
-                    <span id="checkout_page" className="App-page">
+                <Col md={8} className="Cart-Display" style={{gridTemplateColumns: "repeat(3, 200px)"}}>
+                    <div id="checkout_page" className="App-page" >
                         {items.map((item, i) => {
-                            return <ListedItem item={item} key={i} />
+                            return <ListedItem item={item} key={i}/>
                         })}
-                    </span>
+                    </div>
                 </Col>
                 <Col sm={4}>
                     <h2>Total Cost</h2>
