@@ -7,3 +7,8 @@ margin:5px;
 .Cart-Display{
 max-width:66%;
 }
+
+.gridLayout{
+grid-template-columns: 33% 33%, 34%;
+grid-template-rows: 25%;
+}

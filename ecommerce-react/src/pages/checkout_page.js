@@ -36,7 +36,7 @@ class CheckoutPage extends React.Component {
   render(){
       let{items, currency, handleCurrencySelect, handleTestAxios, totalCost} = this.props
       return (
-        <Container>
+        <Container className="gridLayout">
             <Row>
                 <Col>
                     <h1 className="text-center">Checkout</h1>
@@ -47,6 +47,7 @@ class CheckoutPage extends React.Component {
                 <Col className="Cart-Display" style={{width: '70%'}}>
                     <div id="checkout_page" className="App-page" >
                         {items.map((item, i) => {
+                            alert("test");
                             return <ListedItem item={item} key={i}/>
                         })}
                     </div>
