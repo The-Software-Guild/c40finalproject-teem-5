@@ -86,6 +86,7 @@ class App extends Component {
     componentDidMount() {
         console.log("App is now mounted.")
         this.loadItemData();
+        this.state.cartData.pop();
     }
 
     loadItemData() {

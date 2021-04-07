@@ -11,6 +11,45 @@
     grid-area: sidebar;
 }
 
+.item-display {
+    display: flex; 
+    flex-direction: row; 
+    flex-wrap: wrap; 
+    border: groove; 
+    overflow: scroll; 
+    overflow-x: hidden; 
+    max-height: 85vh
+}
+
+.title-box {
+    font-size: 20px; 
+    text-align: center; 
+    overflow-x:hidden; 
+    height: 150px; 
+    width: 260px; 
+    resize: none; 
+    text-align: center
+}
+
+.store-card {
+    background-color: white;
+    min-height: 350px;
+    max-width: 350px; 
+    border-style: outset; 
+    padding: 5px;
+    margin: 5px;
+}
+
+.card-text {
+    border: groove; 
+    height: 90px; 
+    font-size: 14px; 
+    overflow: scroll; 
+    overflow-x: hidden;
+}
+
+
+
 .Store-grid {
     display: grid;
     grid-template-columns: 80% 20%;

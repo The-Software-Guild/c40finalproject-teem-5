@@ -5,10 +5,7 @@ import { Row, Container, Card, Button, Col } from 'react-bootstrap'
 const ItemCard = ({ item , handleSelect }) => {
     return (
         <Col className="col-3" >
-            <Card id={item.id} style={{
-                backgroundColor: "white", minHeight: "350px", maxWidth: "350px",
-                borderStyle: "outset", padding: "5px", margin: "5px"
-            }}>
+            <Card id={item.id} className="store-card">
                 <Card.Body>
                     <Card.Title style={{ fontSize: "16px", height: "80px" }}>
                         {item.title}
@@ -16,7 +13,7 @@ const ItemCard = ({ item , handleSelect }) => {
                         {item.price.toFixed(2)}
                     </Card.Title>
                     <Card.Img src={item.image} style={{ height: "100px" }} />
-                    <Card.Text style={{ border: "groove", height: "90px", fontSize: "14px", overflow: "scroll", overflowX: "hidden" }}>
+                    <Card.Text className="card-text">
                         {item.description}
                     </Card.Text>
                 </Card.Body>
@@ -75,13 +72,9 @@ class StorePage extends Component {
         return (
             <Container className="Store-page" style={{ height: "100vh" }}>
                 <Row style={{ fontSize: "35px", marginBottom: "5px" }}>Storefront</Row>
-
                 <div className="Store-grid">
                     {/* component holding all items */}
-                    <Container className="main" style={{
-                        display: "flex", flexDirection: "row", flexWrap: "wrap",
-                        border: "groove", overflow: "scroll", overflowX: "hidden", maxHeight: "85vh"
-                    }}>
+                    <Container className="main item-display">
                         {items.map((item, i) => {
                             return <ItemCard item={item} key={i} handleSelect={this.selectHandler} />
                         })}
@@ -104,11 +97,7 @@ class StorePage extends Component {
                         {/* item title display when selected */}
                         <Row><img src={this.state.image} style={{height:"150px", margin:"10px"}}></img></Row>
                         <Row>
-                            <textarea type="text" value={this.state.title}
-                                style={{
-                                    fontSize: "20px", textAlign: "center", overflowX:"hidden",
-                                    height: "150px", width: "260px", resize: "none", textAlign: "center"
-                                }} readOnly />
+                            <textarea type="text" className="title-box" value={this.state.title} readOnly />
                         </Row>
                         {/* quantity of items to add to cart */}
                         <Row>
