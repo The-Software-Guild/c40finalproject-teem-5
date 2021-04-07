@@ -8,7 +8,6 @@ USE ECommerceDB;
 -- -----------------------------------------------------
 CREATE TABLE exchangeRate (
   exchangeId INT PRIMARY KEY AUTO_INCREMENT,
-  usd DECIMAL(6,4) NOT NULL,
   cad DECIMAL(6,4) NOT NULL,
   eur DECIMAL(6,4) NOT NULL,
   gbp DECIMAL(6,4) NOT NULL,
@@ -60,8 +59,7 @@ CREATE TABLE item (
   itemId INT PRIMARY KEY,
   itemName VARCHAR(50) NOT NULL,
   category VARCHAR(30) NOT NULL,
-  price DECIMAL(6,2) NOT NULL,
-  quantity INT DEFAULT 1
+  price DECIMAL(6,2) NOT NULL
 );
 
 -- -----------------------------------------------------
@@ -70,7 +68,21 @@ CREATE TABLE item (
 CREATE TABLE item_purchase (
   itemId INT NOT NULL,
   purchaseId INT NOT NULL,
+  quantity INT DEFAULT 1,
   PRIMARY KEY (itemId, purchaseId),
     FOREIGN KEY (itemId) REFERENCES item (itemId),
     FOREIGN KEY (purchaseId) REFERENCES purchase (purchaseId)
 );
+
+-- -----------------------------------------------------
+-- Address and Customer Data Insertion
+-- -----------------------------------------------------
+INSERT INTO address(street, city, state, postal, country) VALUES
+('123 Maple Street', 'Toronto', 'ON', 'T2R9B1', 'Canada'),
+('4332 Washington Boulevard', 'Grand Rapids', 'MI', '29832', 'USA'),
+('884 Avenue Bonaparte','Lyon','RA','69009','France');
+
+INSERT INTO customer(customerName, customerEmail, customerPhone, addressId) VALUES
+('Michael Morrow', 'bigmike69@abc.com', '9059634512', 1),
+('Roselyn Smith', 'rosyrose420@abc.com', '3364589586', 2),
+('Roger Dupont','rogerdupont@xyz.com','9548756328',3);

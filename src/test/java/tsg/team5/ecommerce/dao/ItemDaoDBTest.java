@@ -64,7 +64,6 @@ class ItemDaoDBTest {
         item.setItemName("example1");
         item.setCategory("category1");
         item.setPrice(2.10);
-        item.setQuantity(5);
         item = itemDao.addItem(item);
 
         Item item2 = new Item();
@@ -72,7 +71,6 @@ class ItemDaoDBTest {
         item2.setItemName("example2");
         item2.setCategory("category2");
         item2.setPrice(2.50);
-        item2.setQuantity(10);
         item2 = itemDao.addItem(item2);
 
         List<Item> allItems = itemDao.getAllItems();
@@ -87,20 +85,18 @@ class ItemDaoDBTest {
         item.setItemName("example1");
         item.setCategory("category1");
         item.setPrice(2.10);
-        item.setQuantity(5);
         item = itemDao.addItem(item);
 
         Item item2 = new Item();
-        item2.setItemId(2);
+        item2.setItemId(1);
         item2.setItemName("example2");
         item2.setCategory("category2");
         item2.setPrice(2.50);
-        item2.setQuantity(10);
         item2 = itemDao.addItem(item2);
 
         Item itemHolder = itemDao.getItemById(item2.getItemId());
-
-        assertEquals(itemHolder, item2);
+        assertNotEquals(itemHolder, item2);
+        assertEquals("example1", itemHolder.getItemName());
     }
 
     @Test
@@ -111,7 +107,6 @@ class ItemDaoDBTest {
         item.setItemName("example1");
         item.setCategory("category1");
         item.setPrice(2.10);
-        item.setQuantity(5);
         item = itemDao.addItem(item);
 
         item.setItemName("new example 1");
@@ -128,7 +123,6 @@ class ItemDaoDBTest {
         item.setItemName("example1");
         item.setCategory("category1");
         item.setPrice(2.10);
-        item.setQuantity(5);
         item = itemDao.addItem(item);
 
         Item holder = itemDao.getItemById(item.getItemId());

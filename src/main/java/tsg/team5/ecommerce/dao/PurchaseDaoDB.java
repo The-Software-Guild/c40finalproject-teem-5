@@ -11,6 +11,7 @@ import tsg.team5.ecommerce.entity.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -18,21 +19,6 @@ public class PurchaseDaoDB implements PurchaseDao{
 
     @Autowired
     JdbcTemplate jdbc;
-
-    @Override
-    public Purchase getPurchaseById(int purchaseId) {
-        try{
-            final String GET_PURCHASE_BY_ID= "select * from purchase where purchaseId = ?";
-            Purchase purchase = jdbc.queryForObject(GET_PURCHASE_BY_ID, new PurchaseMapper(), purchaseId);
-            purchase.setCustomer(getCustomerForPurchase(purchaseId));
-            purchase.setExchange(getExchangeForPurchase(purchaseId));
-            purchase.setItems(getItemsForPurchase(purchaseId));
-            return purchase;
-
-        } catch (DataAccessException ex){
-            return null;
-        }
-    }
 
     @Override
     public List<Purchase> getAllPurchases() {
@@ -48,6 +34,23 @@ public class PurchaseDaoDB implements PurchaseDao{
             prc.setCustomer(getCustomerForPurchase(prc.getPurchaseId()));
             prc.setExchange(getExchangeForPurchase(prc.getPurchaseId()));
             prc.setItems(getItemsForPurchase(prc.getPurchaseId()));
+            prc.setQuantities(getQuantitiesForPurchase(prc.getPurchaseId()));
+        }
+    }
+
+    @Override
+    public Purchase getPurchaseById(int purchaseId) {
+        try{
+            final String GET_PURCHASE_BY_ID= "select * from purchase where purchaseId = ?";
+            Purchase purchase = jdbc.queryForObject(GET_PURCHASE_BY_ID, new PurchaseMapper(), purchaseId);
+            purchase.setCustomer(getCustomerForPurchase(purchaseId));
+            purchase.setExchange(getExchangeForPurchase(purchaseId));
+            purchase.setItems(getItemsForPurchase(purchaseId));
+            purchase.setQuantities(getQuantitiesForPurchase(purchaseId));
+            return purchase;
+
+        } catch (DataAccessException ex){
+            return null;
         }
     }
 
@@ -74,11 +77,15 @@ public class PurchaseDaoDB implements PurchaseDao{
         return jdbc.queryForObject(SELECT_ADDRESS_FOR_CUSTOMER, new AddressDaoDB.AddressMapper(), id);
     }
 
+    private List<Integer> getQuantitiesForPurchase(int purchaseId) {
+        final String SELECT_QTY_FOR_PURCHASE = "SELECT quantity FROM item_purchase WHERE purchaseId = ?";
+        return jdbc.query(SELECT_QTY_FOR_PURCHASE, new QuantityMapper(), purchaseId);
+    }
+
     private List<Item> getItemsForPurchase(int purchaseId) {
         final String GET_ITEMS_FOR_PURCHASE = "select it.* FROM item it "
                 + "join item_purchase ip on ip.itemId = it.itemId where ip.purchaseId= ?";
         return jdbc.query(GET_ITEMS_FOR_PURCHASE, new ItemDaoDB.ItemMapper(), purchaseId);
-
     }
 
     @Override
@@ -131,9 +138,11 @@ public class PurchaseDaoDB implements PurchaseDao{
     }
 
     private void insertItemsForPurchase(Purchase purchase) {
-        final String insertItemsForPurchase_sql = "insert into item_purchase(itemId, purchaseId) VALUES(?,?)";
+        final String insertItemsForPurchase_sql = "insert into item_purchase(itemId, purchaseId, quantity) VALUES(?,?,?)";
+        int index = 0;
         for(Item item : purchase.getItems()) {
-            jdbc.update(insertItemsForPurchase_sql, item.getItemId(), purchase.getPurchaseId());
+            jdbc.update(insertItemsForPurchase_sql, item.getItemId(), purchase.getPurchaseId(), purchase.getQuantities().get(index));
+            index++;
         }
     }
 
@@ -179,6 +188,15 @@ public class PurchaseDaoDB implements PurchaseDao{
             purchase.setPurchaseDate(rs.getDate("purchaseDate").toLocalDate());
             purchase.setCurrency(rs.getString("currency"));
             return purchase;
+        }
+    }
+
+    public final static class QuantityMapper implements RowMapper<Integer>
+    {
+        @Override
+        public Integer mapRow (ResultSet rs, int index) throws SQLException{
+            return rs.getInt(("quantity"));
+
         }
     }
 }

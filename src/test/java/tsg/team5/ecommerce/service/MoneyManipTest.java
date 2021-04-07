@@ -35,14 +35,12 @@ class MoneyManipTest {
         item.setItemName("example1");
         item.setCategory("category1");
         item.setPrice(2.10);
-        item.setQuantity(5);
 
         Item item2 = new Item();
         item2.setItemId(2);
         item2.setItemName("example2");
         item2.setCategory("category2");
         item2.setPrice(2.50);
-        item2.setQuantity(10);
 
         List<Item> items = new ArrayList<>();
         items.add(item);
@@ -68,12 +66,17 @@ class MoneyManipTest {
         customer.setCustomerPhone("3879894356");
         customer.setAddress(address);
 
+        List<Integer> quantities = new ArrayList<>();
+        quantities.add(5);
+        quantities.add(10);
+
         Purchase purchase = new Purchase();
         purchase.setPurchaseDate(LocalDate.now());
         purchase.setCurrency("CAD");
         purchase.setExchange(exchange);
         purchase.setCustomer(customer);
         purchase.setItems(items);
+        purchase.setQuantities(quantities);
 
         double value = MoneyManip.calculateTotalInvoice(purchase);
         assertEquals(71, value);
@@ -86,14 +89,12 @@ class MoneyManipTest {
         item.setItemName("example1");
         item.setCategory("category1");
         item.setPrice(2.10);
-        item.setQuantity(5);
 
         Item item2 = new Item();
         item2.setItemId(2);
         item2.setItemName("example2");
         item2.setCategory("category2");
         item2.setPrice(2.50);
-        item2.setQuantity(10);
 
         List<Item> items = new ArrayList<>();
         items.add(item);
@@ -119,12 +120,17 @@ class MoneyManipTest {
         customer.setCustomerPhone("3879894356");
         customer.setAddress(address);
 
+        List<Integer> quantities = new ArrayList<>();
+        quantities.add(5);
+        quantities.add(10);
+
         Purchase purchase = new Purchase();
         purchase.setPurchaseDate(LocalDate.now());
         purchase.setCurrency("EUR");
         purchase.setExchange(exchange);
         purchase.setCustomer(customer);
         purchase.setItems(items);
+        purchase.setQuantities(quantities);
 
         double value = MoneyManip.calculateTotalInvoice(purchase);
         assertEquals(106.5, value);
@@ -137,14 +143,12 @@ class MoneyManipTest {
         item.setItemName("example1");
         item.setCategory("category1");
         item.setPrice(2.10);
-        item.setQuantity(5);
 
         Item item2 = new Item();
         item2.setItemId(2);
         item2.setItemName("example2");
         item2.setCategory("category2");
         item2.setPrice(2.50);
-        item2.setQuantity(10);
 
         List<Item> items = new ArrayList<>();
         items.add(item);
@@ -170,12 +174,17 @@ class MoneyManipTest {
         customer.setCustomerPhone("3879894356");
         customer.setAddress(address);
 
+        List<Integer> quantities = new ArrayList<>();
+        quantities.add(5);
+        quantities.add(10);
+
         Purchase purchase = new Purchase();
         purchase.setPurchaseDate(LocalDate.now());
         purchase.setCurrency("GBP");
         purchase.setExchange(exchange);
         purchase.setCustomer(customer);
         purchase.setItems(items);
+        purchase.setQuantities(quantities);
 
         double value = MoneyManip.calculateTotalInvoice(purchase);
         assertEquals(142, value);
@@ -188,14 +197,12 @@ class MoneyManipTest {
         item.setItemName("example1");
         item.setCategory("category1");
         item.setPrice(2.10);
-        item.setQuantity(5);
 
         Item item2 = new Item();
         item2.setItemId(2);
         item2.setItemName("example2");
         item2.setCategory("category2");
         item2.setPrice(2.50);
-        item2.setQuantity(10);
 
         List<Item> items = new ArrayList<>();
         items.add(item);
@@ -221,12 +228,17 @@ class MoneyManipTest {
         customer.setCustomerPhone("3879894356");
         customer.setAddress(address);
 
+        List<Integer> quantities = new ArrayList<>();
+        quantities.add(5);
+        quantities.add(10);
+
         Purchase purchase = new Purchase();
         purchase.setPurchaseDate(LocalDate.now());
         purchase.setCurrency("JPY");
         purchase.setExchange(exchange);
         purchase.setCustomer(customer);
         purchase.setItems(items);
+        purchase.setQuantities(quantities);
 
         double value = MoneyManip.calculateTotalInvoice(purchase);
         assertEquals(177.5, value);
@@ -239,14 +251,12 @@ class MoneyManipTest {
         item.setItemName("example1");
         item.setCategory("category1");
         item.setPrice(2.10);
-        item.setQuantity(5);
 
         Item item2 = new Item();
         item2.setItemId(2);
         item2.setItemName("example2");
         item2.setCategory("category2");
         item2.setPrice(2.50);
-        item2.setQuantity(10);
 
         List<Item> items = new ArrayList<>();
         items.add(item);
@@ -272,12 +282,17 @@ class MoneyManipTest {
         customer.setCustomerPhone("3879894356");
         customer.setAddress(address);
 
+        List<Integer> quantities = new ArrayList<>();
+        quantities.add(5);
+        quantities.add(10);
+
         Purchase purchase = new Purchase();
         purchase.setPurchaseDate(LocalDate.now());
         purchase.setCurrency("CNY");
         purchase.setExchange(exchange);
         purchase.setCustomer(customer);
         purchase.setItems(items);
+        purchase.setQuantities(quantities);
 
         double value = MoneyManip.calculateTotalInvoice(purchase);
         assertEquals(17.75, value);
@@ -290,14 +305,12 @@ class MoneyManipTest {
         item.setItemName("example1");
         item.setCategory("category1");
         item.setPrice(2.10);
-        item.setQuantity(5);
 
         Item item2 = new Item();
         item2.setItemId(2);
         item2.setItemName("example2");
         item2.setCategory("category2");
         item2.setPrice(2.50);
-        item2.setQuantity(10);
 
         List<Item> items = new ArrayList<>();
         items.add(item);
@@ -323,12 +336,17 @@ class MoneyManipTest {
         customer.setCustomerPhone("3879894356");
         customer.setAddress(address);
 
+        List<Integer> quantities = new ArrayList<>();
+        quantities.add(5);
+        quantities.add(10);
+
         Purchase purchase = new Purchase();
         purchase.setPurchaseDate(LocalDate.now());
         purchase.setCurrency("USD");
         purchase.setExchange(exchange);
         purchase.setCustomer(customer);
         purchase.setItems(items);
+        purchase.setQuantities(quantities);
 
         double value = MoneyManip.calculateTotalInvoice(purchase);
         assertEquals(35.5, value);

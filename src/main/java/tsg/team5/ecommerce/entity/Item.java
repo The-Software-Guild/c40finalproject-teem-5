@@ -8,7 +8,6 @@ public class Item {
     private String itemName;
     private String category;
     private double price;
-    private int quantity;
 
     public int getItemId() {
         return itemId;
@@ -38,24 +37,16 @@ public class Item {
         this.price = price;
     }
 
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Item item = (Item) o;
-        return itemId == item.itemId && Double.compare(item.price, price) == 0 && quantity == item.quantity && itemName.equals(item.itemName) && category.equals(item.category);
+        return itemId == item.itemId && Double.compare(item.price, price) == 0 && itemName.equals(item.itemName) && category.equals(item.category);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(itemId, itemName, category, price, quantity);
+        return Objects.hash(itemId, itemName, category, price);
     }
 }
