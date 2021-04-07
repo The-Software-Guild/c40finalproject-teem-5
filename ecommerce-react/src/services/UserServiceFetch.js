@@ -11,6 +11,14 @@ class UserServiceFetch{
             items:null
         }).then(response => response.json)
     }
+
+    async getCurrentExchange(event){
+        return await axios.get('http://data.fixer.io/api/latest?access_key=5577025857c2f2cc601f6bd524482428')
+            .then(response => response.data.rates);
+
+
+
+    }
 }
 
 export default new UserServiceFetch();

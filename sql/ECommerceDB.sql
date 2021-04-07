@@ -8,6 +8,7 @@ USE ECommerceDB;
 -- -----------------------------------------------------
 CREATE TABLE exchangeRate (
   exchangeId INT PRIMARY KEY AUTO_INCREMENT,
+  usd DECIMAL(6,4) NOT NULL,
   cad DECIMAL(6,4) NOT NULL,
   eur DECIMAL(6,4) NOT NULL,
   gbp DECIMAL(6,4) NOT NULL,

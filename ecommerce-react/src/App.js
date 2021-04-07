@@ -30,8 +30,7 @@ class App extends Component {
                 title: "test product",
                 price: 1.99,
                 quantity: 0,
-                itemId: 0,
-                category: "fake"
+
             }
         ],
         exchangeRate: {
@@ -43,12 +42,13 @@ class App extends Component {
         },
         currentCurrency: "USD",
         customerId: 0,
-        addressId: 0,
+        addressId: 0
     }
 
     handleCurrencySelect = (event) => {
         let selected = event.target.value;
         this.setState({ currentCurrency: selected })
+
     }
 
     handleCustomerSelect = (event) => {
@@ -57,37 +57,80 @@ class App extends Component {
         console.log(selected)
     }
 
+
     handleAddressSelect = (event) => {
         let selected = event.target.value;
         this.setState({ addressId: selected })
         console.log(selected)
     }
 
-    handleAddToCart = (itemTitle, itemPrice, itemQuantity, itemId, itemCategory) => {
-        var batch = {
-            title: itemTitle,
-            price: parseFloat(itemPrice.toFixed(2)),
-            quantity: parseInt(itemQuantity),
-            itemId: itemId,
-            category: itemCategory
+
+
+
+
+    handleTestAxios = async(event) =>{
+
+        let USDRate = await axios.get('http://data.fixer.io/api/latest?access_key=5577025857c2f2cc601f6bd524482428')
+            .then(response =>
+            response.data.rates.USD);
+
+        let CADRate = await axios.get('http://data.fixer.io/api/latest?access_key=5577025857c2f2cc601f6bd524482428')
+            .then(response =>
+            response.data.rates.CAD);
+
+        let EURRate = await axios.get('http://data.fixer.io/api/latest?access_key=5577025857c2f2cc601f6bd524482428')
+            .then(response =>
+            response.data.rates.EUR);
+
+        let GBPRate = await axios.get('http://data.fixer.io/api/latest?access_key=5577025857c2f2cc601f6bd524482428')
+            .then(response =>
+            response.data.rates.GBP);
+
+        let JPYRate = await axios.get('http://data.fixer.io/api/latest?access_key=5577025857c2f2cc601f6bd524482428')
+            .then(response =>
+            response.data.rates.JPY);
+
+        let CNYRate = await axios.get('http://data.fixer.io/api/latest?access_key=5577025857c2f2cc601f6bd524482428')
+            .then(response =>
+            response.data.rates.CNY);
+
+        var rates = {
+            USD:USDRate,
+            CAD:CADRate,
+            EUR:EURRate,
+            GBP:GBPRate,
+            JPY:JPYRate,
+            CNY:CNYRate
         }
-        this.state.cartData.push(batch);
-        alert("Added to Cart!");
-        console.log(this.state.cartData);
-    }
+        console.log(rates);
 
-    handleTestAxios = (event) => {
+        this.setState({exchangeRate:rates});
 
+        console.log(this.state.exchangeRate);
+
+            axios.post('http://localhost:8080/cart/makePurchase',
+            {
+                purchaseDate:null,
+                currency:this.state.currentCurrency,
+                exchange:this.state.exchangeRate,
+                addressId:this.state.addressId,
+                customerId:this.state.customerId,
+                cartData:this.state.cartData
+            }).then(response => response.json)
+
+        {/*
         UserServiceFetch.addPurchase().then((response =>
             console.log(response)
-        ));
+        )); */}
+        
+
 
     }
+
 
     componentDidMount() {
         console.log("App is now mounted.")
         this.loadItemData();
-        this.state.cartData.pop();
     }
 
     loadItemData() {
@@ -100,6 +143,7 @@ class App extends Component {
             ))
     }
 
+
     render() {
         return (
             <div className="App">
@@ -111,8 +155,7 @@ class App extends Component {
                             selectCustomer={this.handleCustomerSelect} selectAddress={this.handleAddressSelect} />)}
                         />
                         <Route path='/store' render={props =>
-                        (<StorePage items={this.state.itemData} handleSelect={this.selectHandler}
-                            handleAdd={this.handleAddToCart} cart={this.state.cartData}/>)}
+                            (<StorePage items={this.state.itemData} />)}
                         />
                         <Route path='/checkout' render={props =>
                         (<CheckoutPage items={this.state.cartData} currency={this.state.currentCurrency}
