@@ -95,9 +95,15 @@ public class PurchaseController {
         double total = MoneyManip.calculateTotalInvoice(purchase1);
         System.out.println(total);
 
+        ReactService passInfo = new ReactService();
+        passInfo.setCurrency(purchaseCurrency);
+        passInfo.setTotalCost(total);
+
+
+
         ObjectMapper mapper = new ObjectMapper();
-        System.out.println(mapper.writeValueAsString(purchase1));
-        return mapper.writeValueAsString(purchase1);
+        System.out.println(mapper.writeValueAsString(passInfo));
+        return mapper.writeValueAsString(passInfo);
     }
 
 

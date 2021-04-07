@@ -76,11 +76,7 @@ class App extends Component {
                     .then(response => response.data.rates)
 
 
-        console.log(USDRates);
-
-        this.setState({exchangeRate:USDRates});
-
-        console.log(this.state.exchangeRate);
+       this.setState({exchangeRate:USDRates});
 
             axios.post('http://localhost:8080/cart/makePurchase',
             {
@@ -90,15 +86,15 @@ class App extends Component {
                 addressId:this.state.addressId,
                 customerId:this.state.customerId,
                 cartData:this.state.cartData
-            }).then(response => console.log(response));
+            }).then(response =>
+            this.setState({totalCost:parseFloat(response.data.totalCost).toFixed(2)})
+            );
 
 
         {/*
         UserServiceFetch.addPurchase().then((response =>
             console.log(response)
         )); */}
-        
-
 
     }
 
