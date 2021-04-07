@@ -30,6 +30,8 @@ class App extends Component {
                 title: "test product",
                 price: 1.99,
                 quantity: 0,
+                itemId: 0,
+                category: "fake"
             }
         ],
         exchangeRate: {
@@ -59,6 +61,18 @@ class App extends Component {
         let selected = event.target.value;
         this.setState({ addressId: selected })
         console.log(selected)
+    }
+
+    handleAddToCart = (itemTitle, itemPrice, itemQuantity, itemId, itemCategory) => {
+        var batch = {
+            title: itemTitle,
+            price: parseFloat(itemPrice.toFixed(2)),
+            quantity: parseInt(itemQuantity),
+            itemId: itemId,
+            category: itemCategory
+        }
+        this.state.cartData.push(batch);
+        console.log(this.state.cartData);
     }
 
     handleTestAxios = (event) => {
@@ -95,7 +109,8 @@ class App extends Component {
                             selectCustomer={this.handleCustomerSelect} selectAddress={this.handleAddressSelect} />)}
                         />
                         <Route path='/store' render={props =>
-                            (<StorePage items={this.state.itemData} />)}
+                        (<StorePage items={this.state.itemData} handleSelect={this.selectHandler}
+                            handleAdd={this.handleAddToCart} cart={this.state.cartData}/>)}
                         />
                         <Route path='/checkout' render={props =>
                         (<CheckoutPage items={this.state.cartData} currency={this.state.currentCurrency}
