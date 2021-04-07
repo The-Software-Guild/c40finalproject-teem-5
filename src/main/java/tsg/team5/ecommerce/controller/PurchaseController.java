@@ -47,6 +47,7 @@ public class PurchaseController {
     public String makePurchase(@RequestBody String purchase) throws JSONException, JsonProcessingException {
         //Use this section to parse all relevant data from the JSON received
         JSONObject info = new JSONObject(purchase);
+        System.out.println(info);
         String purchaseCurrency = info.getString("currency");
         LocalDate date = LocalDate.now();
         int customerId = info.getInt("customerId");
@@ -100,12 +101,40 @@ public class PurchaseController {
         passInfo.setTotalCost(total);
 
 
-
         ObjectMapper mapper = new ObjectMapper();
         System.out.println(mapper.writeValueAsString(passInfo));
         return mapper.writeValueAsString(passInfo);
     }
 
+    @ResponseBody
+    @PostMapping("findTotal")
+    public String cardData(@RequestBody String cart) throws JSONException {
+
+        JSONObject info = new JSONObject(cart);
+        System.out.println(info);
+        int quantity = info.getJSONObject("cartData").getInt("quantity");
+        double price = info.getJSONObject("cartData").getDouble("price");
+        String currency = info.getString("currency");
+        double rate;
+        if(currency.equals("CAD")) {
+            rate = info.getJSONObject("exchange").getDouble("CAD");
+        }else if(currency.equals("EUR")) {
+            rate = info.getJSONObject("exchange").getDouble("EUR");
+        }else if(currency.equals("GBP")) {
+            rate = info.getJSONObject("exchange").getDouble("GBP");
+        }else if(currency.equals("JPY")) {
+            rate = info.getJSONObject("exchange").getDouble("JPY");
+        }else if(currency.equals("CNY")) {
+            rate = info.getJSONObject("exchange").getDouble("CNY");
+        }else{
+            rate = 1;
+        }
+
+        double adjPrice = MoneyManip.evaluatePriceForRate(price, BigDecimal.valueOf(rate));
+        double totalCard = MoneyManip.evaluateTotalPriceForQuantity(adjPrice, quantity);
+
+            return null;
+    }
 
 
 

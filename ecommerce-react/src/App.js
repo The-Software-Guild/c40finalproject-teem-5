@@ -31,7 +31,9 @@ class App extends Component {
                 price: 1.99,
                 quantity: 5,
                 itemId:0,
-                category:'fake'
+                category:'fake',
+                totalForCard: "0.00"                   
+                
             }
         ],
         exchangeRate: {
@@ -44,8 +46,11 @@ class App extends Component {
         currentCurrency: "USD",
         customerId: 1,
         addressId: 0,
-        totalCost:"0.00"
+        totalCost:"0.00",
+        
     }
+
+    
 
     handleCurrencySelect = (event) => {
         let selected = event.target.value;
@@ -67,14 +72,27 @@ class App extends Component {
     }
 
 
+    handleTotalCalculation = async() =>{
+        console.log("test");
 
+        let USDRates = await axios.get('https://api.ratesapi.io/api/latest?base=USD&symbols=CAD,EUR,GBP,JPY,CNY')
+                    .then(response => response.data.rates);
 
+       this.setState({exchangeRate:USDRates});
+
+        axios.post('http://localhost:8080/cart/findTotal',
+        {
+            cartData:this.state.cartData,
+            currency:this.state.currentCurrency,
+            exchange:this.state.exchangeRate
+        });
+    }
+    
 
     handleTestAxios = async(event) =>{
 
         let USDRates = await axios.get('https://api.ratesapi.io/api/latest?base=USD&symbols=CAD,EUR,GBP,JPY,CNY')
                     .then(response => response.data.rates)
-
 
        this.setState({exchangeRate:USDRates});
 
@@ -89,19 +107,14 @@ class App extends Component {
             }).then(response =>
             this.setState({totalCost:parseFloat(response.data.totalCost).toFixed(2)})
             );
-
-
-        {/*
-        UserServiceFetch.addPurchase().then((response =>
-            console.log(response)
-        )); */}
-
+        
     }
 
 
     componentDidMount() {
         console.log("App is now mounted.")
         this.loadItemData();
+        this.handleTotalCalculation();
     }
 
     loadItemData() {
@@ -116,6 +129,7 @@ class App extends Component {
 
 
     render() {
+        
         return (
             <div className="App">
                 <NavBar />
@@ -131,7 +145,7 @@ class App extends Component {
                         <Route path='/checkout' render={props =>
                         (<CheckoutPage items={this.state.cartData} currency={this.state.currentCurrency}
                             handleCurrencySelect={this.handleCurrencySelect} handleTestAxios={this.handleTestAxios}
-                            totalCost={this.state.totalCost}/>)}
+                            totalCost={this.state.totalCost} handleTotalCalculation={this.handleTotalCalculation}/>)}
                         />
 
                         <Route path='/data' component={DataPage} />

@@ -4,9 +4,8 @@ import axios from 'axios';
 import "./checkout_page.css"
 
 
-const ListedItem = ({item, key }) =>{
-    let total = item.price * item.quantity;
-    console.log(total);
+const ListedItem = ({item, totalCalc, key }) =>{
+       
 
     return(
 
@@ -20,7 +19,8 @@ const ListedItem = ({item, key }) =>{
                     Quantity: {item.quantity}
                     <br/>
                     <br/>
-                    Total: {total} USD
+                                       
+                    Total: 0 USD
                     <br/>
                 </div>
             </Card.Body>
@@ -34,7 +34,8 @@ class CheckoutPage extends React.Component {
 
 
   render(){
-      let{items, currency, handleCurrencySelect, handleTestAxios, totalCost} = this.props
+      let{items, currency, handleCurrencySelect, handleTestAxios, totalCost, handleTotalCalculation} = this.props;
+      
       return (
         <Container className="gridLayout">
             <Row>
@@ -47,7 +48,7 @@ class CheckoutPage extends React.Component {
                 <Col style={{width: '70%'}}>
                     <div id="checkout_page" className="item-display" >
                         {items.map((item, i) => {
-                            return <ListedItem item={item} key={i}/>
+                            return <ListedItem item={item} totalCalc={handleTotalCalculation} key={i} />
                         })}
                     </div>
                 </Col>
