@@ -47,7 +47,6 @@ class CheckoutPage extends React.Component {
                 <Col className="Cart-Display" style={{width: '70%'}}>
                     <div id="checkout_page" className="App-page" >
                         {items.map((item, i) => {
-                            alert("test");
                             return <ListedItem item={item} key={i}/>
                         })}
                     </div>
