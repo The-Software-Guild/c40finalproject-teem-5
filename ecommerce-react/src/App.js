@@ -43,7 +43,7 @@ class App extends Component {
         },
         currentCurrency: "USD",
         customerId: 0,
-        addressId: 0
+        addressId: 0,
     }
 
     handleCurrencySelect = (event) => {
@@ -72,6 +72,7 @@ class App extends Component {
             category: itemCategory
         }
         this.state.cartData.push(batch);
+        alert("Added to Cart!");
         console.log(this.state.cartData);
     }
 

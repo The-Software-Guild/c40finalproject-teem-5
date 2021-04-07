@@ -4,7 +4,7 @@
     height: 100vh;
 }
 
-.Login-grid {
+.half-grid {
     display: grid;
     grid-template-columns: 50% 50%;
     grid-template-rows: auto;
@@ -13,8 +13,30 @@
 
 .left {
     grid-area: left;
+    display: flex;
+    justify-content: center;
+    align-items:center; 
+    height: 75vh; 
 }
 
 .right {
     grid-area: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 75vh;
+}
+
+.customer-input {
+    font-size: 20px;
+    width: 50%;
+}
+
+.customer-label {
+    color: white;
+    font-size: 20px;
+    margin: 5px;
+}
+
+.sign-up {
 }

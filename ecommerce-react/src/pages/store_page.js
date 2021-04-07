@@ -47,7 +47,8 @@ class StorePage extends Component {
         quantity: 1,
         itemId: 0,
         category: "",
-        image: ""
+        image: "",
+        buttonStatus: true
     }
 
     selectHandler = (itemTitle, itemId, itemImage, itemCategory, itemPrice) => {
@@ -57,7 +58,8 @@ class StorePage extends Component {
             itemId: itemId,
             image: itemImage,
             category: itemCategory,
-            price: itemPrice
+            price: itemPrice,
+            buttonStatus: false
         });
         console.log(this.state.price);
     }
@@ -81,7 +83,7 @@ class StorePage extends Component {
                     </Container>
                     {/* sidebar component for quantity and item name with add to cart button */}
                     <Container className="sidebar" style={{ 
-                        alignItem: "center"
+                        alignItems: "center"
                     }}>
                         {/* select input for category */}
                         <Row>
@@ -107,7 +109,7 @@ class StorePage extends Component {
                         </Row>
                         {/* add to cart button */}
                         <Row>
-                            <Button onClick={() => {
+                            <Button disabled={this.state.buttonStatus} onClick={() => {
                                 handleAdd(this.state.title,
                                     this.state.price,
                                     this.state.quantity,
