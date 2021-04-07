@@ -1,0 +1,9 @@
+.item-display {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border: groove;
+    overflow: scroll;
+    overflow-x: hidden;
+    max-height: 85vh
+}

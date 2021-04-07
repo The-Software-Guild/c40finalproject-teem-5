@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, Button, Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
+import "./checkout_page.css"
 
 
 const ListedItem = ({item, key }) =>{
@@ -35,22 +36,22 @@ class CheckoutPage extends React.Component {
   render(){
       let{items, currency, handleCurrencySelect, handleTestAxios, totalCost} = this.props
       return (
-        <Container fluid>
+        <Container>
             <Row>
                 <Col>
                     <h1 className="text-center">Checkout</h1>
                 </Col>
             </Row>
             <hr/>
-            <Row style={{display:"flex", justifyContent:"space-between"}}>
-                <Col md={8} className="Cart-Display" style={{gridTemplateColumns: "repeat(3, 200px)"}}>
+            <Row style={{display:"flex"}}>
+                <Col className="Cart-Display" style={{width: '70%'}}>
                     <div id="checkout_page" className="App-page" >
                         {items.map((item, i) => {
                             return <ListedItem item={item} key={i}/>
                         })}
                     </div>
                 </Col>
-                <Col sm={4}>
+                <Col style={{width:'30%'}}>
                     <h2>Total Cost</h2>
                     <input type="text" readOnly value={totalCost}/>
                     <hr/>
@@ -66,7 +67,7 @@ class CheckoutPage extends React.Component {
                     </select>
 
                     <hr/>
-                    <Button onClick={handleTestAxios}>
+                    <Button onClick={handleTestAxios} className="btn btn-default btn-danger">
                         Purchase
                    </Button>
                 </Col>
