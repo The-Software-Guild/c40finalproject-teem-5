@@ -11,6 +11,7 @@ public class Purchase {
     private Exchange exchange;
     private Customer customer;
     private List<Item> items;
+    private List<Integer> quantities;
 
     public int getPurchaseId() {
         return purchaseId;
@@ -60,16 +61,24 @@ public class Purchase {
         this.items = items;
     }
 
+    public List<Integer> getQuantities() {
+        return quantities;
+    }
+
+    public void setQuantities(List<Integer> quantities) {
+        this.quantities = quantities;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Purchase purchase = (Purchase) o;
-        return purchaseId == purchase.purchaseId && purchaseDate.equals(purchase.purchaseDate) && currency.equals(purchase.currency) && exchange.equals(purchase.exchange) && customer.equals(purchase.customer) && items.equals(purchase.items);
+        return purchaseId == purchase.purchaseId && purchaseDate.equals(purchase.purchaseDate) && currency.equals(purchase.currency) && exchange.equals(purchase.exchange) && customer.equals(purchase.customer) && items.equals(purchase.items) && quantities.equals(purchase.quantities);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(purchaseId, purchaseDate, currency, exchange, customer, items);
+        return Objects.hash(purchaseId, purchaseDate, currency, exchange, customer, items, quantities);
     }
 }

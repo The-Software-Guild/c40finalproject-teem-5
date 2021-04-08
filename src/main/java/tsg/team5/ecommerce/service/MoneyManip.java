@@ -19,8 +19,10 @@ public class MoneyManip {
     public static double calculateTotalInvoice(Purchase purchase){
         double invoice = 0.0;
 
+        int index = 0;
         for(Item item : purchase.getItems()){
-            invoice += evaluateTotalPriceForQuantity(item.getPrice(), item.getQuantity());
+            invoice += evaluateTotalPriceForQuantity(item.getPrice(), purchase.getQuantities().get(index));
+            index++;
         }
 
         switch (purchase.getCurrency()){

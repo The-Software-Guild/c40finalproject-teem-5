@@ -59,8 +59,7 @@ CREATE TABLE item (
   itemId INT PRIMARY KEY,
   itemName VARCHAR(50) NOT NULL,
   category VARCHAR(30) NOT NULL,
-  price DECIMAL(6,2) NOT NULL,
-  quantity INT DEFAULT 1
+  price DECIMAL(6,2) NOT NULL
 );
 
 -- -----------------------------------------------------
@@ -69,6 +68,7 @@ CREATE TABLE item (
 CREATE TABLE item_purchase (
   itemId INT NOT NULL,
   purchaseId INT NOT NULL,
+  quantity INT DEFAULT 1,
   PRIMARY KEY (itemId, purchaseId),
     FOREIGN KEY (itemId) REFERENCES item (itemId),
     FOREIGN KEY (purchaseId) REFERENCES purchase (purchaseId)

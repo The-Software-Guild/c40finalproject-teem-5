@@ -67,7 +67,6 @@ class PurchaseDaoDBTest {
         item.setItemName("example1");
         item.setCategory("category1");
         item.setPrice(2.10);
-        item.setQuantity(5);
         item = itemDao.addItem(item);
 
         Item item2 = new Item();
@@ -75,7 +74,6 @@ class PurchaseDaoDBTest {
         item2.setItemName("example2");
         item2.setCategory("category2");
         item2.setPrice(2.50);
-        item2.setQuantity(10);
         item2 = itemDao.addItem(item2);
 
         List<Item> items = new ArrayList<>();
@@ -105,12 +103,17 @@ class PurchaseDaoDBTest {
         customer.setAddress(address);
         customer = customerDao.addCustomer(customer);
 
+        List<Integer> quantities = new ArrayList<>();
+        quantities.add(5);
+        quantities.add(10);
+
         Purchase purchase = new Purchase();
         purchase.setPurchaseDate(LocalDate.now());
         purchase.setCurrency("CAD");
         purchase.setExchange(exchange);
         purchase.setCustomer(customer);
         purchase.setItems(items);
+        purchase.setQuantities(quantities);
         purchase = purchaseDao.addPurchase(purchase);
 
         Purchase fromDao = purchaseDao.getPurchaseById(purchase.getPurchaseId());
@@ -124,7 +127,6 @@ class PurchaseDaoDBTest {
         item.setItemName("example1");
         item.setCategory("category1");
         item.setPrice(2.10);
-        item.setQuantity(5);
         item = itemDao.addItem(item);
 
         Item item2 = new Item();
@@ -132,7 +134,6 @@ class PurchaseDaoDBTest {
         item2.setItemName("example2");
         item2.setCategory("category2");
         item2.setPrice(2.50);
-        item2.setQuantity(10);
         item2 = itemDao.addItem(item2);
 
         List<Item> items = new ArrayList<>();
@@ -185,12 +186,17 @@ class PurchaseDaoDBTest {
         customer2.setAddress(address2);
         customer2 = customerDao.addCustomer(customer2);
 
+        List<Integer> quantities = new ArrayList<>();
+        quantities.add(5);
+        quantities.add(10);
+
         Purchase purchase = new Purchase();
         purchase.setPurchaseDate(LocalDate.now());
         purchase.setCurrency("CAD");
         purchase.setExchange(exchange);
         purchase.setCustomer(customer);
         purchase.setItems(items);
+        purchase.setQuantities(quantities);
         purchase = purchaseDao.addPurchase(purchase);
 
         Purchase purchase2 = new Purchase();
@@ -199,6 +205,7 @@ class PurchaseDaoDBTest {
         purchase2.setExchange(exchange2);
         purchase2.setCustomer(customer2);
         purchase2.setItems(items);
+        purchase2.setQuantities(quantities);
         purchase2 = purchaseDao.addPurchase(purchase2);
 
         List<Purchase> purchases = purchaseDao.getAllPurchases();
@@ -215,7 +222,6 @@ class PurchaseDaoDBTest {
         item.setItemName("example1");
         item.setCategory("category1");
         item.setPrice(2.10);
-        item.setQuantity(5);
         item = itemDao.addItem(item);
 
         Item item2 = new Item();
@@ -223,7 +229,6 @@ class PurchaseDaoDBTest {
         item2.setItemName("example2");
         item2.setCategory("category2");
         item2.setPrice(2.50);
-        item2.setQuantity(10);
         item2 = itemDao.addItem(item2);
 
         List<Item> items = new ArrayList<>();
@@ -253,12 +258,17 @@ class PurchaseDaoDBTest {
         customer.setAddress(address);
         customer = customerDao.addCustomer(customer);
 
+        List<Integer> quantities = new ArrayList<>();
+        quantities.add(5);
+        quantities.add(10);
+
         Purchase purchase = new Purchase();
         purchase.setPurchaseDate(LocalDate.now());
         purchase.setCurrency("CAD");
         purchase.setExchange(exchange);
         purchase.setCustomer(customer);
         purchase.setItems(items);
+        purchase.setQuantities(quantities);
         purchase = purchaseDao.addPurchase(purchase);
 
         Purchase fromDao = purchaseDao.getPurchaseById(purchase.getPurchaseId());
@@ -279,7 +289,6 @@ class PurchaseDaoDBTest {
         item.setItemName("example1");
         item.setCategory("category1");
         item.setPrice(2.10);
-        item.setQuantity(5);
         item = itemDao.addItem(item);
 
         Item item2 = new Item();
@@ -287,7 +296,6 @@ class PurchaseDaoDBTest {
         item2.setItemName("example2");
         item2.setCategory("category2");
         item2.setPrice(2.50);
-        item2.setQuantity(10);
         item2 = itemDao.addItem(item2);
 
         List<Item> items = new ArrayList<>();
@@ -317,12 +325,17 @@ class PurchaseDaoDBTest {
         customer.setAddress(address);
         customer = customerDao.addCustomer(customer);
 
+        List<Integer> quantities = new ArrayList<>();
+        quantities.add(5);
+        quantities.add(10);
+
         Purchase purchase = new Purchase();
         purchase.setPurchaseDate(LocalDate.now());
         purchase.setCurrency("CAD");
         purchase.setExchange(exchange);
         purchase.setCustomer(customer);
         purchase.setItems(items);
+        purchase.setQuantities(quantities);
         purchase = purchaseDao.addPurchase(purchase);
 
         purchaseDao.deletePurchase(purchase.getPurchaseId());
@@ -337,7 +350,6 @@ class PurchaseDaoDBTest {
         item.setItemName("example1");
         item.setCategory("category1");
         item.setPrice(2.10);
-        item.setQuantity(5);
         item = itemDao.addItem(item);
 
         Item item2 = new Item();
@@ -345,7 +357,6 @@ class PurchaseDaoDBTest {
         item2.setItemName("example2");
         item2.setCategory("category2");
         item2.setPrice(2.50);
-        item2.setQuantity(10);
         item2 = itemDao.addItem(item2);
 
         List<Item> items = new ArrayList<>();
@@ -406,12 +417,17 @@ class PurchaseDaoDBTest {
         customer2.setAddress(address2);
         customer2 = customerDao.addCustomer(customer2);
 
+        List<Integer> quantities = new ArrayList<>();
+        quantities.add(5);
+        quantities.add(10);
+
         Purchase purchase = new Purchase();
         purchase.setPurchaseDate(LocalDate.parse("2021-03-08"));
         purchase.setCurrency("CAD");
         purchase.setExchange(exchange);
         purchase.setCustomer(customer);
         purchase.setItems(items);
+        purchase.setQuantities(quantities);
         purchase = purchaseDao.addPurchase(purchase);
 
         Purchase purchase2 = new Purchase();
@@ -420,6 +436,7 @@ class PurchaseDaoDBTest {
         purchase2.setExchange(exchange2);
         purchase2.setCustomer(customer2);
         purchase2.setItems(items);
+        purchase2.setQuantities(quantities);
         purchase2 = purchaseDao.addPurchase(purchase2);
 
         Purchase purchase3 = new Purchase();
@@ -428,6 +445,7 @@ class PurchaseDaoDBTest {
         purchase3.setExchange(exchange3);
         purchase3.setCustomer(customer2);
         purchase3.setItems(items);
+        purchase3.setQuantities(quantities);
         purchase3 = purchaseDao.addPurchase(purchase3);
 
         LocalDate from = LocalDate.parse("2021-03-20");
@@ -445,7 +463,6 @@ class PurchaseDaoDBTest {
         item.setItemName("example1");
         item.setCategory("category1");
         item.setPrice(2.10);
-        item.setQuantity(5);
         item = itemDao.addItem(item);
 
         Item item2 = new Item();
@@ -453,7 +470,6 @@ class PurchaseDaoDBTest {
         item2.setItemName("example2");
         item2.setCategory("category2");
         item2.setPrice(2.50);
-        item2.setQuantity(10);
         item2 = itemDao.addItem(item2);
 
         List<Item> items = new ArrayList<>();
@@ -514,12 +530,17 @@ class PurchaseDaoDBTest {
         customer2.setAddress(address2);
         customer2 = customerDao.addCustomer(customer2);
 
+        List<Integer> quantities = new ArrayList<>();
+        quantities.add(5);
+        quantities.add(10);
+
         Purchase purchase = new Purchase();
         purchase.setPurchaseDate(LocalDate.parse("2021-03-08"));
         purchase.setCurrency("CAD");
         purchase.setExchange(exchange);
         purchase.setCustomer(customer);
         purchase.setItems(items);
+        purchase.setQuantities(quantities);
         purchase = purchaseDao.addPurchase(purchase);
 
         Purchase purchase2 = new Purchase();
@@ -528,6 +549,7 @@ class PurchaseDaoDBTest {
         purchase2.setExchange(exchange2);
         purchase2.setCustomer(customer2);
         purchase2.setItems(items);
+        purchase2.setQuantities(quantities);
         purchase2 = purchaseDao.addPurchase(purchase2);
 
         Purchase purchase3 = new Purchase();
@@ -536,6 +558,7 @@ class PurchaseDaoDBTest {
         purchase3.setExchange(exchange3);
         purchase3.setCustomer(customer2);
         purchase3.setItems(items);
+        purchase3.setQuantities(quantities);
         purchase3 = purchaseDao.addPurchase(purchase3);
 
         List<Purchase> fromDao = purchaseDao.getPurchasesForCustomer(customer2.getCustomerId());
@@ -552,7 +575,6 @@ class PurchaseDaoDBTest {
         item.setItemName("example1");
         item.setCategory("category1");
         item.setPrice(2.10);
-        item.setQuantity(5);
         item = itemDao.addItem(item);
 
         Item item2 = new Item();
@@ -560,7 +582,6 @@ class PurchaseDaoDBTest {
         item2.setItemName("example2");
         item2.setCategory("category2");
         item2.setPrice(2.50);
-        item2.setQuantity(10);
         item2 = itemDao.addItem(item2);
 
         List<Item> items = new ArrayList<>();
@@ -621,12 +642,17 @@ class PurchaseDaoDBTest {
         customer2.setAddress(address2);
         customer2 = customerDao.addCustomer(customer2);
 
+        List<Integer> quantities = new ArrayList<>();
+        quantities.add(5);
+        quantities.add(10);
+
         Purchase purchase = new Purchase();
         purchase.setPurchaseDate(LocalDate.parse("2021-03-08"));
         purchase.setCurrency("CAD");
         purchase.setExchange(exchange);
         purchase.setCustomer(customer);
         purchase.setItems(items);
+        purchase.setQuantities(quantities);
         purchase = purchaseDao.addPurchase(purchase);
 
         Purchase purchase2 = new Purchase();
@@ -635,6 +661,7 @@ class PurchaseDaoDBTest {
         purchase2.setExchange(exchange2);
         purchase2.setCustomer(customer2);
         purchase2.setItems(items);
+        purchase2.setQuantities(quantities);
         purchase2 = purchaseDao.addPurchase(purchase2);
 
         Purchase purchase3 = new Purchase();
@@ -643,6 +670,7 @@ class PurchaseDaoDBTest {
         purchase3.setExchange(exchange3);
         purchase3.setCustomer(customer2);
         purchase3.setItems(items);
+        purchase3.setQuantities(quantities);
         purchase3 = purchaseDao.addPurchase(purchase3);
 
         LocalDate date = LocalDate.parse("2021-03-21");
@@ -660,7 +688,6 @@ class PurchaseDaoDBTest {
         item.setItemName("example1");
         item.setCategory("category1");
         item.setPrice(2.10);
-        item.setQuantity(5);
         item = itemDao.addItem(item);
 
         Item item2 = new Item();
@@ -668,7 +695,6 @@ class PurchaseDaoDBTest {
         item2.setItemName("example2");
         item2.setCategory("category2");
         item2.setPrice(2.50);
-        item2.setQuantity(10);
         item2 = itemDao.addItem(item2);
 
         List<Item> items = new ArrayList<>();
@@ -729,12 +755,17 @@ class PurchaseDaoDBTest {
         customer2.setAddress(address2);
         customer2 = customerDao.addCustomer(customer2);
 
+        List<Integer> quantities = new ArrayList<>();
+        quantities.add(5);
+        quantities.add(10);
+
         Purchase purchase = new Purchase();
         purchase.setPurchaseDate(LocalDate.parse("2021-03-08"));
         purchase.setCurrency("CAD");
         purchase.setExchange(exchange);
         purchase.setCustomer(customer);
         purchase.setItems(items);
+        purchase.setQuantities(quantities);
         purchase = purchaseDao.addPurchase(purchase);
 
         Purchase purchase2 = new Purchase();
@@ -743,6 +774,7 @@ class PurchaseDaoDBTest {
         purchase2.setExchange(exchange2);
         purchase2.setCustomer(customer2);
         purchase2.setItems(items);
+        purchase2.setQuantities(quantities);
         purchase2 = purchaseDao.addPurchase(purchase2);
 
         Purchase purchase3 = new Purchase();
@@ -751,6 +783,7 @@ class PurchaseDaoDBTest {
         purchase3.setExchange(exchange3);
         purchase3.setCustomer(customer2);
         purchase3.setItems(items);
+        purchase3.setQuantities(quantities);
         purchase3 = purchaseDao.addPurchase(purchase3);
 
         List<Purchase> fromDao = purchaseDao.getPurchasesByCurrency("EUR");

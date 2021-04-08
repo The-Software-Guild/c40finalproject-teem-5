@@ -34,8 +34,8 @@ public class ItemDaoDB implements ItemDao{
 
     @Override
     public Item addItem(Item item) {
-        final String sql = "Insert into Item(itemId, itemName, category, price, quantity) Values(?, ?, ?, ?, ?)";
-        jdbc.update(sql, item.getItemId(), item.getItemName(), item.getCategory(), item.getPrice(), item.getQuantity());
+        final String sql = "INSERT IGNORE into Item(itemId, itemName, category, price) Values(?, ?, ?, ?)";
+        jdbc.update(sql, item.getItemId(), item.getItemName(), item.getCategory(), item.getPrice());
 
         //ID does not need to be updated since every item is assigned an ID by API
         return item;
@@ -43,8 +43,8 @@ public class ItemDaoDB implements ItemDao{
 
     @Override
     public void updateItem(Item item) {
-        final String sql = "Update Item Set itemId = ?, itemName = ?, category = ?, price = ?, quantity = ? Where itemId = ?";
-        jdbc.update(sql, item.getItemId(), item.getItemName(), item.getCategory(), item.getPrice(), item.getQuantity(), item.getItemId());
+        final String sql = "Update Item Set itemId = ?, itemName = ?, category = ?, price = ? Where itemId = ?";
+        jdbc.update(sql, item.getItemId(), item.getItemName(), item.getCategory(), item.getPrice(), item.getItemId());
     }
 
     @Override
@@ -62,7 +62,6 @@ public class ItemDaoDB implements ItemDao{
             item.setItemName(rs.getString("itemName"));
             item.setCategory(rs.getString("category"));
             item.setPrice(rs.getDouble("price"));
-            item.setQuantity(rs.getInt("quantity"));
             return item;
         }
     }
