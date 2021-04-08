@@ -5,6 +5,7 @@ import tsg.team5.ecommerce.entity.Purchase;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 public interface PurchaseDao {
     Purchase getPurchaseById(int purchaseId);   //return a purchase object by id
@@ -16,4 +17,5 @@ public interface PurchaseDao {
     Purchase addPurchase(Purchase purchase);    //add a new purchase
     void updatePurchase(Purchase purchase);    //update a purchase
     void deletePurchase(int id);
+    Map<Integer,Double> getTotalCostForAllPurchases(List<Purchase> purchases);
 }

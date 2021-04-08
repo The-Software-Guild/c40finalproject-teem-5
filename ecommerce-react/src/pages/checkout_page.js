@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Button, Container, Row, Col } from 'react-bootstrap';
+import {Card, Button, Container, Row, Col, Table} from 'react-bootstrap';
 import axios from 'axios';
 import './checkout_page.css'
 
@@ -38,9 +38,9 @@ class CheckoutPage extends React.Component {
     }
 
     render() {
-        let { items, currency, handleCurrencySelect, handleTestAxios, totalCost} = this.props
+        let { items, currency, handleCurrencySelect, handleTestAxios, totalCost,exchangeRate } = this.props
         return (
-            
+
             <Container className="gridForCheckout">
                 <Row>
                     <Col>
@@ -48,6 +48,28 @@ class CheckoutPage extends React.Component {
                     </Col>
                 </Row>
                 <hr />
+                <Table className="table table-striped">
+                    <thead>
+                    <tr>
+                        <td>Base Currency</td>
+                        <td>CAD Rate</td>
+                        <td>EUR Rate</td>
+                        <td>GBP Rate</td>
+                        <td>JPY Rate</td>
+                        <td>CNY Rate</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{exchangeRate.base}</td>
+                        <td>{exchangeRate.rates.CAD}</td>
+                        <td>{exchangeRate.rates.EUR}</td>
+                        <td>{exchangeRate.rates.GBP}</td>
+                        <td>{exchangeRate.rates.JPY}</td>
+                        <td>{exchangeRate.rates.CNY}</td>
+                    </tr>
+                    </tbody>
+                </Table>
                 <Row style={{ display: "flex", justifyContent: "space-between" }}>
                     <Col style={{width:"70%"}} className="Cart-Display">
                         <span id="checkout_page" className="item-display">
@@ -77,6 +99,8 @@ class CheckoutPage extends React.Component {
                         <hr />
                     </Col>
                 </Row>
+
+
             </Container>
         )
     }
