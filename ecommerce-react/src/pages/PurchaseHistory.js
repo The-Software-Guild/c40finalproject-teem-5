@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Card, Button, Container, Row, Col, Table} from 'react-bootstrap';
 import PurchaseHistoryModal from "./purchaseHistoryModal";
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class PurchaseHistory extends Component{
 
@@ -39,8 +39,8 @@ class PurchaseHistory extends Component{
                     itemName:'',
                     category:'',
                     price:'',
-                    quantity:''
-                }]
+                }],
+                quantities: [{}]
 
             }
 

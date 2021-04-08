@@ -6,7 +6,7 @@ import PurchaseHistoryModal from "./purchaseHistoryModal";
 class ItemDetailModal extends Component{
 
     render() {
-    let { showItemsModal,ItemDetail,handleClose} = this.props;
+    let { showItemsModal,ItemDetail,quantities,handleClose} = this.props;
     var j=0;
     return (
         <Modal show={showItemsModal} onHide={handleClose} animation={false} >
@@ -20,7 +20,7 @@ class ItemDetailModal extends Component{
                             <tr>
                                 <td>Item Name</td>
                                 <td>Category</td>
-                                <td>quantity</td>
+                                {/*<td>quantity</td>*/}
                                 <td>price</td>
                             </tr>
                             </thead>
@@ -30,6 +30,7 @@ class ItemDetailModal extends Component{
                                         <tr key={item.itemId}>
                                             <td>{item.itemName }</td>
                                             <td>{item.category}</td>
+                                            {/*<td>{quantities[++i]}</td>*/}
                                             <td>{item.price}</td>
                                         </tr>)
                             }

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom"
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 import NavBar from "./components/nav_bar"
 import CheckoutPage from "./pages/checkout_page";
@@ -43,6 +43,17 @@ class App extends Component {
             JPY: 1.1234,
             CNY: 1.1234
         },
+        LiveExchangeRate:{
+            base: 'USD',
+            rates: {
+                EUR: '',
+                CAD: '',
+                JPY: '',
+                CNY: '',
+                GBP: ''
+            },
+             date: ''
+             },
         currentCurrency: "USD",
         customerId: 0,
         addressId: 0,
@@ -102,7 +113,6 @@ class App extends Component {
         console.log(selected)
     }
 
-
     handleAddressSelect = (event) => {
         let selected = event.target.value;
         this.setState({ addressId: selected })
@@ -151,7 +161,9 @@ class App extends Component {
     }
 
     loadExchangeRate(){
-
+        axios.get('https://api.ratesapi.io/api/latest?base=USD&symbols=CAD,EUR,GBP,JPY,CNY').then(
+            ((res) =>this.setState({LiveExchangeRate:res.data})
+        ))
     }
 
     loadPurchaseHistory()
@@ -189,12 +201,14 @@ class App extends Component {
                         <Route path='/checkout' render={props =>
                         (<CheckoutPage items={this.state.cartData} currency={this.state.currentCurrency}
                             handleCurrencySelect={this.handleCurrencySelect} handleTestAxios={this.handleTestAxios}
-                            totalCost={this.state.totalCost}/>)}
+                                       exchangeRate = {this.state.LiveExchangeRate}
+                                       totalCost={this.state.totalCost}/>)}
                         />
                         <Route path='/history' render={props =>(<PurchaseHistory
                                purchaseHistory={this.state.purchaseHistory}
-                               totalCost={this.state.totalCost}/>)}/>
-                        <Route path='/data'  />
+                               totalCost={this.state.totalCost}/>)}
+                        />
+                        <Route path='/data'/>
                     </Switch>
                 </main>
             </div>
