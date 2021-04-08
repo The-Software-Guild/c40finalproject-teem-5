@@ -10,12 +10,12 @@ class Report extends Component{
         toDate='';
 
      //set the selected date
-    DateHandlerFrom = (f) => {
-        this.fromDate=f;
+    DateHandlerFrom = (event) => {
+        this.setState({from:event.target.value})
     };
 
-    DateHandlerTo = (t) => {
-        this.toDate=t;
+    DateHandlerTo = (event) => {
+        this.setState({from:event.target.value})
     };
 
 
@@ -65,52 +65,52 @@ class Report extends Component{
                         </tbody>
                     </Table>
                 </Col>
-                <Col className="justify-content-md-center  border border-dark">
-                    <h1 style={{color:"#069"}}> Purchases in range date</h1>
-                    <Row className="justify-content-md-center">
-                        <Col>
-                            <label htmlFor="date" >
-                                From: </label>
-                            <div >
-                                <input type="date" name="date"
-                                       id="from" className="date-picker" onChange={(e)=> this.DateHandlerFrom(e.target.value)}/>
-                            </div>
-                        </Col>
-                        <Col>
-                            <label htmlFor="date" >
-                                To:</label>
-                            <div>
-                                <input type="date" name="date"
-                                       id="to" className="date-picker" onChange={(e)=> this.DateHandlerTo(e.target.value)}/>
-                            </div>
-                        </Col>
-                    </Row>
-                    <Table className="table table-striped">
-                        <thead>
-                            <tr>
-                                <td>purchaseDate</td>
-                                <td>total Cost</td>
-                                <td>currency</td>
-                                <td>customerName</td>
-                                <td>country</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        {
-                            purchaseHistory.filter(history => (history.purchaseDate>this.fromDate) && (history.purchaseDate<this.toDate))
-                                .map(filteredName => (
-                                    <tr key={filteredName.purchaseId}>
-                                        <td>{filteredName.purchaseDate }</td>
-                                        <td>{totalCostOfPurchases[filteredName.purchaseId]}</td>
-                                        <td>{filteredName.currency}</td>
-                                        <td>{filteredName.customer.customerName}</td>
-                                        <td>{filteredName.customer.address.country}</td>
-                                    </tr>
-                                ))
-                        }
-                        </tbody>
-                    </Table>
-                </Col>
+                {/*<Col className="justify-content-md-center  border border-dark">*/}
+                {/*    <h1 style={{color:"#069"}}> Purchases in range date</h1>*/}
+                {/*    <Row className="justify-content-md-center">*/}
+                {/*        <Col>*/}
+                {/*            <label htmlFor="date" >*/}
+                {/*                From: </label>*/}
+                {/*            <div >*/}
+                {/*                <input type="date" name="date"*/}
+                {/*                       id="from" className="date-picker" value={this.state.fromDate}  onChange={this.DateHandlerTo.bind(this)}/>*/}
+                {/*            </div>*/}
+                {/*        </Col>*/}
+                {/*        <Col>*/}
+                {/*            <label htmlFor="date" >*/}
+                {/*                To:</label>*/}
+                {/*            <div>*/}
+                {/*                <input type="date" name="date"*/}
+                {/*                       id="to" className="date-picker" value={this.state.fromDate}  onChange={this.DateHandlerFrom.bind(this)}/>*/}
+                {/*            </div>*/}
+                {/*        </Col>*/}
+                {/*    </Row>*/}
+                {/*    <Table className="table table-striped">*/}
+                {/*        <thead>*/}
+                {/*            <tr>*/}
+                {/*                <td>purchaseDate</td>*/}
+                {/*                <td>total Cost</td>*/}
+                {/*                <td>currency</td>*/}
+                {/*                <td>customerName</td>*/}
+                {/*                <td>country</td>*/}
+                {/*            </tr>*/}
+                {/*        </thead>*/}
+                {/*        <tbody>*/}
+                {/*        {*/}
+                {/*            purchaseHistory.filter(history => (history.purchaseDate>this.state.fromDate) && (history.purchaseDate<this.state.toDate))*/}
+                {/*                .map(filteredName => (*/}
+                {/*                    <tr key={filteredName.purchaseId}>*/}
+                {/*                        <td>{filteredName.purchaseDate }</td>*/}
+                {/*                        <td>{totalCostOfPurchases[filteredName.purchaseId]}</td>*/}
+                {/*                        <td>{filteredName.currency}</td>*/}
+                {/*                        <td>{filteredName.customer.customerName}</td>*/}
+                {/*                        <td>{filteredName.customer.address.country}</td>*/}
+                {/*                    </tr>*/}
+                {/*                ))*/}
+                {/*        }*/}
+                {/*        </tbody>*/}
+                {/*    </Table>*/}
+                {/*</Col>*/}
                 </Row>
             </div>
         );
