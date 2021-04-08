@@ -20,7 +20,7 @@ class ItemDetailModal extends Component{
                             <tr>
                                 <td>Item Name</td>
                                 <td>Category</td>
-                                {/*<td>quantity</td>*/}
+                                <td>quantity</td>
                                 <td>price</td>
                             </tr>
                             </thead>
@@ -30,7 +30,7 @@ class ItemDetailModal extends Component{
                                         <tr key={item.itemId}>
                                             <td>{item.itemName }</td>
                                             <td>{item.category}</td>
-                                            {/*<td>{quantities[++i]}</td>*/}
+                                            <td>{quantities[i]}</td>
                                             <td>{item.price}</td>
                                         </tr>)
                             }

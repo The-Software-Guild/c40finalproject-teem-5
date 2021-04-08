@@ -30,8 +30,8 @@ class PurchaseHistoryModal extends Component{
         // let purchaseId = value1.purchaseId;
         console.log(`showing detail of purchase Id ${value1.purchaseId}`)
         this.setState({ showItemsModal : true})
-        this.setState({ ItemDetail: value1})
-        // this.setState({ quantities: value1.quantities})
+        this.setState({ ItemDetail: value1.items})
+        this.setState({ quantities: value1.quantities})
         // console.log(this.state.showDetailModal)
     }
 
@@ -88,11 +88,11 @@ class PurchaseHistoryModal extends Component{
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>Close</Button>
                     <Button variant="secondary" onClick={(e)=>
-                                               {this.handleItemModalOpen(purchaseHistory.items)}}>Item Detail</Button>
+                                               {this.handleItemModalOpen(purchaseHistory)}}>Item Detail</Button>
                 </Modal.Footer>
                 <ItemDetailModal showItemsModal ={this.state.showItemsModal}
                                  ItemDetail ={this.state.ItemDetail}
-                                 // quantities = {this.state.quantities}
+                                 quantities = {this.state.quantities}
                                  handleClose={this.handleItemModalClose}/>
             </Modal.Dialog>
         </Modal>
