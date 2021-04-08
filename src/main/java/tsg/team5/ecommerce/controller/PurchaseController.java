@@ -1,6 +1,8 @@
 package tsg.team5.ecommerce.controller;
 
-import org.json.JSONException;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONException;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,9 +11,6 @@ import tsg.team5.ecommerce.entity.Purchase;
 
 import tsg.team5.ecommerce.dao.*;
 import tsg.team5.ecommerce.entity.*;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -47,7 +46,7 @@ public class PurchaseController {
     public Purchase makePurchase(@RequestBody String purchase) throws JSONException {
 
         //Use this section to parse all relevant data from the JSON received
-        JSONObject info = new JSONObject(purchase);
+        JSONObject info = JSONObject.fromObject(purchase);
         String purchaseCurrency = info.getString("currency");
         LocalDate date = LocalDate.now();
         //int customerId = info.getInt("customerId");
@@ -66,7 +65,7 @@ public class PurchaseController {
         item.setItemName("example1");
         item.setCategory("category1");
         item.setPrice(2.10);
-        item.setQuantity(5);
+        //item.setQuantity(5);
         item = itemDao.addItem(item);
 
         List<Item> itemList = new ArrayList<>();
