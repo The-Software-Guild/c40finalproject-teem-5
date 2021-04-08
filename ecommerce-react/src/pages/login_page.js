@@ -40,9 +40,8 @@ class LoginPage extends Component {
                 <Row style={{ fontSize: "50px", color: "white" }}>Account</Row>
                 <div className="half-grid">
                     <Container className="left">
-                        <select value={customer} onChange={selectCustomer}
+                        <select value={customer} onChange={selectCustomer} defaultValue="1"
                             style={{ fontSize: "30px", width: "300px", marginBottom: "10px" }}>
-                            <option selected disabled> Select a Customer </option>
                             <option value="1"> Customer 1 </option>
                             <option value="2"> Customer 2 </option>
                             <option value="3"> Customer 3 </option>
