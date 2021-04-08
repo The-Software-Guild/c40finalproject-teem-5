@@ -100,4 +100,12 @@ public class PurchaseController {
         return mapper.writeValueAsString(passInfo);
 
     }
+
+    @GetMapping("/history")
+    @ResponseBody
+    public List<Purchase> getPurchases()
+    {
+        return purchaseDao.getAllPurchases();
+    }
+
 }

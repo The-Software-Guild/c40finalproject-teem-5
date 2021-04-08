@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom"
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
 import NavBar from "./components/nav_bar"
 import CheckoutPage from "./pages/checkout_page";
 import StorePage from './pages/store_page'
 import DataPage from './pages/data_page'
 import LoginPage from './pages/login_page'
+import PurchaseHistory from "./pages/PurchaseHistory";
 import axios from 'axios';
 import UserServiceFetch from './services/UserServiceFetch'
 import { Col } from "react-bootstrap";
@@ -44,7 +46,48 @@ class App extends Component {
         currentCurrency: "USD",
         customerId: 0,
         addressId: 0,
-        totalCost: "0.00"
+        totalCost: "0.00",
+
+        purchaseHistory:[
+            {
+                purchaseId: '',
+                purchaseDate: '',
+                currency: '',
+                exchange: {
+                    exchangeId: '',
+                    cad:'' ,
+                    eur:'',
+                    gbp: '',
+                    jpy: '',
+                    cny: ''
+                },
+                customer: {
+                    customerId: '',
+                    customerName: '',
+                    customerEmail: '',
+                    customerPhone: '',
+                    address: {
+                        addressId: '',
+                        street: '',
+                        city: '',
+                        state: '',
+                        postal: '',
+                        country: ''
+                    }
+                },
+                items: [
+                    {
+                        itemId: '',
+                        itemName: '',
+                        category: '',
+                        price: ''
+                    }
+                ],
+                quantities: [
+                    {}
+                ]
+            }
+        ]
     }
 
     handleCurrencySelect = (event) => {
@@ -102,8 +145,21 @@ class App extends Component {
     componentDidMount() {
         console.log("App is now mounted.")
         this.loadItemData();
+        this.loadPurchaseHistory();
+        this.loadExchangeRate();
         this.state.cartData.pop();
     }
+
+    loadExchangeRate(){
+
+    }
+
+    loadPurchaseHistory()
+    {
+        axios.get('http://localhost:8080/cart/history').then((res)=>
+            this.setState({purchaseHistory:res.data}))
+    }
+
 
     loadItemData() {
         this.setState({ loading: true })
@@ -135,8 +191,10 @@ class App extends Component {
                             handleCurrencySelect={this.handleCurrencySelect} handleTestAxios={this.handleTestAxios}
                             totalCost={this.state.totalCost}/>)}
                         />
-
-                        <Route path='/data' component={DataPage} />
+                        <Route path='/history' render={props =>(<PurchaseHistory
+                               purchaseHistory={this.state.purchaseHistory}
+                               totalCost={this.state.totalCost}/>)}/>
+                        <Route path='/data'  />
                     </Switch>
                 </main>
             </div>

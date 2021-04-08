@@ -15,9 +15,7 @@ class PurchaseHistoryModal extends Component{
                 price: ''
             }],
             quantities:
-                [{
-                    quantity: ''
-                }]
+                [{}]
         }
 
 
