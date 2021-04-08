@@ -1,0 +1,47 @@
+.Login-page {
+    background-color: darkslategrey;
+    justify-items: flex-start;
+    height: 100vh;
+}
+
+.half-grid {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: auto;
+    grid-template-areas: 
+        "left right";
+}
+
+.left {
+    grid-area: left;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 75vh;
+    margin: 20px;
+}
+
+.right {
+    grid-area: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 75vh;
+    margin: 20px;
+}
+
+.customer-input {
+    display:flex;
+    font-size: 20px;
+}
+
+.customer-label {
+    display:flex;
+    color: white;
+    font-size: 20px;
+    margin: 5px;
+}
+
+.sign-up {
+    height: 50vh;
+}

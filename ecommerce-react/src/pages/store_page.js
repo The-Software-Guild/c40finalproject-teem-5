@@ -1,25 +1,27 @@
 import React, { Component } from "react"
 import '../styles/store_page.css'
-import { Table, Row, Container, Card, CardDeck, Button, CardColumns, Col } from 'react-bootstrap'
+import { Row, Container, Card, Button, Col } from 'react-bootstrap'
 
-const ItemCard = ({ item }) => {
+const ItemCard = ({ item , handleSelect }) => {
     return (
         <Col className="col-3" >
-            <Card style={{ backgroundColor: "white", minHeight: "340px", maxWidth: "350px", borderStyle: "outset", padding: "5px", margin: "5px" }}>
+            <Card id={item.id} className="store-card">
                 <Card.Body>
-                    <Card.Title style={{ fontSize: "16px", height: "70px" }}>
+                    <Card.Title style={{ fontSize: "16px", height: "80px" }}>
                         {item.title}
                         <br />
                         {item.price.toFixed(2)}
                     </Card.Title>
                     <Card.Img src={item.image} style={{ height: "100px" }} />
-                    <Card.Text style={{ border: "groove", height: "90px", fontSize: "14px", overflow: "scroll", overflowX: "hidden" }}>
+                    <Card.Text className="card-text">
                         {item.description}
-                        <br />
-                        {item.category}
                     </Card.Text>
                 </Card.Body>
-                <Card.Footer><Button>Select Item</Button></Card.Footer>
+                <Card.Footer>
+                    <Button onClick={() => { handleSelect(item.title, item.id, item.image, item.category, item.price) }}
+                        style={{ fontSize: "16px" }}>Select Item
+                        </Button>
+                </Card.Footer>
             </Card>
         </Col>
     );
@@ -39,29 +41,84 @@ class StorePage extends Component {
         }]
     }
 
+    state = {
+        title: "",
+        price: 0.00,
+        quantity: 1,
+        itemId: 0,
+        category: "",
+        image: "",
+        buttonStatus: true
+    }
+
+    selectHandler = (itemTitle, itemId, itemImage, itemCategory, itemPrice) => {
+        console.log("selectHandler reached");
+        this.setState({
+            title: itemTitle,
+            itemId: itemId,
+            image: itemImage,
+            category: itemCategory,
+            price: itemPrice,
+            buttonStatus: false
+        });
+        console.log(this.state.price);
+    }
+
+    quantityHandler = (event) => {
+        this.setState({ quantity: event.target.value });
+        console.log(this.state.quantity)
+    }
+
     render() {
-        let { items } = this.props
+        let { items, handleAdd, cart } = this.props
         return (
-            <Container className="Store-page" style={{ height: "100vh" }}>
-                <Row style={{ fontSize: "35px" }}>Storefront</Row>
+            <Container className="Store-page">
+                <Row style={{ fontSize: "35px", marginBottom: "5px" }}>Storefront</Row>
                 <div className="Store-grid">
-                    <Row className="main" style={{
-                        display: "flex", flexDirection: "row", flexWrap: "wrap",
-                        border: "groove", overflow: "scroll", overflowX: "hidden", maxHeight: "85vh"
-                    }}>
+                    {/* component holding all items */}
+                    <Container className="main item-display">
                         {items.map((item, i) => {
-                            return <ItemCard item={item} key={i} />
+                            return <ItemCard item={item} key={i} handleSelect={this.selectHandler} />
                         })}
-                    </Row>
-                    <Row className="sidebar" style={{ alignItem: "center" }}>
-                        <select style={{ fontSize: "20px" }}>
-                            <option selected disabled> Select a Category </option>
-                            <option value="men clothing" > Men's Clothing </option>
-                            <option value="women clothing"> Women's Clothing </option>
-                            <option value="jewelry"> Jewelry </option>
-                            <option value="electronics"> Electronics </option>
-                        </select>
-                    </Row>
+                    </Container>
+                    {/* sidebar component for quantity and item name with add to cart button */}
+                    <Container className="sidebar" style={{ 
+                        alignItems: "center"
+                    }}>
+                        {/* select input for category */}
+                        <Row>
+                            <select style={{ fontSize: "20px", margin: "10px" }}> // Category selection
+                                <option selected disabled> Select a Category </option>
+                                <option value="men clothing" > Men's Clothing </option>
+                                <option value="women clothing"> Women's Clothing </option>
+                                <option value="jewelry"> Jewelry </option>
+                                <option value="electronics"> Electronics </option>
+                            </select>
+                        </Row>
+                        <hr style={{ marginLeft: "40px", marginRight: "40px" }} />
+                        {/* item title display when selected */}
+                        <Row><img src={this.state.image} style={{height:"150px", margin:"10px"}}></img></Row>
+                        <Row>
+                            <textarea type="text" className="title-box" value={this.state.title} readOnly />
+                        </Row>
+                        {/* quantity of items to add to cart */}
+                        <Row>
+                            <label style={{ fontSize: "20px", margin: "5px" }}>Quantity:</label>
+                            <input type="number" min="1" step="1" defaultValue="1" onChange={this.quantityHandler} onKeyDown="return false"
+                                style={{ fontSize: "20px", textAlign: "center", width: "50px" }} />
+                        </Row>
+                        {/* add to cart button */}
+                        <Row>
+                            <Button disabled={this.state.buttonStatus} onClick={() => {
+                                handleAdd(this.state.title,
+                                    this.state.price,
+                                    this.state.quantity,
+                                    this.state.itemId,
+                                    this.state.category)
+                            }}
+                                style={{ fontSize: "20px", margin: "10px" }} >Add to Cart</Button>
+                        </Row>
+                    </Container>
                 </div>
             </Container>
         )
