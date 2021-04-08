@@ -39,6 +39,28 @@ class CheckoutPage extends React.Component {
                     </Col>
                 </Row>
                 <hr />
+                <Table className="table table-striped">
+                    <thead>
+                    <tr>
+                        <td>Base Currency</td>
+                        <td>CAD Rate</td>
+                        <td>EUR Rate</td>
+                        <td>GBP Rate</td>
+                        <td>JPY Rate</td>
+                        <td>CNY Rate</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{exchangeRate.base}</td>
+                        <td>{exchangeRate.rates.CAD}</td>
+                        <td>{exchangeRate.rates.EUR}</td>
+                        <td>{exchangeRate.rates.GBP}</td>
+                        <td>{exchangeRate.rates.JPY}</td>
+                        <td>{exchangeRate.rates.CNY}</td>
+                    </tr>
+                    </tbody>
+                </Table>
                 <Row style={{ display: "flex", justifyContent: "space-between" }}>
                     <Col sm={8} className="Cart-Display">
                         <span id="checkout_page" className="App-page">
@@ -67,28 +89,7 @@ class CheckoutPage extends React.Component {
                     </Col>
                 </Row>
 
-                <Table className="table table-striped">
-                    <thead>
-                    <tr>
-                        <td>Base Currency</td>
-                        <td>CAD Rate</td>
-                        <td>EUR Rate</td>
-                        <td>GBP Rate</td>
-                        <td>JPY Rate</td>
-                        <td>CNY Rate</td>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>{exchangeRate.base}</td>
-                        <td>{exchangeRate.rates.CAD}</td>
-                        <td>{exchangeRate.rates.EUR}</td>
-                        <td>{exchangeRate.rates.GBP}</td>
-                        <td>{exchangeRate.rates.JPY}</td>
-                        <td>{exchangeRate.rates.CNY}</td>
-                    </tr>
-                    </tbody>
-                </Table>
+
             </Container>
         )
     }

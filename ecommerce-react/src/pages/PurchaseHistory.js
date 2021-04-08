@@ -43,8 +43,6 @@ class PurchaseHistory extends Component{
                 quantities: [{}]
 
             }
-
-
     }
 
     handlePurchaseHistoryModalClose = (event) => {
@@ -63,7 +61,7 @@ class PurchaseHistory extends Component{
     }
 
     render() {
-        let{purchaseHistory , totalCost} = this.props
+        let{purchaseHistory , totalCostOfPurchases} = this.props
         return (
             <div >
                 <h1 style={{color:"#069"}}> List of Purchases</h1>
@@ -75,6 +73,7 @@ class PurchaseHistory extends Component{
                     <tr>
                         <td>purchaseDate</td>
                         <td>total Cost</td>
+                        <td>currency</td>
                         <td>customerName</td>
                         <td>country</td>
                         <td>Purchase Detail</td>
@@ -86,7 +85,8 @@ class PurchaseHistory extends Component{
                             history =>
                                 <tr key={history.purchaseId}>
                                     <td>{history.purchaseDate }</td>
-                                    <td>{totalCost}</td>
+                                    <td>{totalCostOfPurchases[history.purchaseId]}</td>
+                                    <td>{history.currency}</td>
                                     <td>{history.customer.customerName}</td>
                                     <td>{history.customer.address.country}</td>
                                     <td><Button onClick={(e) => {this.handleDetailPurchaseHistoryModalOpen(history)}}>Purchase Detail</Button></td>

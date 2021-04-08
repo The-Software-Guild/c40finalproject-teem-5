@@ -98,7 +98,8 @@ class App extends Component {
                     {}
                 ]
             }
-        ]
+        ],
+        totalCostOfPurchases:[{}]
     }
 
     handleCurrencySelect = (event) => {
@@ -157,6 +158,7 @@ class App extends Component {
         this.loadItemData();
         this.loadPurchaseHistory();
         this.loadExchangeRate();
+        this.loadPurchaseTotalCost();
         this.state.cartData.pop();
     }
 
@@ -170,6 +172,13 @@ class App extends Component {
     {
         axios.get('http://localhost:8080/cart/history').then((res)=>
             this.setState({purchaseHistory:res.data}))
+    }
+
+
+    loadPurchaseTotalCost()
+    {
+        axios.get('http://localhost:8080/cart/totals').then((res)=>
+            this.setState({totalCostOfPurchases:res.data}))
     }
 
 
@@ -206,7 +215,8 @@ class App extends Component {
                         />
                         <Route path='/history' render={props =>(<PurchaseHistory
                                purchaseHistory={this.state.purchaseHistory}
-                               totalCost={this.state.totalCost}/>)}
+                               totalCostOfPurchases = {this.state.totalCostOfPurchases}
+                               />)}
                         />
                         <Route path='/data'/>
                     </Switch>

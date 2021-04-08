@@ -22,6 +22,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -106,6 +107,13 @@ public class PurchaseController {
     public List<Purchase> getPurchases()
     {
         return purchaseDao.getAllPurchases();
+    }
+
+    @GetMapping("/totals")
+    @ResponseBody
+    public Map<Integer, Double> getTotalCostForPurchases()
+    {
+        return purchaseDao.getTotalCostForAllPurchases(purchaseDao.getAllPurchases());
     }
 
 }
