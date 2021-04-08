@@ -132,7 +132,8 @@ class App extends Component {
                         />
                         <Route path='/checkout' render={props =>
                         (<CheckoutPage items={this.state.cartData} currency={this.state.currentCurrency}
-                            handleCurrencySelect={this.handleCurrencySelect} handleTestAxios={this.handleTestAxios} />)}
+                            handleCurrencySelect={this.handleCurrencySelect} handleTestAxios={this.handleTestAxios}
+                            totalCost={this.state.totalCost}/>)}
                         />
 
                         <Route path='/data' component={DataPage} />

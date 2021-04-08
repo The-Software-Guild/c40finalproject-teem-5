@@ -30,7 +30,7 @@ class CheckoutPage extends React.Component {
 
 
     render() {
-        let { items, currency, handleCurrencySelect, handleTestAxios } = this.props
+        let { items, currency, handleCurrencySelect, handleTestAxios, totalCost } = this.props
         return (
             <Container fluid>
                 <Row>
@@ -48,7 +48,7 @@ class CheckoutPage extends React.Component {
                         </span>
                     </Col>
                     <Col sm={4}>
-                        <input type="text" defaultValue="Deposit Money" />
+                        <input type="text" defaultValue={totalCost} readOnly />
                         <hr />
                         <span>Select Currency</span>
                         <br />

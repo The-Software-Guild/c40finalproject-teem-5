@@ -1,6 +1,7 @@
 package tsg.team5.ecommerce.controller;
 
-import org.json.JSONException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,8 +10,10 @@ import tsg.team5.ecommerce.entity.Purchase;
 
 import tsg.team5.ecommerce.dao.*;
 import tsg.team5.ecommerce.entity.*;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONException;
+import net.sf.json.JSONObject;
+import tsg.team5.ecommerce.service.MoneyManip;
 
 
 import java.math.BigDecimal;
@@ -44,48 +47,12 @@ public class PurchaseController {
     @ResponseBody
     @PostMapping("makePurchase")
 
-    public Purchase makePurchase(@RequestBody String purchase) throws JSONException {
-
-        //Use this section to parse all relevant data from the JSON received
-        JSONObject info = new JSONObject(purchase);
+    public String makePurchase(@RequestBody String purchase) throws JSONException, JsonProcessingException {
+        JSONObject info = JSONObject.fromObject(purchase);
+        System.out.println(info);
         String purchaseCurrency = info.getString("currency");
         LocalDate date = LocalDate.now();
-        //int customerId = info.getInt("customerId");
-        //int addressId = info.getInt("addressId");
-
-        Address address1 = new Address();
-        address1.setStreet("real St.");
-        address1.setCity("real-city");
-        address1.setState("NJ");
-        address1.setPostal("11223344");
-        address1.setCountry("country");
-        Address address2 = addressDao.addAddress(address1);
-
-        Item item = new Item();
-        item.setItemId(1);
-        item.setItemName("example1");
-        item.setCategory("category1");
-        item.setPrice(2.10);
-        item.setQuantity(5);
-        item = itemDao.addItem(item);
-
-        List<Item> itemList = new ArrayList<>();
-        itemList.add(item);
-
-
-        Customer customer1 = new Customer();
-        customer1.setCustomerName("Mr.Fake");
-        customer1.setAddress(address2);
-        customer1.setCustomerEmail("fake@email.com");
-        customer1.setCustomerPhone("5555555555");
-        Customer customer2 = customerDao.addCustomer(customer1);
-
-
-
-        //Address address = addressDao.getAddressById(addressId);
-        //address may be adjusted based on front page
-
-        //add in a .setUsd method back into the exchange entity
+        int customerId = info.getInt("customerId");
         Exchange exchange1 = new Exchange();
         exchange1.setCny(BigDecimal.valueOf(info.getJSONObject("exchange").getDouble("CNY")));
         exchange1.setCad(BigDecimal.valueOf(info.getJSONObject("exchange").getDouble("CAD")));
@@ -93,27 +60,42 @@ public class PurchaseController {
         exchange1.setEur(BigDecimal.valueOf(info.getJSONObject("exchange").getDouble("EUR")));
         exchange1.setCny(BigDecimal.valueOf(info.getJSONObject("exchange").getDouble("CNY")));
         exchange1.setJpy(BigDecimal.valueOf(info.getJSONObject("exchange").getDouble("JPY")));
-
         exchange1 = exchangeDao.addExchange(exchange1);
-
-
-        System.out.println(purchase);
-        System.out.println("axios contact");
-
-
-        //use this section to populate the purchase object with data
-        //get the exchangeID from the above exchange
+        Customer customer = customerDao.getCustomerById(customerId);
+        Exchange exchange = exchangeDao.getExchangeById(exchange1.getExchangeId());
+        JSONArray items = info.getJSONArray("cartData");
+        List<Item> itemList = new ArrayList<>();
+        JSONObject cartItem;
+        Item item;
+        for(int i = 0; i < items.size(); i++){
+            cartItem = items.getJSONObject(i);
+            item = new Item();
+            item.setItemId(cartItem.getInt("itemId"));
+            item.setPrice(cartItem.getDouble("price"));
+            //item.setQuantity(cartItem.getInt("quantity"));
+            item.setCategory(cartItem.getString("category"));
+            item.setItemName(cartItem.getString("title"));
+            itemList.add(item);
+        }
+//use this section to populate the purchase object with data
+//get the exchangeID from the above exchange
         Purchase purchase1 = new Purchase();
         purchase1.setCurrency(purchaseCurrency);
         purchase1.setPurchaseDate(date);
-        purchase1.setCustomer(customer2);
-        purchase1.setExchange(exchange1);
+        purchase1.setCustomer(customer);
+        purchase1.setExchange(exchange);
         purchase1.setItems(itemList);
-
         purchaseDao.addPurchase(purchase1);
         System.out.println("did it work?");
+        double total = MoneyManip.calculateTotalInvoice(purchase1);
+        System.out.println(total);
+        ReactService passInfo = new ReactService();
+        passInfo.setCurrency(purchaseCurrency);
+        passInfo.setTotalCost(total);
+        ObjectMapper mapper = new ObjectMapper();
+        System.out.println(mapper.writeValueAsString(passInfo));
+        return mapper.writeValueAsString(passInfo);
 
-        return null;
     }
 
 
