@@ -1,0 +1,14 @@
+.item-display {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border: groove;
+    overflow: scroll;
+    overflow-x: hidden;
+    max-height: 85vh
+}
+
+.gridForCheckout{
+    grid-template-columns: 33% 33% 34%;
+    grid-template-rows: 25%;
+}
