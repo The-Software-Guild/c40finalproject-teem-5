@@ -48,7 +48,7 @@ class CheckoutPage extends React.Component {
                         </span>
                     </Col>
                     <Col sm={4}>
-                        <input type="text" defaultValue={totalCost} readOnly />
+                        <input type="text" value={totalCost} readOnly />
                         <hr />
                         <span>Select Currency</span>
                         <br />

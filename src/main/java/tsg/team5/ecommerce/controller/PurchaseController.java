@@ -65,6 +65,7 @@ public class PurchaseController {
         Exchange exchange = exchangeDao.getExchangeById(exchange1.getExchangeId());
         JSONArray items = info.getJSONArray("cartData");
         List<Item> itemList = new ArrayList<>();
+        List<Integer> quantityList = new ArrayList<>();
         JSONObject cartItem;
         Item item;
         for(int i = 0; i < items.size(); i++){
@@ -72,19 +73,21 @@ public class PurchaseController {
             item = new Item();
             item.setItemId(cartItem.getInt("itemId"));
             item.setPrice(cartItem.getDouble("price"));
-            //item.setQuantity(cartItem.getInt("quantity"));
+            quantityList.add(cartItem.getInt("quantity"));
             item.setCategory(cartItem.getString("category"));
             item.setItemName(cartItem.getString("title"));
             itemList.add(item);
+            itemDao.addItem(item);
         }
-//use this section to populate the purchase object with data
-//get the exchangeID from the above exchange
+        //use this section to populate the purchase object with data
+        //get the exchangeID from the above exchange
         Purchase purchase1 = new Purchase();
         purchase1.setCurrency(purchaseCurrency);
         purchase1.setPurchaseDate(date);
         purchase1.setCustomer(customer);
         purchase1.setExchange(exchange);
         purchase1.setItems(itemList);
+        purchase1.setQuantities(quantityList);
         purchaseDao.addPurchase(purchase1);
         System.out.println("did it work?");
         double total = MoneyManip.calculateTotalInvoice(purchase1);
