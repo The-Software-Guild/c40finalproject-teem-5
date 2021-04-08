@@ -32,8 +32,7 @@ class App extends Component {
                 quantity: 5,
                 itemId:0,
                 category:'fake',
-                totalForCard: "0.00"                   
-                
+                totalForCard: "0.00"                  
             }
         ],
         exchangeRate: {
@@ -80,12 +79,12 @@ class App extends Component {
 
        this.setState({exchangeRate:USDRates});
 
-        axios.post('http://localhost:8080/cart/findTotal',
-        {
-            cartData:this.state.cartData,
-            currency:this.state.currentCurrency,
-            exchange:this.state.exchangeRate
-        });
+       axios.post('http://localhost:8080/cart/findTotal',
+       {
+           cart:this.state.cartData,
+           currency:this.state.currentCurrency,
+           exchange:this.state.exchangeRate
+       });
     }
     
 

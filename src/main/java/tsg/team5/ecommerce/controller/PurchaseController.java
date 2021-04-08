@@ -2,7 +2,7 @@ package tsg.team5.ecommerce.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.JSONException;
+import net.sf.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,8 +11,8 @@ import tsg.team5.ecommerce.entity.Purchase;
 
 import tsg.team5.ecommerce.dao.*;
 import tsg.team5.ecommerce.entity.*;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -24,7 +24,6 @@ import tsg.team5.ecommerce.service.MoneyManip;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("cart/")
-
 public class PurchaseController {
 
     @Autowired
@@ -46,7 +45,8 @@ public class PurchaseController {
     @PostMapping("makePurchase")
     public String makePurchase(@RequestBody String purchase) throws JSONException, JsonProcessingException {
         //Use this section to parse all relevant data from the JSON received
-        JSONObject info = new JSONObject(purchase);
+        JSONObject info = JSONObject.fromObject(purchase);
+
         System.out.println(info);
         String purchaseCurrency = info.getString("currency");
         LocalDate date = LocalDate.now();
@@ -71,7 +71,7 @@ public class PurchaseController {
         JSONObject cartItem;
         Item item;
 
-        for(int i = 0; i < items.length(); i++){
+        for(int i = 0; i < items.size(); i++){
             cartItem = items.getJSONObject(i);
             item = new Item();
             item.setItemId(cartItem.getInt("itemId"));
@@ -108,12 +108,11 @@ public class PurchaseController {
 
     @ResponseBody
     @PostMapping("findTotal")
-    public String cardData(@RequestBody String cart) throws JSONException {
+    public String cardData(@RequestBody String cart) throws JSONException, JsonProcessingException{
 
-        JSONObject info = new JSONObject(cart);
+        JSONObject info = JSONObject.fromObject(cart);
         System.out.println(info);
-        int quantity = info.getJSONObject("cartData").getInt("quantity");
-        double price = info.getJSONObject("cartData").getDouble("price");
+        JSONArray items = info.getJSONArray("cart");
         String currency = info.getString("currency");
         double rate;
         if(currency.equals("CAD")) {
@@ -130,10 +129,42 @@ public class PurchaseController {
             rate = 1;
         }
 
-        double adjPrice = MoneyManip.evaluatePriceForRate(price, BigDecimal.valueOf(rate));
-        double totalCard = MoneyManip.evaluateTotalPriceForQuantity(adjPrice, quantity);
+        JSONObject test2;
+        JSONArray test3 = new JSONArray();
+        JSONObject finalData = new JSONObject();
+        
 
-            return null;
+        for(int i = 0; i < items.size(); i++){
+            test2 = items.getJSONObject(i);
+            int itemId = test2.getInt("itemId");
+            String title = test2.getString("title");
+            Double price = test2.getDouble("price");
+            int quantity = test2.getInt("quantity");
+            String category = test2.getString("category");
+            String totalForCard = test2.getString("totalForCard");
+
+            double adjPrice = MoneyManip.evaluatePriceForRate(price, BigDecimal.valueOf(rate));
+            double totalCard = MoneyManip.evaluateTotalPriceForQuantity(adjPrice, quantity);
+            String correctTotalCard = String.valueOf(totalCard);
+
+            
+            finalData.accumulate("itemId", itemId);
+            finalData.accumulate("title", title);
+            finalData.accumulate("price", price);
+            finalData.accumulate("quantity", quantity);
+            finalData.accumulate("category", category);
+            finalData.accumulate("totalForCard", correctTotalCard);
+
+            test3.add(finalData);
+            finalData.clear();
+
+        }
+        
+        //ObjectMapper mapper = new ObjectMapper();
+        //System.out.println(mapper.writeValueAsString(test));
+
+        
+        return test3.toString();
     }
 
 
