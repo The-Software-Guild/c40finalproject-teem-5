@@ -54,7 +54,6 @@ public class PurchaseController {
         LocalDate date = LocalDate.now();
         int customerId = info.getInt("customerId");
         Exchange exchange1 = new Exchange();
-        exchange1.setCny(BigDecimal.valueOf(info.getJSONObject("exchange").getDouble("CNY")));
         exchange1.setCad(BigDecimal.valueOf(info.getJSONObject("exchange").getDouble("CAD")));
         exchange1.setGbp(BigDecimal.valueOf(info.getJSONObject("exchange").getDouble("GBP")));
         exchange1.setEur(BigDecimal.valueOf(info.getJSONObject("exchange").getDouble("EUR")));
