@@ -13,6 +13,7 @@ import net.sf.json.JSONObject;
 import tsg.team5.ecommerce.service.MoneyManip;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -98,5 +99,70 @@ public class PurchaseController {
         ObjectMapper mapper = new ObjectMapper();
         //System.out.println(mapper.writeValueAsString(passInfo));
         return mapper.writeValueAsString(passInfo);
+    }
+
+    @ResponseBody
+    @PostMapping("findTotal")
+    public String cardData(@RequestBody String cart) throws JSONException, JsonProcessingException {
+
+        JSONObject info = JSONObject.fromObject(cart);
+        System.out.println(info);
+        System.out.println("second function above this");
+        JSONArray items = info.getJSONArray("cart");
+        String currency = info.getString("currency");
+        double rate;
+        if(currency.equals("CAD")) {
+            rate = info.getJSONObject("exchange").getDouble("CAD");
+        }else if(currency.equals("EUR")) {
+            rate = info.getJSONObject("exchange").getDouble("EUR");
+        }else if(currency.equals("GBP")) {
+            rate = info.getJSONObject("exchange").getDouble("GBP");
+        }else if(currency.equals("JPY")) {
+            rate = info.getJSONObject("exchange").getDouble("JPY");
+        }else if(currency.equals("CNY")) {
+            rate = info.getJSONObject("exchange").getDouble("CNY");
+        }else{
+            rate = 1;
+        }
+
+        JSONObject test2;
+        JSONArray test3 = new JSONArray();
+        JSONObject finalData = new JSONObject();
+
+
+        for(int i = 0; i < items.size(); i++){
+            test2 = items.getJSONObject(i);
+            int itemId = test2.getInt("itemId");
+            String title = test2.getString("title");
+            Double price = test2.getDouble("price");
+            int quantity = test2.getInt("quantity");
+            String category = test2.getString("category");
+
+
+            double adjPrice = MoneyManip.evaluatePriceForRate(price, BigDecimal.valueOf(rate));
+            double totalCard = MoneyManip.evaluateTotalPriceForQuantity(adjPrice, quantity);
+            BigDecimal totalCardB = new BigDecimal(Double.toString(totalCard));
+            totalCardB = totalCardB.setScale(2, RoundingMode.HALF_UP);
+
+            String correctTotalCard = String.valueOf(totalCardB.doubleValue());
+
+
+            finalData.accumulate("itemId", itemId);
+            finalData.accumulate("title", title);
+            finalData.accumulate("price", price);
+            finalData.accumulate("quantity", quantity);
+            finalData.accumulate("category", category);
+            finalData.accumulate("totalForCard", correctTotalCard);
+
+            test3.add(finalData);
+            finalData.clear();
+
+        }
+
+        //ObjectMapper mapper = new ObjectMapper();
+        //System.out.println(mapper.writeValueAsString(test));
+
+        System.out.println(test3.toString());
+        return test3.toString();
     }
 }
