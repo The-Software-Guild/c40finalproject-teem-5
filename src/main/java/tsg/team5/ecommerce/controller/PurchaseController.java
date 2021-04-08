@@ -116,4 +116,11 @@ public class PurchaseController {
         return purchaseDao.getTotalCostForAllPurchases(purchaseDao.getAllPurchases());
     }
 
+//    @GetMapping("/reportDateRange")
+//    @ResponseBody
+//    public List<Purchase> getPurchaseOfDataRange(@RequestParam LocalDate from, @RequestParam LocalDate to)
+//    {
+//        return purchaseDao.getPurchasesRangeDate(from,to);
+//    }
+
 }

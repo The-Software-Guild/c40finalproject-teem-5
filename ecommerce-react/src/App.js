@@ -11,6 +11,7 @@ import PurchaseHistory from "./pages/PurchaseHistory";
 import axios from 'axios';
 import UserServiceFetch from './services/UserServiceFetch'
 import { Col } from "react-bootstrap";
+import Report from "./pages/Report";
 
 const STORE_URL = "https://fakestoreapi.com"
 const EXCHANGE_RATE_URL = "http://data.fixer.io/api"
@@ -152,7 +153,7 @@ class App extends Component {
                 this.setState({ totalCost: parseFloat(response.data.totalCost).toFixed(2) })
             );
     }
-
+    //mount all the data
     componentDidMount() {
         console.log("App is now mounted.")
         this.loadItemData();
@@ -161,27 +162,25 @@ class App extends Component {
         this.loadPurchaseTotalCost();
         this.state.cartData.pop();
     }
-
+    //retrieve current exchange rate
     loadExchangeRate(){
         axios.get('https://api.ratesapi.io/api/latest?base=USD&symbols=CAD,EUR,GBP,JPY,CNY').then(
             ((res) =>this.setState({LiveExchangeRate:res.data})
         ))
     }
-
+    //retrieve purchase history from database
     loadPurchaseHistory()
     {
         axios.get('http://localhost:8080/cart/history').then((res)=>
             this.setState({purchaseHistory:res.data}))
     }
-
-
+    //retrieve total cost for each purchase from service layer
     loadPurchaseTotalCost()
     {
         axios.get('http://localhost:8080/cart/totals').then((res)=>
             this.setState({totalCostOfPurchases:res.data}))
     }
-
-
+    //set items, current exchange rates and purchase history
     loadItemData() {
         this.setState({ loading: true })
         console.log("Loading item data")
@@ -191,7 +190,6 @@ class App extends Component {
                 { itemData: data, loading: false }
             ))
     }
-
 
     render() {
         return (
@@ -218,7 +216,12 @@ class App extends Component {
                                totalCostOfPurchases = {this.state.totalCostOfPurchases}
                                />)}
                         />
-                        <Route path='/data'/>
+                        <Route path='/report' render ={props =>
+                            <Report purchaseHistory={this.state.purchaseHistory}
+                                    currency ={this.state.currentCurrency}
+                                    handleCurrencySelect ={this.handleCurrencySelect}
+                                    totalCostOfPurchases = {this.state.totalCostOfPurchases}
+                            />}/>
                     </Switch>
                 </main>
             </div>

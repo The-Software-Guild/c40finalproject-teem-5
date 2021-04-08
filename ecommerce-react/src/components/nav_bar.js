@@ -9,7 +9,7 @@ function NavBar() {
                 <li><NavLink to='/store'>Store</NavLink></li>
                 <li><NavLink to='/checkout'>Checkout</NavLink></li>
                 <li><NavLink to='/history'>Purchase History</NavLink></li>
-                <li><NavLink to='/data'>Data</NavLink></li>
+                <li><NavLink to='/report'>Report</NavLink></li>
             </ul>
         </div>
     );
