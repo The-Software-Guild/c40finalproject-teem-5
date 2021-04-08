@@ -100,30 +100,4 @@ public class PurchaseController {
         return mapper.writeValueAsString(passInfo);
 
     }
-
-
-
-   /* @ResponseBody
-    @GetMapping
-    public List<Purchase> getCustomerData(int id){
-        return purchaseDao.getPurchasesForCustomer(id);
-    }
-
-    @ResponseBody
-    @GetMapping
-    public List<Purchase> getCurrencyData(String currency){
-        return purchaseDao.getPurchasesByCurrency(currency);
-    }
-
-    @ResponseBody
-    @GetMapping
-    public List<Purchase> getSpecificDateData(LocalDate date){
-        return purchaseDao.getPurchasesByDate(date);
-    }
-
-    @ResponseBody
-    @GetMapping
-    public List<Purchase> getRangedDateData(LocalDate from, LocalDate to){
-        return purchaseDao.getPurchasesRangeDate(from, to);
-    }*/
 }
