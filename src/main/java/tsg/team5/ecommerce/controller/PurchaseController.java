@@ -17,6 +17,7 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -165,4 +166,26 @@ public class PurchaseController {
         System.out.println(test3.toString());
         return test3.toString();
     }
+
+    @GetMapping("/history")
+    @ResponseBody
+    public List<Purchase> getPurchases()
+    {
+        return purchaseDao.getAllPurchases();
+    }
+
+    @GetMapping("/totals")
+    @ResponseBody
+    public Map<Integer, Double> getTotalCostForPurchases()
+    {
+        return purchaseDao.getTotalCostForAllPurchases(purchaseDao.getAllPurchases());
+    }
+
+//    @GetMapping("/reportDateRange")
+//    @ResponseBody
+//    public List<Purchase> getPurchaseOfDataRange(@RequestParam LocalDate from, @RequestParam LocalDate to)
+//    {
+//        return purchaseDao.getPurchasesRangeDate(from,to);
+//    }
+
 }

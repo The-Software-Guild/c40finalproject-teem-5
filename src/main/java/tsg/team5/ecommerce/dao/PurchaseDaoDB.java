@@ -6,13 +6,17 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ResponseBody;
 import tsg.team5.ecommerce.entity.*;
+import tsg.team5.ecommerce.service.MoneyManip;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class PurchaseDaoDB implements PurchaseDao{
@@ -36,6 +40,16 @@ public class PurchaseDaoDB implements PurchaseDao{
             prc.setItems(getItemsForPurchase(prc.getPurchaseId()));
             prc.setQuantities(getQuantitiesForPurchase(prc.getPurchaseId()));
         }
+    }
+
+    @Override
+    @ResponseBody
+    public Map<Integer,Double> getTotalCostForAllPurchases(List<Purchase> purchases) {
+        Map<Integer,Double> totalCost = new HashMap<>();
+        for (Purchase purchase : purchases) {
+            totalCost.put(purchase.getPurchaseId(),MoneyManip.calculateTotalInvoice(purchase));
+        }
+        return totalCost;
     }
 
     @Override
