@@ -17,6 +17,7 @@ const ListedItem = ({ item, key }) => {
                     <br />
                     Quantity: {item.quantity}
                     <br />
+                    Cost For Item(s): {item.totalForCard}
                     <br />
                     <br />
                 </div>
@@ -28,11 +29,18 @@ const ListedItem = ({ item, key }) => {
 
 class CheckoutPage extends React.Component {
 
+    handleTotalCalculation(){
+        this.props.handleTotalCalculation();
+    }
 
+    componentDidMount(){
+        this.handleTotalCalculation();
+    }
 
     render() {
-        let { items, currency, handleCurrencySelect, handleTestAxios, totalCost } = this.props
+        let { items, currency, handleCurrencySelect, handleTestAxios, totalCost} = this.props
         return (
+            
             <Container className="gridForCheckout">
                 <Row>
                     <Col>

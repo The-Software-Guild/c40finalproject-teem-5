@@ -31,7 +31,8 @@ class App extends Component {
                 price: 1.99,
                 quantity: 0,
                 itemId: 0,
-                category: "fake"
+                category: "fake",
+                totalForCard: "0.00"
             }
         ],
         exchangeRate: {
@@ -50,6 +51,7 @@ class App extends Component {
     handleCurrencySelect = (event) => {
         let selected = event.target.value;
         this.setState({ currentCurrency: selected })
+        this.handleTotalCalculation();
 
     }
 
@@ -79,6 +81,23 @@ class App extends Component {
         console.log(this.state.cartData);
     }
 
+    handleTotalCalculation = async() =>{
+        console.log("test");
+
+        let USDRates = await axios.get('https://api.ratesapi.io/api/latest?base=USD&symbols=CAD,EUR,GBP,JPY,CNY')
+                    .then(response => response.data.rates);
+
+       this.setState({exchangeRate:USDRates});
+
+       axios.post('http://localhost:8080/cart/findTotal',
+       {
+           cart:this.state.cartData,
+           currency:this.state.currentCurrency,
+           exchange:this.state.exchangeRate
+       }).then(response => 
+                this.setState({cartData:response.data}));
+    }
+
     handleTestAxios = async (event) => {
 
         let USDRates = await axios.get('https://api.ratesapi.io/api/latest?base=USD&symbols=CAD,EUR,GBP,JPY,CNY')
@@ -103,6 +122,7 @@ class App extends Component {
         console.log("App is now mounted.")
         this.loadItemData();
         this.state.cartData.pop();
+        
     }
 
     loadItemData() {
@@ -133,7 +153,7 @@ class App extends Component {
                         <Route path='/checkout' render={props =>
                         (<CheckoutPage items={this.state.cartData} currency={this.state.currentCurrency}
                             handleCurrencySelect={this.handleCurrencySelect} handleTestAxios={this.handleTestAxios}
-                            totalCost={this.state.totalCost}/>)}
+                            totalCost={this.state.totalCost} handleTotalCalculation={this.handleTotalCalculation}/>)}
                         />
 
                         <Route path='/data' component={DataPage} />
