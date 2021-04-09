@@ -7,7 +7,6 @@ class ItemDetailModal extends Component{
 
     render() {
     let { showItemsModal,ItemDetail,quantities,handleClose} = this.props;
-    var j=0;
     return (
         <Modal show={showItemsModal} onHide={handleClose} animation={false} >
             <Modal.Dialog>
