@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Container, Row, Form } from 'react-bootstrap'
+import { Button, Form } from 'react-bootstrap'
 import '../styles/login_page.css'
 
 const StateOption = ({ state }) => {
@@ -50,33 +50,39 @@ class LoginPage extends Component {
         let { customer, selectCustomer, handleSubmit } = this.props
         return (
             <div className="Login-page">
-                <div style={{ fontSize: "50px", color: "white" }}>Account</div>
+                <div style={{ fontWeight: "bold", color: "gold", fontSize: "60px"}}>Account</div>
                 <div className="half-grid">
                     <div className="left">
+                    <div>
+                        <label style={{ fontWeight: "bold", color: "gold", textAlign:"center", fontSize:"40px"}}>LOGIN</label>
+                        <br />
                         <select value={customer} onChange={selectCustomer} defaultValue="1"
                             style={{ fontSize: "30px", width: "300px", marginBottom: "10px" }}>
                             <option value="1"> Customer 1 </option>
                             <option value="2"> Customer 2 </option>
                             <option value="3"> Customer 3 </option>
                         </select>
+                        </div>
                     </div>
                     <div className="right">
-                        <Form className="half-grid" style={{ border: "groove" }}>
+                        <Form className="half-grid" style={{ border: "groove", padding: "40px" }}>
                             <div className="right sign-up">
                                 <Form.Group>
-                                    <div style={{ color: "white", fontSize: "30px", margin: "10px" }}>Address</div>
+                                    <div style={{ fontWeight: "bold", color: "gold", fontSize: "40px", margin: "10px" }}>Address</div>
                                     <Form.Row> {/*street*/}
-                                        <label className="customer-label">Street:</label>
-                                        <input type="text" name="street" className="customer-input" required
+                                        <Form.Label className="customer-label">Street:</Form.Label>
+                                        <Form.Control type="text" name="street" className="customer-input" required
                                             pattern="[A-Za-z0-9 ]+" maxLength="30" onChange={this.handleChange} />
                                     </Form.Row>
+                                    <br />
                                     <Form.Row> {/*city*/}
-                                        <label className="customer-label">City:</label>
-                                        <input type="text" name="city" className="customer-input" required
+                                        <Form.Label className="customer-label">City:</Form.Label>
+                                        <Form.Control type="text" name="city" className="customer-input" required
                                             pattern="[A-Za-z ]+" maxLength="30" onChange={this.handleChange} />
                                     </Form.Row>
+                                    <br />
                                     <Form.Row> {/*state*/}
-                                        <label className="customer-label">State:</label>
+                                        <Form.Label className="customer-label">State:</Form.Label>
                                         <select type="text" name="state" className="customer-input" required onChange={this.handleChange}  >
                                             <option disabled selected>Select a State</option>
                                             {this.states.map((state, i) => {
@@ -84,38 +90,39 @@ class LoginPage extends Component {
                                             })}
                                         </select>
                                     </Form.Row>
+                                    <br />
                                     <Form.Row> {/*postal*/}
-                                        <label className="customer-label">Postal:</label>
-                                        <input type="text" name="postal" className="customer-input" required
+                                        <Form.Label className="customer-label">Postal:</Form.Label>
+                                        <Form.Control type="text" name="postal" className="customer-input" required
                                             pattern="[A-Z0-9-]+" maxLength="10" onChange={this.handleChange} />
                                     </Form.Row>
+                                    <br />
                                     <Form.Row> {/*country*/}
-                                        <label className="customer-label">Country:</label>
-                                        <input type="text" name="country" className="customer-input" required
+                                        <Form.Label className="customer-label">Country:</Form.Label>
+                                        <Form.Control type="text" name="country" className="customer-input" required
                                             pattern="[A-Za-z ]+" maxLength="30" onChange={this.handleChange} />
                                     </Form.Row>
                                 </Form.Group>
                             </div>
                             <div className="left sign-up">
                                 <Form.Group>
-                                    <div style={{ color: "white", fontSize: "30px", margin: "10px" }}>Customer</div>
+                                    <div style={{ fontWeight: "bold", color: "gold", fontSize: "40px", margin: "10px" }}>Customer</div>
                                     <Form.Row> {/*name*/}
-                                        <label className="customer-label">Name:</label>
-                                        <input type="text" name="name" className="customer-input" required
+                                        <Form.Label className="customer-label">Name:</Form.Label>
+                                        <Form.Control type="text" name="name" className="customer-input" required
                                             pattern="[A-Za-z ]+" maxLength="50" onChange={this.handleChange} />
                                     </Form.Row>
                                     <Form.Row> {/*email*/}
-                                        <label className="customer-label">Email:</label>
-                                        <input type="email" name="email" className="customer-input" required onChange={this.handleChange} />
+                                        <Form.Label className="customer-label">Email:</Form.Label>
+                                        <Form.Control type="email" name="email" className="customer-input" required onChange={this.handleChange} />
                                     </Form.Row>
                                     <Form.Row> {/*phone*/}
-                                        <label className="customer-label">Phone:</label>
-                                        <input type="tel" name="phone" className="customer-input" required
-                                            pattern="[0-9]{3}-[0-9]{4}" required onChange={this.handleChange} />
+                                        <Form.Label className="customer-label">Phone:</Form.Label>
+                                        <Form.Control type="tel" name="phone" className="customer-input" required
+                                            pattern="[0-9]{3}-[0-9]{4}" onChange={this.handleChange} />
                                     </Form.Row>
-                                </Form.Group>
-                            </div>
-                            <Button type="submit"
+                                    <br /><br /><br /><br /><br /><br /><br />
+                                    <Button variant="danger" size="lg" block type="submit"
                                 onSubmit={(event) => {
                                     handleSubmit(event,
                                         this.state.name,
@@ -128,6 +135,10 @@ class LoginPage extends Component {
                                         this.state.country
                                         )
                                 }} >Create Account</Button>
+                                
+                                </Form.Group>
+                                <hr />
+                            </div>
                         </Form>
                     </div>
                 </div>
