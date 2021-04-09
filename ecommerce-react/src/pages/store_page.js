@@ -1,6 +1,5 @@
 import React, { Component } from "react"
 import '../styles/store_page.css'
-import { Row, Container, Card, Button, Col } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ItemCard = ({ item, handleSelect }) => {
@@ -13,7 +12,7 @@ const ItemCard = ({ item, handleSelect }) => {
                         <br />
                         ${item.price.toFixed(2)}
                     </div>
-                    <img src={item.image} style={{ height: "100px" }} />
+                    <img alt="" src={item.image} style={{ height: "100px" }} />
                     <div className="card-text">
                         {item.description}
                     </div>
@@ -49,7 +48,8 @@ class StorePage extends Component {
         itemId: 0,
         category: "",
         image: "",
-        buttonStatus: true
+        buttonStatus: true,
+        selectedCategory: ""
     }
 
     selectHandler = (itemTitle, itemId, itemImage, itemCategory, itemPrice) => {
@@ -70,15 +70,21 @@ class StorePage extends Component {
         console.log(this.state.quantity)
     }
 
+    handleSelectedCategory = (event) => {
+        this.setState({
+            selectedCategory: event.target.value
+        })
+    }
+
     render() {
-        let { items, handleAdd, cart } = this.props
+        let { items, handleAdd } = this.props
         return (
             <div className="Store-page">
                 <div style={{ fontSize: "35px" }}>Storefront</div>
                 <div className="Store-grid">
                     {/* component holding all items */}
                     <div className="item-display">
-                        {items.filter(it => it.category.includes('men clothing')).map((filteredName,i) =>(
+                        {items.filter(it => it.category.includes(this.state.selectedCategory)).map((filteredName,i) =>(
                             <ItemCard item={filteredName} key={i} handleSelect={this.selectHandler} />
                             ))}
                     </div>
@@ -88,11 +94,11 @@ class StorePage extends Component {
                     }}>
                         {/* select input for category */}
                         <div>
-                            <select style={{ fontSize: "20px", margin: "10px" }}> // Category selection
+                            <select style={{ fontSize: "20px", margin: "10px" }} onChange={ this.handleSelectedCategory }> // Category selection
                                 <option selected disabled> Select a Category </option>
                                 <option value="men clothing" > Men's Clothing </option>
                                 <option value="women clothing"> Women's Clothing </option>
-                                <option value="jewelry"> Jewelry </option>
+                                <option value="jewelery"> Jewelry </option>
                                 <option value="electronics"> Electronics </option>
                             </select>
                         </div>

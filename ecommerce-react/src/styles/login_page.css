@@ -31,17 +31,30 @@
     margin: 20px;
 }
 
-.customer-input {
-    display:flex;
-    font-size: 20px;
+.input-grid {
+    display: grid;
+    grid-template-columns: 30% 70%;
+    grid-template-rows: auto;
+    grid-template-areas:
+        "input-left input-right";
 }
 
 .customer-label {
+    grid-area: input-left;
     display:flex;
     color: white;
     font-size: 20px;
     margin: 5px;
+    left: auto;
 }
+
+.customer-input {
+    grid-area: input-right;
+    display:flex;
+    font-size: 20px;
+}
+
+
 
 .sign-up {
     height: 50vh;
