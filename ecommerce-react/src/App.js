@@ -48,6 +48,11 @@ class App extends Component {
         totalCost: "0.00"
     }
 
+    constructor(props){
+        super(props);
+        this.handleClearItems = this.handleClearItems.bind(this);
+    }
+    
     handleCurrencySelect = (event) => {
         let selected = event.target.value;
         this.setState({ currentCurrency: selected })
@@ -118,6 +123,20 @@ class App extends Component {
             );
     }
 
+    handleClearItems(){
+        const reset = 
+        {
+            title: null,
+            price: null,
+            quantity: null,
+            itemId: null,
+            category: null,
+            totalForCard: null
+        };
+        this.setState({ cartData:reset });
+        
+    }
+
     componentDidMount() {
         console.log("App is now mounted.")
         this.loadItemData();
@@ -153,7 +172,8 @@ class App extends Component {
                         <Route path='/checkout' render={props =>
                         (<CheckoutPage items={this.state.cartData} currency={this.state.currentCurrency}
                             handleCurrencySelect={this.handleCurrencySelect} handleTestAxios={this.handleTestAxios}
-                            totalCost={this.state.totalCost} handleTotalCalculation={this.handleTotalCalculation}/>)}
+                            totalCost={this.state.totalCost} handleTotalCalculation={this.handleTotalCalculation}
+                            handleClearItems={this.handleClearItems}/>)}
                         />
 
                         <Route path='/data' component={DataPage} />

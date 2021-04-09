@@ -29,16 +29,50 @@ const ListedItem = ({ item, key }) => {
 
 class CheckoutPage extends React.Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state.replaceItems = {
+            title: null,
+            price: null,
+            quantity: null,
+            itemId: null,
+            category: null,
+            totalForCard: null
+        }
+    }
+
+    state = {
+        replaceItems : [
+        {
+            title: null,
+            price: null,
+            quantity: null,
+            itemId: null,
+            category: null,
+            totalForCard: null
+        }]
+    }
+
     handleTotalCalculation(){
         this.props.handleTotalCalculation();
     }
+
+    handleDeleteCart(){
+        console.log(this.props.items);
+        console.log(this.state.replaceItems);
+        this.setState({items:""});
+        console.log(this.props.items);
+        window.location.reload(false);
+    }
+    
 
     componentDidMount(){
         this.handleTotalCalculation();
     }
 
     render() {
-        let { items, currency, handleCurrencySelect, handleTestAxios, totalCost} = this.props
+        let {items, currency, handleCurrencySelect, handleTestAxios, totalCost, handleTotalCalculation, handleClearItems} = this.props
         return (
             
             <Container className="gridForCheckout">
@@ -73,8 +107,11 @@ class CheckoutPage extends React.Component {
                         <hr />
                         <Button onClick={handleTestAxios}>
                             Purchase
-                   </Button>
+                        </Button>
                         <hr />
+                        <Button onClick={() => this.handleDeleteCart()}>
+                            Clear Items
+                        </Button>
                     </Col>
                 </Row>
             </Container>
