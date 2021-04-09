@@ -84,7 +84,7 @@ class StorePage extends Component {
                 <div className="Store-grid">
                     {/* component holding all items */}
                     <div className="item-display">
-                        {items.filter(it => it.category===(this.state.selectedCategory)).map((filteredName,i) =>(
+                        {items.filter(it => it.category.includes(this.state.selectedCategory)).map((filteredName,i) =>(
                             <ItemCard item={filteredName} key={i} handleSelect={this.selectHandler} />
                             ))}
                     </div>
