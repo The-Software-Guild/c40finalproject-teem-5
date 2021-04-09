@@ -11,7 +11,7 @@ const ItemCard = ({ item, handleSelect }) => {
                     <div style={{ fontSize: "14px", height: "80px" }}>
                         {item.title}
                         <br />
-                        {item.price.toFixed(2)}
+                        ${item.price.toFixed(2)}
                     </div>
                     <img src={item.image} style={{ height: "100px" }} />
                     <div className="card-text">

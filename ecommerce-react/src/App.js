@@ -57,7 +57,7 @@ class App extends Component {
              date: ''
              },
         currentCurrency: "USD",
-        customerId: 0,
+        customerId: 1,
         addressId: 0,
         totalCost: "0.00",
 
