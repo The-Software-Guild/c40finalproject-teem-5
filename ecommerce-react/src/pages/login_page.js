@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Container, Row, Form } from 'react-bootstrap'
+import { Button, Form } from 'react-bootstrap'
 import '../styles/login_page.css'
 
 const StateOption = ({ state }) => {
