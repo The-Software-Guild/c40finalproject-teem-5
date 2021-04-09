@@ -79,7 +79,7 @@ class StorePage extends Component {
                     {/* component holding all items */}
                     <div className="item-display">
                         {items.filter(it => it.category.includes('men clothing')).map((filteredName,i) =>(
-                            return <ItemCard item={filteredName} key={i} handleSelect={this.selectHandler} />
+                            <ItemCard item={filteredName} key={i} handleSelect={this.selectHandler} />
                             ))}
                     </div>
                     {/* sidebar component for quantity and item name with add to cart button */}
