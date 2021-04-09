@@ -45,7 +45,7 @@ class App extends Component {
             JPY: 1.1234,
             CNY: 1.1234
         },
-        LiveExchangeRate:{
+        LiveExchangeRate: {
             base: 'USD',
             rates: {
                 EUR: '',
@@ -54,22 +54,22 @@ class App extends Component {
                 CNY: '',
                 GBP: ''
             },
-             date: ''
-             },
+            date: ''
+        },
         currentCurrency: "USD",
         customerId: 1,
         addressId: 0,
         totalCost: "0.00",
 
-        purchaseHistory:[
+        purchaseHistory: [
             {
                 purchaseId: '',
                 purchaseDate: '',
                 currency: '',
                 exchange: {
                     exchangeId: '',
-                    cad:'' ,
-                    eur:'',
+                    cad: '',
+                    eur: '',
                     gbp: '',
                     jpy: '',
                     cny: ''
@@ -101,7 +101,43 @@ class App extends Component {
                 ]
             }
         ],
-        totalCostOfPurchases:[{}]
+        totalCostOfPurchases: [{}],
+        customerInfo: {
+            //customer
+            name: "",   // max 50 char
+            email: "",  // max 50 char
+            phone: "",   // max 10 char and needs regex validation (?)
+            //address
+            street: "", // max 30 char
+            city: "",   // max 30 char
+            state: "",  // max 2 char (should be handled by <select> input method)
+            postal: "", // max 10 char
+            country: "" // max 30 char
+        }
+    }
+
+    handleCustomerCreation = (newName, newEmail, newPhone,
+        newStreet, newCity, newState, newPostal, newCountry) => {
+        console.log("test");
+            var newCustomer = {
+                name: newName,
+                email: newEmail,
+                phone: newPhone
+            }
+            var newAddress = {
+                street: newStreet,
+                city: newCity,
+                state: newState,
+                postal: newPostal,
+                country: newCountry
+            }
+            this.setState({
+                customer: newCustomer,
+                address: newAddress
+            })
+            alert("Customer created!")
+            console.log(this.state.customerInfo)
+        
     }
 
     handleCurrencySelect = (event) => {
@@ -136,21 +172,21 @@ class App extends Component {
         console.log(this.state.cartData);
     }
 
-    handleTotalCalculation = async() =>{
+    handleTotalCalculation = async () => {
         console.log("test");
 
         let USDRates = await axios.get('https://api.ratesapi.io/api/latest?base=USD&symbols=CAD,EUR,GBP,JPY,CNY')
-                    .then(response => response.data.rates);
+            .then(response => response.data.rates);
 
-       this.setState({exchangeRate:USDRates});
+        this.setState({ exchangeRate: USDRates });
 
-       axios.post('http://localhost:8080/cart/findTotal',
-       {
-           cart:this.state.cartData,
-           currency:this.state.currentCurrency,
-           exchange:this.state.exchangeRate
-       }).then(response =>
-                this.setState({cartData:response.data}));
+        axios.post('http://localhost:8080/cart/findTotal',
+            {
+                cart: this.state.cartData,
+                currency: this.state.currentCurrency,
+                exchange: this.state.exchangeRate
+            }).then(response =>
+                this.setState({ cartData: response.data }));
     }
 
     handleTestAxios = async (event) => {
@@ -180,25 +216,23 @@ class App extends Component {
         this.loadExchangeRate();
         this.loadPurchaseTotalCost();
         this.state.cartData.pop();
-
+        console.log(this.state.customerInfo)
     }
     //retrieve current exchange rate
-    loadExchangeRate(){
+    loadExchangeRate() {
         axios.get('https://api.ratesapi.io/api/latest?base=USD&symbols=CAD,EUR,GBP,JPY,CNY').then(
-            ((res) =>this.setState({LiveExchangeRate:res.data})
-        ))
+            ((res) => this.setState({ LiveExchangeRate: res.data })
+            ))
     }
     //retrieve purchase history from database
-    loadPurchaseHistory()
-    {
-        axios.get('http://localhost:8080/cart/history').then((res)=>
-            this.setState({purchaseHistory:res.data}))
+    loadPurchaseHistory() {
+        axios.get('http://localhost:8080/cart/history').then((res) =>
+            this.setState({ purchaseHistory: res.data }))
     }
     //retrieve total cost for each purchase from service layer
-    loadPurchaseTotalCost()
-    {
-        axios.get('http://localhost:8080/cart/totals').then((res)=>
-            this.setState({totalCostOfPurchases:res.data}))
+    loadPurchaseTotalCost() {
+        axios.get('http://localhost:8080/cart/totals').then((res) =>
+            this.setState({ totalCostOfPurchases: res.data }))
     }
     //set items, current exchange rates and purchase history
     loadItemData() {
@@ -219,7 +253,8 @@ class App extends Component {
                     <Switch>
                         <Route exact path='/' render={props =>
                         (<LoginPage customer={this.state.customerId} address={this.state.addressId}
-                            selectCustomer={this.handleCustomerSelect} selectAddress={this.handleAddressSelect} />)}
+                            selectCustomer={this.handleCustomerSelect} selectAddress={this.handleAddressSelect}
+                            handleSubmit={this.handleCustomerCreation}/>)}
                         />
                         <Route path='/store' render={props =>
                         (<StorePage items={this.state.itemData} handleSelect={this.selectHandler}
@@ -229,19 +264,19 @@ class App extends Component {
                         (<CheckoutPage items={this.state.cartData} currency={this.state.currentCurrency}
                             handleCurrencySelect={this.handleCurrencySelect} handleTestAxios={this.handleTestAxios}
                             totalCost={this.state.totalCost} handleTotalCalculation={this.handleTotalCalculation}
-                                       exchangeRate = {this.state.LiveExchangeRate}/>)}
+                            exchangeRate={this.state.LiveExchangeRate} />)}
                         />
-                        <Route path='/history' render={props =>(<PurchaseHistory
-                               purchaseHistory={this.state.purchaseHistory}
-                               totalCostOfPurchases = {this.state.totalCostOfPurchases}
-                               />)}
+                        <Route path='/history' render={props => (<PurchaseHistory
+                            purchaseHistory={this.state.purchaseHistory}
+                            totalCostOfPurchases={this.state.totalCostOfPurchases}
+                        />)}
                         />
-                        <Route path='/report' render ={props =>
+                        <Route path='/report' render={props =>
                             <Report purchaseHistory={this.state.purchaseHistory}
-                                    currency ={this.state.currentCurrency}
-                                    handleCurrencySelect ={this.handleCurrencySelect}
-                                    totalCostOfPurchases = {this.state.totalCostOfPurchases}
-                            />}/>
+                                currency={this.state.currentCurrency}
+                                handleCurrencySelect={this.handleCurrencySelect}
+                                totalCostOfPurchases={this.state.totalCostOfPurchases}
+                            />} />
                     </Switch>
                 </main>
             </div>

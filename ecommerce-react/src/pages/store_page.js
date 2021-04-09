@@ -1,6 +1,5 @@
 import React, { Component } from "react"
 import '../styles/store_page.css'
-import { Row, Container, Card, Button, Col } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ItemCard = ({ item, handleSelect }) => {
@@ -13,7 +12,7 @@ const ItemCard = ({ item, handleSelect }) => {
                         <br />
                         ${item.price.toFixed(2)}
                     </div>
-                    <img src={item.image} style={{ height: "100px" }} />
+                    <img alt="" src={item.image} style={{ height: "100px" }} />
                     <div className="card-text">
                         {item.description}
                     </div>
@@ -71,7 +70,7 @@ class StorePage extends Component {
     }
 
     render() {
-        let { items, handleAdd, cart } = this.props
+        let { items, handleAdd } = this.props
         return (
             <div className="Store-page">
                 <div style={{ fontSize: "35px" }}>Storefront</div>
