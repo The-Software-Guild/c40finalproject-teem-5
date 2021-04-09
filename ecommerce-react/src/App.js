@@ -101,6 +101,11 @@ class App extends Component {
         totalCostOfPurchases:[{}]
     }
 
+    constructor(props){
+        super(props);
+        this.handleClearItems = this.handleClearItems.bind(this);
+    }
+    
     handleCurrencySelect = (event) => {
         let selected = event.target.value;
         this.setState({ currentCurrency: selected })
@@ -168,6 +173,22 @@ class App extends Component {
             }).then(response =>
                 this.setState({ totalCost: parseFloat(response.data.totalCost).toFixed(2) })
             );
+
+        alert("Cart Purchased");
+    }
+
+    handleClearItems(){
+        const reset = 
+        {
+            title: null,
+            price: null,
+            quantity: null,
+            itemId: null,
+            category: null,
+            totalForCard: null
+        };
+        this.setState({ cartData:reset });
+        
     }
     //mount all the data
     componentDidMount() {
@@ -226,7 +247,8 @@ class App extends Component {
                         (<CheckoutPage items={this.state.cartData} currency={this.state.currentCurrency}
                             handleCurrencySelect={this.handleCurrencySelect} handleTestAxios={this.handleTestAxios}
                             totalCost={this.state.totalCost} handleTotalCalculation={this.handleTotalCalculation}
-                                       exchangeRate = {this.state.LiveExchangeRate}/>)}
+                            exchangeRate = {this.state.LiveExchangeRate} handleClearItems={this.handleClearItems}/>)}
+
                         />
                         <Route path='/history' render={props =>(<PurchaseHistory
                                purchaseHistory={this.state.purchaseHistory}

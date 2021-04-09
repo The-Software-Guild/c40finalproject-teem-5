@@ -4,6 +4,7 @@ import axios from 'axios';
 import './checkout_page.css'
 
 
+
 const ListedItem = ({ item, key }) => {
 
     return (
@@ -29,16 +30,52 @@ const ListedItem = ({ item, key }) => {
 
 class CheckoutPage extends React.Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state.replaceItems = {
+            title: null,
+            price: null,
+            quantity: null,
+            itemId: null,
+            category: null,
+            totalForCard: null
+        }
+    }
+
+    state = {
+        replaceItems : [
+        {
+            title: null,
+            price: null,
+            quantity: null,
+            itemId: null,
+            category: null,
+            totalForCard: null
+        }]
+    }
+
     handleTotalCalculation(){
         this.props.handleTotalCalculation();
     }
+
+    handleDeleteCart(){
+        
+        this.setState({items:""});
+        
+        window.location.reload(false);
+        alert("Cart Emptied");
+    }
+    
 
     componentDidMount(){
         this.handleTotalCalculation();
     }
 
     render() {
-        let { items, currency, handleCurrencySelect, handleTestAxios, totalCost,exchangeRate } = this.props
+
+        let { items, currency, handleCurrencySelect, handleTestAxios, totalCost,exchangeRate,handleTotalCalculation, handleClearItems } = this.props
+
         return (
 
             <Container className="gridForCheckout">
@@ -95,8 +132,11 @@ class CheckoutPage extends React.Component {
                         <hr />
                         <Button onClick={handleTestAxios}>
                             Purchase
-                   </Button>
+                        </Button>
                         <hr />
+                        <Button onClick={() => this.handleDeleteCart()}>
+                            Empty Cart
+                        </Button>
                     </Col>
                 </Row>
 
