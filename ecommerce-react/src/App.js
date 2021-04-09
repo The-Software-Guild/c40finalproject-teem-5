@@ -121,6 +121,8 @@ class App extends Component {
             }).then(response =>
                 this.setState({ totalCost: parseFloat(response.data.totalCost).toFixed(2) })
             );
+
+        alert("Cart Purchased");
     }
 
     handleClearItems(){

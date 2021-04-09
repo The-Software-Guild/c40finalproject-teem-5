@@ -4,6 +4,7 @@ import axios from 'axios';
 import './checkout_page.css'
 
 
+
 const ListedItem = ({ item, key }) => {
 
     return (
@@ -59,11 +60,11 @@ class CheckoutPage extends React.Component {
     }
 
     handleDeleteCart(){
-        console.log(this.props.items);
-        console.log(this.state.replaceItems);
+        
         this.setState({items:""});
-        console.log(this.props.items);
+        
         window.location.reload(false);
+        alert("Cart Emptied");
     }
     
 
@@ -110,7 +111,7 @@ class CheckoutPage extends React.Component {
                         </Button>
                         <hr />
                         <Button onClick={() => this.handleDeleteCart()}>
-                            Clear Items
+                            Empty Cart
                         </Button>
                     </Col>
                 </Row>
