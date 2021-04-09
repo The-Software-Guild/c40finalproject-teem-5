@@ -1,8 +1,6 @@
 package tsg.team5.ecommerce.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import tsg.team5.ecommerce.dao.ItemDao;
@@ -31,23 +29,10 @@ public class ItemController {
     }
     /*HttpServletRequest request*/
     @PostMapping("addItem")
-    public String addItem(HttpServletRequest request){
+    public String addItem(Item item, HttpServletRequest request){
+        itemDao.addItem(item);
 
-        System.out.println("axios contact");
-
-        //String id = request.getParameter("itemID");
-        //String name = request.getParameter("itemName");
-        //String price = request.getParameter("price");
-
-        //Item item = new Item();
-        //item.setItemId(Integer.parseInt(id));
-        //item.setItemName(name);
-        //item.setPrice(Double.parseDouble(price));
-
-        //itemDao.addItem(item);
-
-        return null;
-
+        return "redirect:/items";
     }
 
     @GetMapping("deleteItem")
@@ -61,10 +46,8 @@ public class ItemController {
 
     @GetMapping("editItem")
     public String editItem(HttpServletRequest request, Model model){
-
         int id = Integer.parseInt(request.getParameter("itemid"));
         Item item = itemDao.getItemById(id);
-
         model.addAttribute("Item", item);
 
         return "editItem";
@@ -72,7 +55,6 @@ public class ItemController {
 
     @PostMapping("editItem")
     public String performEditItem(HttpServletRequest request){
-
         int id = Integer.parseInt(request.getParameter("itemid"));
         Item item = itemDao.getItemById(id);
         item.setItemId(Integer.parseInt(request.getParameter("itemid")));
@@ -81,5 +63,4 @@ public class ItemController {
 
         return "redirect:/items";
     }
-
 }

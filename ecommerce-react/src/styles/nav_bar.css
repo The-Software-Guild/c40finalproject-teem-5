@@ -5,9 +5,9 @@
     margin: 0;
     padding: 0;
     list-style: none;
-    background-color: #f2f2f2;
-    border-bottom: 1px solid #ccc;
-    border-top: 1px solid #ccc;
+    background-color: darkslateblue;
+    border-bottom: 1px solid #000000;
+    border-top: 1px solid #000000;
     font-size: calc(5px + 2vmin);
 }
 
@@ -20,8 +20,8 @@
     padding: 8px 15px;
     text-decoration: none;
     font-weight: bold;
-    color: #069;
-    border-right: 1px solid #ccc;
+    color: aliceblue;
+    border-right: 1px solid #a384c6;
 }
 
 .nav_list li a:hover {

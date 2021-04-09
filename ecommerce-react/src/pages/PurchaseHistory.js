@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Card, Button, Container, Row, Col, Table} from 'react-bootstrap';
+import {Button, Table} from 'react-bootstrap';
 import PurchaseHistoryModal from "./purchaseHistoryModal";
 import 'bootstrap/dist/css/bootstrap.min.css';
 

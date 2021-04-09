@@ -11,7 +11,6 @@ import tsg.team5.ecommerce.entity.Address;
 import tsg.team5.ecommerce.entity.Customer;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
