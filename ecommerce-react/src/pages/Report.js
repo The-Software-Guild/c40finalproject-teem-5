@@ -78,8 +78,6 @@ class Report extends Component{
         this.setState({from:event.target.value})
     };
 
-
-
     render() {
 
         let {currency , handleCurrencySelect} = this.props

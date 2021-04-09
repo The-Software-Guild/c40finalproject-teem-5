@@ -49,7 +49,8 @@ class StorePage extends Component {
         itemId: 0,
         category: "",
         image: "",
-        buttonStatus: true
+        buttonStatus: true,
+        selectedCategory:''
     }
 
     selectHandler = (itemTitle, itemId, itemImage, itemCategory, itemPrice) => {
@@ -70,6 +71,10 @@ class StorePage extends Component {
         console.log(this.state.quantity)
     }
 
+    handleSelectedCategory=(event) =>{
+        this.setState({selectedCategory: event.target.value})
+    }
+
     render() {
         let { items, handleAdd, cart } = this.props
         return (
@@ -78,7 +83,7 @@ class StorePage extends Component {
                 <div className="Store-grid">
                     {/* component holding all items */}
                     <div className="item-display">
-                        {items.filter(it => it.category.includes('men clothing')).map((filteredName,i) =>(
+                        {items.filter(it => it.category.includes(this.state.selectedCategory)).map((filteredName,i) =>(
                             <ItemCard item={filteredName} key={i} handleSelect={this.selectHandler} />
                         ))}
                     </div>
@@ -88,11 +93,11 @@ class StorePage extends Component {
                     }}>
                         {/* select input for category */}
                         <div>
-                            <select style={{ fontSize: "20px", margin: "10px" }}> // Category selection
+                            <select style={{ fontSize: "20px", margin: "10px" }} onChange={this.handleSelectedCategory}> // Category selection
                                 <option selected disabled> Select a Category </option>
                                 <option value="men clothing" > Men's Clothing </option>
                                 <option value="women clothing"> Women's Clothing </option>
-                                <option value="jewelry"> Jewelry </option>
+                                <option value="jewelery"> Jewelry </option>
                                 <option value="electronics"> Electronics </option>
                             </select>
                         </div>
