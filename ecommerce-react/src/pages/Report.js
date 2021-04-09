@@ -37,6 +37,7 @@ class Report extends Component{
                         <option value="EUR">EUR</option>
                         <option value="GBP">GBP</option>
                         <option value="JPY">JPY</option>
+                        <option value="CNY">CNY</option>
                     </select>
                     </Row>
                     <Table className="table table-striped">

@@ -1,20 +1,17 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom"
-// import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
+
 import NavBar from "./components/nav_bar"
 import CheckoutPage from "./pages/checkout_page";
 import StorePage from './pages/store_page'
-import DataPage from './pages/data_page'
 import LoginPage from './pages/login_page'
 import PurchaseHistory from "./pages/PurchaseHistory";
 import axios from 'axios';
-import UserServiceFetch from './services/UserServiceFetch'
-import { Col } from "react-bootstrap";
 import Report from "./pages/Report";
 
 const STORE_URL = "https://fakestoreapi.com"
-const EXCHANGE_RATE_URL = "http://data.fixer.io/api"
+const EXCHANGE_RATE_URL = "https://api.ratesapi.io/api"
 
 class App extends Component {
     state = {
@@ -24,7 +21,7 @@ class App extends Component {
                 title: "test product",
                 price: 1.99,
                 description: "lorem ipsum set",
-                image: "https://i.pravatar.cc",
+                image: "",
                 category: "electronic"
             }
         ],
@@ -139,7 +136,7 @@ class App extends Component {
     handleTotalCalculation = async() =>{
         console.log("test");
 
-        let USDRates = await axios.get('https://api.ratesapi.io/api/latest?base=USD&symbols=CAD,EUR,GBP,JPY,CNY')
+        let USDRates = await axios.get(EXCHANGE_RATE_URL + '/latest?base=USD&symbols=CAD,EUR,GBP,JPY,CNY')
                     .then(response => response.data.rates);
 
        this.setState({exchangeRate:USDRates});
@@ -155,7 +152,7 @@ class App extends Component {
 
     handleTestAxios = async (event) => {
 
-        let USDRates = await axios.get('https://api.ratesapi.io/api/latest?base=USD&symbols=CAD,EUR,GBP,JPY,CNY')
+        let USDRates = await axios.get(EXCHANGE_RATE_URL + '/latest?base=USD&symbols=CAD,EUR,GBP,JPY,CNY')
             .then(response => response.data.rates)
 
         this.setState({ exchangeRate: USDRates });
@@ -184,7 +181,7 @@ class App extends Component {
     }
     //retrieve current exchange rate
     loadExchangeRate(){
-        axios.get('https://api.ratesapi.io/api/latest?base=USD&symbols=CAD,EUR,GBP,JPY,CNY').then(
+        axios.get(EXCHANGE_RATE_URL + '/latest?base=USD&symbols=CAD,EUR,GBP,JPY,CNY').then(
             ((res) =>this.setState({LiveExchangeRate:res.data})
         ))
     }
