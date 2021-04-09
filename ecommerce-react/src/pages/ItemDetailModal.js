@@ -7,7 +7,6 @@ class ItemDetailModal extends Component{
 
     render() {
     let { showItemsModal,ItemDetail,quantities,handleClose} = this.props;
-    var j=0;
     return (
         <Modal show={showItemsModal} onHide={handleClose} animation={false} >
             <Modal.Dialog>
@@ -31,7 +30,7 @@ class ItemDetailModal extends Component{
                                             <td>{item.itemName }</td>
                                             <td>{item.category}</td>
                                             <td>{quantities[i]}</td>
-                                            <td>{item.price}</td>
+                                            <td>{parseFloat(item.price).toFixed(2)}</td>
                                         </tr>)
                             }
                             </tbody>

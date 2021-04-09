@@ -57,48 +57,6 @@ class App extends Component {
         customerId: 1,
         addressId: 0,
         totalCost: "0.00",
-
-        purchaseHistory:[
-            {
-                purchaseId: '',
-                purchaseDate: '',
-                currency: '',
-                exchange: {
-                    exchangeId: '',
-                    cad:'' ,
-                    eur:'',
-                    gbp: '',
-                    jpy: '',
-                    cny: ''
-                },
-                customer: {
-                    customerId: '',
-                    customerName: '',
-                    customerEmail: '',
-                    customerPhone: '',
-                    address: {
-                        addressId: '',
-                        street: '',
-                        city: '',
-                        state: '',
-                        postal: '',
-                        country: ''
-                    }
-                },
-                items: [
-                    {
-                        itemId: '',
-                        itemName: '',
-                        category: '',
-                        price: ''
-                    }
-                ],
-                quantities: [
-                    {}
-                ]
-            }
-        ],
-        totalCostOfPurchases:[{}]
     }
 
     constructor(props){
@@ -251,15 +209,13 @@ class App extends Component {
 
                         />
                         <Route path='/history' render={props =>(<PurchaseHistory
-                               purchaseHistory={this.state.purchaseHistory}
-                               totalCostOfPurchases = {this.state.totalCostOfPurchases}
+                               // purchaseHistory={this.state.purchaseHistory}
+                               // totalCostOfPurchases = {this.state.totalCostOfPurchases}
                                />)}
                         />
                         <Route path='/report' render ={props =>
-                            <Report purchaseHistory={this.state.purchaseHistory}
-                                    currency ={this.state.currentCurrency}
+                            <Report currency ={this.state.currentCurrency}
                                     handleCurrencySelect ={this.handleCurrencySelect}
-                                    totalCostOfPurchases = {this.state.totalCostOfPurchases}
                             />}/>
                     </Switch>
                 </main>
