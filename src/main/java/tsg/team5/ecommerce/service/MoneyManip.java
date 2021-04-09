@@ -4,6 +4,7 @@ import tsg.team5.ecommerce.entity.Item;
 import tsg.team5.ecommerce.entity.Purchase;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 // This class is used to calculate the real price of items with the given exchange rate
 public class MoneyManip {
@@ -36,7 +37,10 @@ public class MoneyManip {
                 invoice = evaluatePriceForRate(invoice, purchase.getExchange().getGbp());
                 break;
             case "JPY":
-                invoice = evaluatePriceForRate(invoice, purchase.getExchange().getJpy());
+                double tempd = evaluatePriceForRate(invoice, purchase.getExchange().getJpy());
+                BigDecimal temp = new BigDecimal(Double.toString(tempd));
+                temp = temp.setScale(0, RoundingMode.HALF_UP);
+                invoice = temp.doubleValue();
                 break;
             case "CNY":
                 invoice = evaluatePriceForRate(invoice, purchase.getExchange().getCny());

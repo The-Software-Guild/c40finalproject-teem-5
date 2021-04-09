@@ -1,4 +1,5 @@
 .Login-page {
+    background:linear-gradient(rgba(0, 200, 250, 0.5),transparent);
     background-color: darkslategrey;
     justify-items: flex-start;
     height: 100vh;

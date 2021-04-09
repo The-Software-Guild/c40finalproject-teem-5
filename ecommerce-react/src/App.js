@@ -1,20 +1,17 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router-dom"
-// import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
+
 import NavBar from "./components/nav_bar"
 import CheckoutPage from "./pages/checkout_page";
 import StorePage from './pages/store_page'
-import DataPage from './pages/data_page'
 import LoginPage from './pages/login_page'
 import PurchaseHistory from "./pages/PurchaseHistory";
 import axios from 'axios';
-import UserServiceFetch from './services/UserServiceFetch'
-import { Col } from "react-bootstrap";
 import Report from "./pages/Report";
 
 const STORE_URL = "https://fakestoreapi.com"
-const EXCHANGE_RATE_URL = "http://data.fixer.io/api"
+const EXCHANGE_RATE_URL = "https://api.ratesapi.io/api"
 
 class App extends Component {
     state = {
@@ -24,7 +21,7 @@ class App extends Component {
                 title: "test product",
                 price: 1.99,
                 description: "lorem ipsum set",
-                image: "https://i.pravatar.cc",
+                image: "",
                 category: "electronic"
             }
         ],
@@ -45,7 +42,7 @@ class App extends Component {
             JPY: 1.1234,
             CNY: 1.1234
         },
-        LiveExchangeRate: {
+        LiveExchangeRate:{
             base: 'USD',
             rates: {
                 EUR: '',
@@ -54,92 +51,19 @@ class App extends Component {
                 CNY: '',
                 GBP: ''
             },
-            date: ''
-        },
+             date: ''
+             },
         currentCurrency: "USD",
         customerId: 1,
         addressId: 0,
         totalCost: "0.00",
-
-        purchaseHistory: [
-            {
-                purchaseId: '',
-                purchaseDate: '',
-                currency: '',
-                exchange: {
-                    exchangeId: '',
-                    cad: '',
-                    eur: '',
-                    gbp: '',
-                    jpy: '',
-                    cny: ''
-                },
-                customer: {
-                    customerId: '',
-                    customerName: '',
-                    customerEmail: '',
-                    customerPhone: '',
-                    address: {
-                        addressId: '',
-                        street: '',
-                        city: '',
-                        state: '',
-                        postal: '',
-                        country: ''
-                    }
-                },
-                items: [
-                    {
-                        itemId: '',
-                        itemName: '',
-                        category: '',
-                        price: ''
-                    }
-                ],
-                quantities: [
-                    {}
-                ]
-            }
-        ],
-        totalCostOfPurchases: [{}],
-        customerInfo: {
-            //customer
-            name: "",   // max 50 char
-            email: "",  // max 50 char
-            phone: "",   // max 10 char and needs regex validation (?)
-            //address
-            street: "", // max 30 char
-            city: "",   // max 30 char
-            state: "",  // max 2 char (should be handled by <select> input method)
-            postal: "", // max 10 char
-            country: "" // max 30 char
-        }
     }
 
-    handleCustomerCreation = (newName, newEmail, newPhone,
-        newStreet, newCity, newState, newPostal, newCountry) => {
-        console.log("test");
-            var newCustomer = {
-                name: newName,
-                email: newEmail,
-                phone: newPhone
-            }
-            var newAddress = {
-                street: newStreet,
-                city: newCity,
-                state: newState,
-                postal: newPostal,
-                country: newCountry
-            }
-            this.setState({
-                customer: newCustomer,
-                address: newAddress
-            })
-            alert("Customer created!")
-            console.log(this.state.customerInfo)
-        
+    constructor(props){
+        super(props);
+        this.handleClearItems = this.handleClearItems.bind(this);
     }
-
+    
     handleCurrencySelect = (event) => {
         let selected = event.target.value;
         this.setState({ currentCurrency: selected })
@@ -172,26 +96,26 @@ class App extends Component {
         console.log(this.state.cartData);
     }
 
-    handleTotalCalculation = async () => {
+    handleTotalCalculation = async() =>{
         console.log("test");
 
-        let USDRates = await axios.get('https://api.ratesapi.io/api/latest?base=USD&symbols=CAD,EUR,GBP,JPY,CNY')
-            .then(response => response.data.rates);
+        let USDRates = await axios.get(EXCHANGE_RATE_URL + '/latest?base=USD&symbols=CAD,EUR,GBP,JPY,CNY')
+                    .then(response => response.data.rates);
 
-        this.setState({ exchangeRate: USDRates });
+       this.setState({exchangeRate:USDRates});
 
-        axios.post('http://localhost:8080/cart/findTotal',
-            {
-                cart: this.state.cartData,
-                currency: this.state.currentCurrency,
-                exchange: this.state.exchangeRate
-            }).then(response =>
-                this.setState({ cartData: response.data }));
+       axios.post('http://localhost:8080/cart/findTotal',
+       {
+           cart:this.state.cartData,
+           currency:this.state.currentCurrency,
+           exchange:this.state.exchangeRate
+       }).then(response =>
+                this.setState({cartData:response.data}));
     }
 
     handleTestAxios = async (event) => {
 
-        let USDRates = await axios.get('https://api.ratesapi.io/api/latest?base=USD&symbols=CAD,EUR,GBP,JPY,CNY')
+        let USDRates = await axios.get(EXCHANGE_RATE_URL + '/latest?base=USD&symbols=CAD,EUR,GBP,JPY,CNY')
             .then(response => response.data.rates)
 
         this.setState({ exchangeRate: USDRates });
@@ -207,6 +131,22 @@ class App extends Component {
             }).then(response =>
                 this.setState({ totalCost: parseFloat(response.data.totalCost).toFixed(2) })
             );
+
+        alert("Cart Purchased");
+    }
+
+    handleClearItems(){
+        const reset = 
+        {
+            title: null,
+            price: null,
+            quantity: null,
+            itemId: null,
+            category: null,
+            totalForCard: null
+        };
+        this.setState({ cartData:reset });
+        
     }
     //mount all the data
     componentDidMount() {
@@ -216,23 +156,25 @@ class App extends Component {
         this.loadExchangeRate();
         this.loadPurchaseTotalCost();
         this.state.cartData.pop();
-        console.log(this.state.customerInfo)
+
     }
     //retrieve current exchange rate
-    loadExchangeRate() {
-        axios.get('https://api.ratesapi.io/api/latest?base=USD&symbols=CAD,EUR,GBP,JPY,CNY').then(
-            ((res) => this.setState({ LiveExchangeRate: res.data })
-            ))
+    loadExchangeRate(){
+        axios.get(EXCHANGE_RATE_URL + '/latest?base=USD&symbols=CAD,EUR,GBP,JPY,CNY').then(
+            ((res) =>this.setState({LiveExchangeRate:res.data})
+        ))
     }
     //retrieve purchase history from database
-    loadPurchaseHistory() {
-        axios.get('http://localhost:8080/cart/history').then((res) =>
-            this.setState({ purchaseHistory: res.data }))
+    loadPurchaseHistory()
+    {
+        axios.get('http://localhost:8080/cart/history').then((res)=>
+            this.setState({purchaseHistory:res.data}))
     }
     //retrieve total cost for each purchase from service layer
-    loadPurchaseTotalCost() {
-        axios.get('http://localhost:8080/cart/totals').then((res) =>
-            this.setState({ totalCostOfPurchases: res.data }))
+    loadPurchaseTotalCost()
+    {
+        axios.get('http://localhost:8080/cart/totals').then((res)=>
+            this.setState({totalCostOfPurchases:res.data}))
     }
     //set items, current exchange rates and purchase history
     loadItemData() {
@@ -253,8 +195,7 @@ class App extends Component {
                     <Switch>
                         <Route exact path='/' render={props =>
                         (<LoginPage customer={this.state.customerId} address={this.state.addressId}
-                            selectCustomer={this.handleCustomerSelect} selectAddress={this.handleAddressSelect}
-                            handleSubmit={this.handleCustomerCreation}/>)}
+                            selectCustomer={this.handleCustomerSelect} selectAddress={this.handleAddressSelect} />)}
                         />
                         <Route path='/store' render={props =>
                         (<StorePage items={this.state.itemData} handleSelect={this.selectHandler}
@@ -264,19 +205,18 @@ class App extends Component {
                         (<CheckoutPage items={this.state.cartData} currency={this.state.currentCurrency}
                             handleCurrencySelect={this.handleCurrencySelect} handleTestAxios={this.handleTestAxios}
                             totalCost={this.state.totalCost} handleTotalCalculation={this.handleTotalCalculation}
-                            exchangeRate={this.state.LiveExchangeRate} />)}
+                            exchangeRate = {this.state.LiveExchangeRate} handleClearItems={this.handleClearItems}/>)}
+
                         />
-                        <Route path='/history' render={props => (<PurchaseHistory
-                            purchaseHistory={this.state.purchaseHistory}
-                            totalCostOfPurchases={this.state.totalCostOfPurchases}
-                        />)}
+                        <Route path='/history' render={props =>(<PurchaseHistory
+                               // purchaseHistory={this.state.purchaseHistory}
+                               // totalCostOfPurchases = {this.state.totalCostOfPurchases}
+                               />)}
                         />
-                        <Route path='/report' render={props =>
-                            <Report purchaseHistory={this.state.purchaseHistory}
-                                currency={this.state.currentCurrency}
-                                handleCurrencySelect={this.handleCurrencySelect}
-                                totalCostOfPurchases={this.state.totalCostOfPurchases}
-                            />} />
+                        <Route path='/report' render ={props =>
+                            <Report currency ={this.state.currentCurrency}
+                                    handleCurrencySelect ={this.handleCurrencySelect}
+                            />}/>
                     </Switch>
                 </main>
             </div>

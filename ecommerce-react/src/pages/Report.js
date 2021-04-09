@@ -1,8 +1,68 @@
 import React, {Component} from "react";
 import {Row, Col, Table} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import axios from "axios";
 
 class Report extends Component{
+
+    state={
+        purchaseHistory: [
+            {
+                purchaseId: '',
+                purchaseDate: '',
+                currency: '',
+                exchange: {
+                    exchangeId: '',
+                    cad:'' ,
+                    eur:'',
+                    gbp: '',
+                    jpy: '',
+                    cny: ''
+                },
+                customer: {
+                    customerId: '',
+                    customerName: '',
+                    customerEmail: '',
+                    customerPhone: '',
+                    address: {
+                        addressId: '',
+                        street: '',
+                        city: '',
+                        state: '',
+                        postal: '',
+                        country: ''
+                    }
+                },
+                items: [
+                    {
+                        itemId: '',
+                        itemName: '',
+                        category: '',
+                        price: ''
+                    }
+                ],
+                quantities: [
+                    {}
+                ]
+            }
+        ],
+        totalCostOfPurchases:[{}]
+    }
+    loadPurchaseHistory()
+    {
+        axios.get('http://localhost:8080/cart/history').then((res)=>
+            this.setState({purchaseHistory:res.data}))
+    }
+    loadPurchaseTotalCost()
+    {
+        axios.get('http://localhost:8080/cart/totals').then((res)=>
+            this.setState({totalCostOfPurchases:res.data}))
+    }
+
+    componentDidMount() {
+        this.loadPurchaseHistory()
+        this.loadPurchaseTotalCost()
+    }
 
      min = Date.parse('2001-10-01');
      max = Date.parse('2022-01-01');
@@ -22,7 +82,7 @@ class Report extends Component{
 
     render() {
 
-        let {purchaseHistory,currency,totalCostOfPurchases , handleCurrencySelect} = this.props
+        let {currency , handleCurrencySelect} = this.props
         return (
             <div >
                 <Row className="justify-content-md-center">
@@ -37,6 +97,7 @@ class Report extends Component{
                         <option value="EUR">EUR</option>
                         <option value="GBP">GBP</option>
                         <option value="JPY">JPY</option>
+                        <option value="CNY">CNY</option>
                     </select>
                     </Row>
                     <Table className="table table-striped">
@@ -51,11 +112,11 @@ class Report extends Component{
                         </thead>
                         <tbody>
                         {
-                            purchaseHistory.filter(history => history.currency.includes(currency))
+                            this.state.purchaseHistory.filter(history => history.currency.includes(currency))
                                     .map(filteredName => (
                                     <tr key={filteredName.purchaseId}>
                                         <td>{filteredName.purchaseDate }</td>
-                                        <td>{totalCostOfPurchases[filteredName.purchaseId]}</td>
+                                        <td>{parseFloat(this.state.totalCostOfPurchases[filteredName.purchaseId]).toFixed(2)}</td>
                                         <td>{filteredName.currency}</td>
                                         <td>{filteredName.customer.customerName}</td>
                                         <td>{filteredName.customer.address.country}</td>
