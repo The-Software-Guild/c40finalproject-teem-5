@@ -85,7 +85,7 @@ class PurchaseHistory extends Component{
                             history =>
                                 <tr key={history.purchaseId}>
                                     <td>{history.purchaseDate }</td>
-                                    <td>{totalCostOfPurchases[history.purchaseId]}</td>
+                                    <td>{parseFloat(totalCostOfPurchases[history.purchaseId]).toFixed(2)}</td>
                                     <td>{history.currency}</td>
                                     <td>{history.customer.customerName}</td>
                                     <td>{history.customer.address.country}</td>

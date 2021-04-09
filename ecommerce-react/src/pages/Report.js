@@ -55,7 +55,7 @@ class Report extends Component{
                                     .map(filteredName => (
                                     <tr key={filteredName.purchaseId}>
                                         <td>{filteredName.purchaseDate }</td>
-                                        <td>{totalCostOfPurchases[filteredName.purchaseId]}</td>
+                                        <td>{parseFloat(totalCostOfPurchases[filteredName.purchaseId]).toFixed(2)}</td>
                                         <td>{filteredName.currency}</td>
                                         <td>{filteredName.customer.customerName}</td>
                                         <td>{filteredName.customer.address.country}</td>

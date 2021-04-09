@@ -31,7 +31,7 @@ class ItemDetailModal extends Component{
                                             <td>{item.itemName }</td>
                                             <td>{item.category}</td>
                                             <td>{quantities[i]}</td>
-                                            <td>{item.price}</td>
+                                            <td>{parseFloat(item.price).toFixed(2)}</td>
                                         </tr>)
                             }
                             </tbody>
